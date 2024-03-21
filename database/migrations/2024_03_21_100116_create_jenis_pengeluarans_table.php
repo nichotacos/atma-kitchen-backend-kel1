@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('jenis_pengeluarans', function (Blueprint $table) {
             $table->id('id_pengeluaran');
-            $table->string('tanggal_pengeluaran');
-            $table->string('nominal_pengeluaran');
+            $table->date('tanggal_pengeluaran');
+            $table->double('nominal_pengeluaran');
         });
     }
 
