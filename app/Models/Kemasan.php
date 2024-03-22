@@ -15,4 +15,9 @@ class Kemasan extends Model
         'detail_kemasan',
         'stok_kemasan',
     ];
+
+    public function Kemasan()
+    {
+        return $this->belongsTo(Kemasan::class, 'produk');
+    }
 }

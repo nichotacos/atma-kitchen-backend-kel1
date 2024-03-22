@@ -14,4 +14,9 @@ class Kategori extends Model
     protected $fillable = [
         'nama_kategori',
     ];
+
+    public function Kategori()
+    {
+        return $this->belongsTo(Kategori::class, 'produk');
+    }
 }

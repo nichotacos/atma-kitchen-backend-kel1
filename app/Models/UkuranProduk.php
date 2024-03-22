@@ -14,4 +14,9 @@ class UkuranProduk extends Model
     protected $fillable = [
         'detail_ukuran',
     ];
+
+    public function UkuranProduk()
+    {
+        return $this->belongsTo(UkuranProduk::class, 'produk');
+    }
 }
