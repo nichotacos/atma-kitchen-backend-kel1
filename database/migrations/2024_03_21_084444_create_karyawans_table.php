@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('nama_karyawan');
             $table->string('nomor_telepon_karyawan')->unique();
             $table->string('email')->unique();
+            $table->string('username')->unique();
             $table->string('password');
             $table->date('tanggal_rekrut');
             $table->double('gaji_harian');
