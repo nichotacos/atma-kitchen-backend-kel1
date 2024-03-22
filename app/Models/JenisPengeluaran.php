@@ -26,4 +26,9 @@ class JenisPengeluaran extends Model
         'tanggal_pengeluaran',
         'nominal_pengeluaran',
     ];
+
+    public function pengeluaran(): HasMany
+    {
+        return $this->hasMany(Pengeluaran::class);
+    }
 }

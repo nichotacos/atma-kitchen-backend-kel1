@@ -9,6 +9,8 @@ class Karyawan extends Model
 {
     use HasFactory;
 
+    protected $primaryKey = 'id_karyawan';
+
     protected $fillable = [
         'nama_karyawan',
         'nomor_telepon_karyawan',
@@ -23,5 +25,15 @@ class Karyawan extends Model
     public function role()
     {
         return $this->belongsTo(Role::class, 'id_role');
+    }
+
+    public function presensi(): HasMany
+    {
+        return $this->hasMany(Presensi::class);
+    }
+
+    public function penggajian(): HasMany
+    {
+        return $this->hasMany(Penggajian::class);
     }
 }

@@ -14,4 +14,9 @@ class Status extends Model
     protected $fillable = [
         'detail_status'
     ];
+
+    public function refund(): HasMany
+    {
+        return $this->hasMany(Refund::class);
+    }
 }

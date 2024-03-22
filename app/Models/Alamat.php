@@ -9,6 +9,8 @@ class Alamat extends Model
 {
     use HasFactory;
 
+    protected $primaryKey = 'id_alamat';
+
     protected $fillable = [
         'detail_alamat',
     ];

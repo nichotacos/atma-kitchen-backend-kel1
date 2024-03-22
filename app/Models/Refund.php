@@ -9,6 +9,8 @@ class Refund extends Model
 {
     use HasFactory;
 
+    protected $primaryKey = 'id_refund';
+
     protected $fillable = [
         'nama_bank_tujuan',
         'no_rekening_tujuan',

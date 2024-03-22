@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id('id_karyawan');
             $table->foreignId('id_role')->references('id_role')->on('roles')->onDelete('cascade');
             $table->string('nama_karyawan');
-            $table->string('nomor_telepon_karyawan');
-            $table->string('email');
+            $table->string('nomor_telepon_karyawan')->unique();
+            $table->string('email')->unique();
             $table->string('password');
             $table->date('tanggal_rekrut');
             $table->double('gaji_harian');
