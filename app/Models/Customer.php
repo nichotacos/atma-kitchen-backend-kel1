@@ -22,4 +22,14 @@ class Customer extends Model
         'poin',
         'saldo'
     ];
+
+    public function alamat(): HasMany
+    {
+        return $this->hasMany(Alamat::class);
+    }
+
+    public function refund(): HasMany
+    {
+        return $this->hasMany(Refund::class);
+    }
 }

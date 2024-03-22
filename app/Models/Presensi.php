@@ -16,14 +16,14 @@ class Presensi extends Model
     protected $primaryKey = [
         'id_presensi',
     ];
-
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
+    
     protected $fillable = [
         'tanggal_bolos',
     ];
+
+    public function karyawan()
+    {
+        return $this->belongsTo(Karyawan::class, 'id_karyawan');
+    }
 
 }

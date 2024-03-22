@@ -14,4 +14,9 @@ class Role extends Model
     protected $fillable = [
         'nama_role',
     ];
+
+    public function karyawan(): HasMany
+    {
+        return $this->hasMany(Karyawan::class);
+    }
 }

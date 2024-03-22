@@ -11,8 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('jenis_pengeluarans', function (Blueprint $table) {
-            $table->id('id_jenis_pengeluaran');
+        Schema::create('pengeluarans', function (Blueprint $table) {
+            $table->id('id_pengeluaran');
+            $table->foreignId('id_jenis_pengeluaran')->references('id_jenis_pengeluaran')->on('jenis_pengeluarans')->onDelete('cascade')->onUpdate('cascade');
             $table->date('tanggal_pengeluaran');
             $table->double('nominal_pengeluaran');
         });
@@ -23,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('jenis_pengeluarans');
+        Schema::dropIfExists('pengeluarans');
     }
 };
