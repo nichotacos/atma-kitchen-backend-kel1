@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('presensis', function (Blueprint $table) {
             $table->id('id_presensi');
-            $table->foreignId('id_karyawan')->references('id_karyawan')->on('karyawans')->onDelete('cascade');
+            $table->foreignId('id_karyawan')->references('id_karyawan')->on('karyawans')->onDelete('cascade')->onUpdate('cascade');
             $table->date('tanggal_bolos');
         });
     }

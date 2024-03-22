@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('penggajians', function (Blueprint $table) {
             $table->id('id_penggajian');
-            $table->foreignId('id_karyawan')->references('id_karyawan')->on('karyawans')->onDelete('cascade');
+            $table->foreignId('id_karyawan')->references('id_karyawan')->on('karyawans')->onDelete('cascade')->onUpdate('cascade');
             $table->integer('jumlah_hadir');
             $table->integer('jumlah_bolos');
             $table->double('bonus');

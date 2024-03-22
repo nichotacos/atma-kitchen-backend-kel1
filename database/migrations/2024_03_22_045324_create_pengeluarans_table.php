@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('pengeluarans', function (Blueprint $table) {
             $table->id('id_pengeluaran');
-            $table->foreignId('id_jenis_pengeluaran')->references('id_jenis_pengeluaran')->on('jenis_pengeluarans')->onDelete('cascade');
+            $table->foreignId('id_jenis_pengeluaran')->references('id_jenis_pengeluaran')->on('jenis_pengeluarans')->onDelete('cascade')->onUpdate('cascade');
             $table->date('tanggal_pengeluaran');
             $table->double('nominal_pengeluaran');
         });

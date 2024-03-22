@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('refunds', function (Blueprint $table) {
             $table->id('id_refund');
-            $table->foreignId('id_status')->references('id_status')->on('statuses')->onDelete('cascade');
-            $table->foreignId('id_customer')->references('id_customer')->on('customers')->onDelete('cascade');
+            $table->foreignId('id_status')->references('id_status')->on('statuses')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('id_customer')->references('id_customer')->on('customers')->onDelete('cascade')->onUpdate('cascade');
             $table->string('nama_bank_tujuan');
             $table->string('no_rekening_tujuan');
             $table->double('nominal_refund');

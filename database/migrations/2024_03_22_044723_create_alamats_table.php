@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('alamats', function (Blueprint $table) {
             $table->id('id_alamat');
-            $table->foreignId('id_customer')->references('id_customer')->on('customers')->onDelete('cascade');
+            $table->foreignId('id_customer')->references('id_customer')->on('customers')->onDelete('cascade')->onUpdate('cascade');
             $table->string('detail_alamat');
         });
     }
