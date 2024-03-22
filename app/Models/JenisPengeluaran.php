@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Presensi extends Model
+class JenisPengeluaran extends Model
 {
     use HasFactory;
     /**
@@ -14,16 +14,21 @@ class Presensi extends Model
      * @var array<int, string>
      */
     protected $primaryKey = [
-        'id_presensi',
+        'id_pengeluaran',
     ];
-    
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
+     */
     protected $fillable = [
-        'tanggal_bolos',
+        'tanggal_pengeluaran',
+        'nominal_pengeluaran',
     ];
 
-    public function karyawan()
+    public function pengeluaran(): HasMany
     {
-        return $this->belongsTo(Karyawan::class, 'id_karyawan');
+        return $this->hasMany(Pengeluaran::class);
     }
-
 }

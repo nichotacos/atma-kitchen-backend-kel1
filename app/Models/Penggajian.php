@@ -12,8 +12,15 @@ class Penggajian extends Model
     protected $primaryKey = 'id_penggajian';
 
     protected $fillable = [
-        'name',
-        'email',
-        'password',
+        'jumlah_hadir',
+        'jumlah_bolos',
+        'bonus',
+        'total_gaji',
+        'tanggal_penggajian',
     ];
+
+    public function karyawan()
+    {
+        return $this->belongsTo(Karyawan::class, 'id_karyawan');
+    }
 }
