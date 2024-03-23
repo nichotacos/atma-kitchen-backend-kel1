@@ -5,18 +5,18 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Status extends Model
+class Alamat extends Model
 {
     use HasFactory;
 
-    protected $primaryKey = 'id_status';
+    protected $primaryKey = 'id_alamat';
 
     protected $fillable = [
-        'detail_status'
+        'detail_alamat',
     ];
 
-    public function refund(): HasMany
+    public function customer()
     {
-        return $this->hasMany(Refund::class);
+        return $this->belongsTo(Customer::class, 'id_customer');
     }
 }
