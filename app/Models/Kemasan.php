@@ -16,8 +16,8 @@ class Kemasan extends Model
         'stok_kemasan',
     ];
 
-    public function Kemasan()
+    public function Produk()
     {
-        return $this->belongsTo(Kemasan::class, 'produk');
+        return $this->belongsTo(Produk::class, 'id_produk');
     }
 }

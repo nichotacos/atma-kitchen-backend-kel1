@@ -31,4 +31,8 @@ class JenisPengeluaran extends Model
     {
         return $this->hasMany(Pengeluaran::class);
     }
+
+    //masih salah
+
+
 }
