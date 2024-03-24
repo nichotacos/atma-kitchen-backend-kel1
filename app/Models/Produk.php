@@ -32,9 +32,5 @@ class Produk extends Model
         'id_ukuran',
         'id_kemasan',
     ];
-
-    public function produk()
-    {
-        return $this->belongsTo(Produk::class, 'id_resep', 'id_produk_hampers');
-    }
+    
 }
