@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class JenisPengeluaran extends Model
 {
@@ -23,8 +24,7 @@ class JenisPengeluaran extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'tanggal_pengeluaran',
-        'nominal_pengeluaran',
+        'detail_jenis_pengeluaran',
     ];
 
     public function pengeluaran(): HasMany
