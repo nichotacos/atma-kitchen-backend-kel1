@@ -6,18 +6,19 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class Status extends Model
+class BahanBaku extends Model
 {
     use HasFactory;
 
-    protected $primaryKey = 'id_status';
+    protected $primaryKey = 'id_bahan_baku';
 
     protected $fillable = [
-        'detail_status'
+        'nama_bahan_baku',
+        'stok_bahan_baku'
     ];
 
-    public function refund(): HasMany
+    public function unit(): HasMany
     {
-        return $this->hasMany(Refund::class);
+        return $this->hasMany(Unit::class, 'id_unit');
     }
 }
