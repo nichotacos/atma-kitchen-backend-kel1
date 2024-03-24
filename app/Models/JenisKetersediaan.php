@@ -14,4 +14,9 @@ class JenisKetersediaan extends Model
     protected $fillable = [
         'detail_ketersediaan'
     ];
+
+    public function JenisKetersediaan()
+    {
+        return $this->belongsTo(Produk::class, 'id_produk');
+    }
 }
