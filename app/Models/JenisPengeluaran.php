@@ -29,10 +29,6 @@ class JenisPengeluaran extends Model
 
     public function pengeluaran(): HasMany
     {
-        return $this->hasMany(Pengeluaran::class);
+        return $this->hasMany(Pengeluaran::class, 'id_jenis_pengeluaran');
     }
-
-    //masih salah
-
-
 }

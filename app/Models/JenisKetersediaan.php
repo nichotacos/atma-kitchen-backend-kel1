@@ -15,7 +15,7 @@ class JenisKetersediaan extends Model
         'detail_ketersediaan'
     ];
 
-    public function JenisKetersediaan()
+    public function jenisKetersediaan()
     {
         return $this->belongsTo(Produk::class, 'id_produk');
     }
