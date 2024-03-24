@@ -14,8 +14,9 @@ class Penitip extends Model
     protected $fillable = [
         'nama_penitip',
     ];
-    public function Penitip()
+
+    public function Produk()
     {
-        return $this->belongsTo(Penitip::class, 'produk');
+        return $this->belongsTo(Produk::class, 'id_produk');
     }
 }

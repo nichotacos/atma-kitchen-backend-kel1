@@ -20,17 +20,8 @@ class Produk extends Model
     protected $fillable = [
         'nama_produk',
         'deskripsi_produk',
-        'kategori_produk',
         'harga_produk',
-        'ukuran_produk',
-        'password_karyawan',
         'stok',
         'kuota_harian',
-        'id_penitip',
-        'id_pengambilan',
-        'id_kategori',
-        'id_ukuran',
-        'id_kemasan',
     ];
-    
 }
