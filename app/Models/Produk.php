@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Produk extends Model
 {
@@ -24,4 +25,14 @@ class Produk extends Model
         'stok',
         'kuota_harian',
     ];
+
+    public function DetailResep(): BelongsToMany
+    {
+        return $this->belongsToMany(DetailResep::class, 'id_detail_resep');
+    }
+
+    public function Hampers(): BelongsToMany
+    {
+        return $this->belongsToMany(Hampers::class, 'id_hampers');
+    }
 }

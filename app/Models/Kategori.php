@@ -15,7 +15,7 @@ class Kategori extends Model
         'nama_kategori',
     ];
 
-    public function Produk()
+    public function produk()
     {
         return $this->belongsTo(Produk::class, 'id_produk');
     }

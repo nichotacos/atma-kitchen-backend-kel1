@@ -15,7 +15,7 @@ class UkuranProduk extends Model
         'detail_ukuran',
     ];
 
-    public function Produk()
+    public function produk()
     {
         return $this->belongsTo(Produk::class, 'id_produk');
     }

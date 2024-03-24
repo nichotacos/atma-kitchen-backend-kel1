@@ -26,11 +26,11 @@ class Customer extends Model
 
     public function alamat(): HasMany
     {
-        return $this->hasMany(Alamat::class);
+        return $this->hasMany(Alamat::class, 'id_alamat');
     }
 
     public function refund(): HasMany
     {
-        return $this->hasMany(Refund::class);
+        return $this->hasMany(Refund::class, 'id_refund');
     }
 }

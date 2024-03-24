@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id('id_bahan_baku');
             $table->foreignId('id_unit')->references('id_unit')->on('units')->onUpdate('cascade')->onDelete('cascade');
             $table->string('nama_bahan_baku');
-            $table->integer('stok_bahan_baku');
+            $table->double('stok_bahan_baku');
         });
     }
 
