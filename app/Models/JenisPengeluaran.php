@@ -24,8 +24,7 @@ class JenisPengeluaran extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'tanggal_pengeluaran',
-        'nominal_pengeluaran',
+        'detail_jenis_pengeluaran',
     ];
 
     public function pengeluaran(): HasMany
