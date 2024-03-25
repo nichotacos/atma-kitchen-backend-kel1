@@ -13,9 +13,9 @@ class Presensi extends Model
      *
      * @var array<int, string>
      */
-    protected $primaryKey = [
-        'id_presensi',
-    ];
+    public $timestamps = false;
+
+    protected $primaryKey = 'id_presensi';
     
     protected $fillable = [
         'tanggal_bolos',

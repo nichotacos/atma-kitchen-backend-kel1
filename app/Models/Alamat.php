@@ -11,6 +11,7 @@ class Alamat extends Model
     use HasFactory;
 
     protected $primaryKey = 'id_alamat';
+    public $timestamps = false;
 
     protected $fillable = [
         'detail_alamat',

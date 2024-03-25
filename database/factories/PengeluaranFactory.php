@@ -17,7 +17,9 @@ class PengeluaranFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'id_jenis_pengeluaran' =>$this->faker->numberBetween(1,5),
+            'tanggal_pengeluaran' => $this->faker->date('Y-m-d'),
+            'nominal_pengeluaran' => $this->faker->numberBetween(1000,1000000),
         ];
     }
 }

@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use App\Models\Alamat;
 
 class AlamatSeeder extends Seeder
 {
@@ -12,6 +13,6 @@ class AlamatSeeder extends Seeder
      */
     public function run(): void
     {
-        //
+        Alamat::factory()->count(5)->create();
     }
 }

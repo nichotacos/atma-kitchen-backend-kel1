@@ -17,7 +17,8 @@ class AlamatFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'id_customer' =>$this->faker->numberBetween(1,5),
+            'detail_alamat' => $this->faker->address(),
         ];
     }
 }
