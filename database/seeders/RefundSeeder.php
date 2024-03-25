@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Refund;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -12,6 +13,6 @@ class RefundSeeder extends Seeder
      */
     public function run(): void
     {
-        //
+        Refund::factory()->count(5)->create();
     }
 }

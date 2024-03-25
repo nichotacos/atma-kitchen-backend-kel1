@@ -17,7 +17,8 @@ class PresensiFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'id_karyawan' =>$this->faker->numberBetween(1,5),
+            'tanggal_bolos' => $this->faker->date('2024-m-d'),
         ];
     }
 }

@@ -2,17 +2,17 @@
 
 namespace Database\Seeders;
 
+use App\Models\Presensi;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use App\Models\Alamat;
 
-class AlamatSeeder extends Seeder
+class PresensiSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        Alamat::factory()->count(5)->create();
-    }
+        Presensi::factory()->count(5)->create();
+    }   
 }

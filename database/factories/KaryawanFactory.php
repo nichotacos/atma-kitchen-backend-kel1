@@ -2,7 +2,9 @@
 
 namespace Database\Factories;
 
+use App\Models\Karyawan;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Arr;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Karyawan>
@@ -16,6 +18,8 @@ class KaryawanFactory extends Factory
      */
     public function definition(): array
     {
+        $roles = Arr::shuffle([2, 3, 4]);
+
         return [
             'id_role' => fake()->numberBetween(1, 4),
             'nama_karyawan' => fake()->name(),
@@ -41,5 +45,6 @@ class KaryawanFactory extends Factory
                 }
             },
         ];
+
     }
 }
