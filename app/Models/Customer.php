@@ -13,6 +13,8 @@ class Customer extends Model
 
     protected $primaryKey = 'id_customer';
 
+    public $timestamps = false;
+
     protected $fillable = [
         'nama',
         'nomor_telepon',

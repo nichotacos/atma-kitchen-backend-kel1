@@ -21,15 +21,29 @@ class KaryawanFactory extends Factory
         $roles = Arr::shuffle([2, 3, 4]);
 
         return [
-            'id_role' => array_shift($roles), 
-            'nama_karyawan' => $this->faker->name,
-            'nomor_telepon_karyawan' => $this->faker->unique()->phoneNumber,
-            'email' => $this->faker->unique()->safeEmail,
-            'username' => $this->faker->unique()->userName,
-            'password' => 'password', 
-            'tanggal_rekrut' => $this->faker->date('2023-m-d'),
-            'gaji_harian' => $this->faker->numberBetween(50000, 100000),
-            'bonus_rajin' => $this->faker->numberBetween(0, 50000),
+            'id_role' => fake()->numberBetween(1, 4),
+            'nama_karyawan' => fake()->name(),
+            'nomor_telepon_karyawan' => fake()->phoneNumber(),
+            'email' => fake()->unique()->safeEmail(),
+            'username' => fake()->unique()->userName(),
+            'password' => fake()->word(1),
+            'tanggal_rekrut' => fake()->date('Y-m-d', $max = '-5 years'),
+            'gaji_harian' => function (array $attributes) {
+                if ($attributes['id_role'] == 1) {
+                    return 0;
+                } else {
+                    $baseSalary = 40000;
+                    return ($attributes['id_role'] * $baseSalary);
+                }
+            },
+            'bonus_rajin' => function (array $attributes) {
+                if ($attributes['id_role'] == 1) {
+                    return 0;
+                } else {
+                    $bonus = 25000;
+                    return ($attributes['id_role'] * $bonus);
+                }
+            },
         ];
 
     }

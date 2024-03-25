@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Hampers extends Model
@@ -31,5 +32,10 @@ class Hampers extends Model
     public function produk(): BelongsToMany
     {
         return $this->belongsToMany(Produk::class, 'id_produk');
+    }
+
+    public function kemasan(): BelongsTo
+    {
+        return $this->belongsTo(Kemasan::class, 'id_kemasan');
     }
 }

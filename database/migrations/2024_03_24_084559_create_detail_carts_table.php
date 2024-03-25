@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('detail_carts', function (Blueprint $table) {
             $table->id('id_detail_cart');
-            $table->foreignId('id_hampers')->references('id_hampers')->on('hampers')->onUpdate('cascade')->onDelete('cascade');
-            $table->foreignId('id_produk')->references('id_produk')->on('produks')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignId('id_hampers')->nullable()->references('id_hampers')->on('hampers')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignId('id_produk')->nullable()->references('id_produk')->on('produks')->onUpdate('cascade')->onDelete('cascade');
             $table->foreignId('id_cart')->references('id_cart')->on('carts')->onUpdate('cascade')->onDelete('cascade');
             $table->integer('jumlah_produk');
             $table->double('harga_produk_terkini');
