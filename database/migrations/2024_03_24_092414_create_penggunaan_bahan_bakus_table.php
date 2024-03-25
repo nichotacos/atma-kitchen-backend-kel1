@@ -17,7 +17,7 @@ return new class extends Migration
             $table->foreignId('id_bahan_baku')->references('id_bahan_baku')->on('bahan_bakus')->onUpdate('cascade')->onDelete('cascade');
             $table->foreignId('id_transaksi')->references('id_transaksi')->on('transaksis')->onUpdate('cascade')->onDelete('cascade');
             $table->double('jumlah_penggunaan');
-            $table->double('tanggal_penggunaan');
+            $table->dateTime('tanggal_penggunaan');
         });
     }
 

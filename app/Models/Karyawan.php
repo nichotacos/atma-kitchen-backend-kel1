@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class Karyawan extends Model
 {
     use HasFactory;
+
     public $timestamps = false;
 
     protected $primaryKey = 'id_karyawan';
@@ -23,8 +24,6 @@ class Karyawan extends Model
         'gaji_harian',
         'bonus_rajin',
     ];
-
-    public $timestamps = false;
 
     public function role()
     {

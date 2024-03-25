@@ -17,7 +17,7 @@ return new class extends Migration
             $table->foreignId('id_pengambilan')->references('id_pengambilan')->on('jenis_pengambilans')->onUpdate('cascade')->onDelete('cascade');
             $table->foreignId('id_cart')->references('id_cart')->on('carts')->onUpdate('cascade')->onDelete('cascade');
             $table->foreignId('id_status')->references('id_status')->on('statuses')->onUpdate('cascade')->onDelete('cascade');
-            $table->foreignId('id_alamat')->references('id_alamat')->on('alamats')->onUpdate('cascade')->onDelete('cascade')->nullable();
+            $table->foreignId('id_alamat')->nullable()->references('id_alamat')->on('alamats')->onUpdate('cascade')->onDelete('cascade');
             $table->dateTime('tanggal_pemesanan');
             $table->dateTime('tanggal_pelunasan')->nullable();
             $table->dateTime('tanggal_ambil')->nullable();
@@ -28,7 +28,7 @@ return new class extends Migration
             $table->integer('poin_digunakan');
             $table->double('total_harga_final');
             $table->integer('perolehan_poin');
-            $table->integer('nominal_tip');
+            $table->double('nominal_tip');
             $table->string('bukti_pembayaran');
         });
     }
