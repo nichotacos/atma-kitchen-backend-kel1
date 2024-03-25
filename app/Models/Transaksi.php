@@ -47,4 +47,9 @@ class Transaksi extends Model
     {
         return $this->belongsTo(Status::class, 'id_status');
     }
+
+    public function alamat(): BelongsTo
+    {
+        return $this->belongsTo(Alamat::class, 'id_alamat');
+    }
 }

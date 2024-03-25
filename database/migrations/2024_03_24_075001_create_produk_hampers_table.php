@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('produk_hampers', function (Blueprint $table) {
             $table->foreignId('id_hampers')->references('id_hampers')->on('hampers')->onUpdate('cascade')->onDelete('cascade');
             $table->foreignId('id_produk')->references('id_produk')->on('produks')->onUpdate('cascade')->onDelete('cascade');
-
             $table->primary(['id_hampers', 'id_produk']);
         });
     }
