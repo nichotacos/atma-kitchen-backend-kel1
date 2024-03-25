@@ -23,6 +23,8 @@ class Karyawan extends Model
         'bonus_rajin',
     ];
 
+    public $timestamps = false;
+
     public function role()
     {
         return $this->belongsTo(Role::class, 'id_role');

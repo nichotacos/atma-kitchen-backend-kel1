@@ -22,7 +22,7 @@ class StatusSeeder extends Seeder
             ['detail_status' => 'Ditolak'],
             ['detail_status' => 'Diproses'],
             ['detail_status' => 'Siap di pick-up'],
-            ['detail_status' => 'Diterima oleh Kurir'],
+            ['detail_status' => 'Diterima oleh kurir'],
             ['detail_status' => 'Sudah di pick-up'],
             ['detail_status' => 'Selesai'],
             ['detail_status' => 'Sedang diproses'],
