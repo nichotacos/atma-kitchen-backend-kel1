@@ -11,9 +11,12 @@ class Penitip extends Model
 
     protected $primaryKey = 'id_penitip';
 
+    public $timestamps = false;
+
     protected $fillable = [
         'nama_penitip',
     ];
+
 
     public function produk()
     {

@@ -17,7 +17,7 @@ class PenitipFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'nama_penitip' => $this->faker->name(10)
         ];
     }
 }
