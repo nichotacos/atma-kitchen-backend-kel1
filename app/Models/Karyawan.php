@@ -15,6 +15,7 @@ class Karyawan extends Model
     protected $primaryKey = 'id_karyawan';
 
     protected $fillable = [
+        'id_role',
         'nama_karyawan',
         'nomor_telepon_karyawan',
         'email',
