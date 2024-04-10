@@ -35,10 +35,10 @@ class Customer extends Authenticatable
         'remember_token'
     ];
 
-    // protected $cast = [
-    //     'email_verified_at' => 'datetime',
-    //     'password' => 'hashed'
-    // ];
+    protected $cast = [
+        'email_verified_at' => 'datetime',
+        'password' => 'hashed'
+    ];
 
     public function alamat(): HasMany
     {

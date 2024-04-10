@@ -12,6 +12,7 @@ use App\Http\Controllers\CustomerController;
 
 //Register Customer
 Route::post('/register', [AuthController::class, 'register']);
+Route::post('/login-customer', [AuthController::class, 'loginCustomer']);
 
 // Nanti bakal pake passport, bukan sanctum
 Route::get('/karyawan', function (Request $request) {

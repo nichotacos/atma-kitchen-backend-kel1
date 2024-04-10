@@ -66,7 +66,8 @@ return [
     'providers' => [
         'users' => [
             'driver' => 'eloquent',
-            'model' => env('AUTH_MODEL', App\Models\Customer::class),
+            // 'model' => env('AUTH_MODEL', App\Models\Customer::class),
+            'model' => App\Models\Customer::class
         ],
         Laravel\Passport\PassportServiceProvider::class,
 
