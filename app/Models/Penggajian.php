@@ -12,6 +12,7 @@ class Penggajian extends Model
     protected $primaryKey = 'id_penggajian';
 
     protected $fillable = [
+        'id_karyawan',
         'jumlah_hadir',
         'jumlah_bolos',
         'bonus',

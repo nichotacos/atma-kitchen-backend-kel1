@@ -18,6 +18,7 @@ class Presensi extends Model
     protected $primaryKey = 'id_presensi';
     
     protected $fillable = [
+        'id_karyawan',
         'tanggal_bolos',
     ];
 

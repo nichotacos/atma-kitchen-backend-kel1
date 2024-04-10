@@ -9,10 +9,12 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 class DetailResep extends Model
 {
     use HasFactory;
+    public $timestamps = false;
 
     protected $primaryKey = 'id_detail_resep';
 
     protected $fillable = [
+        'id_bahan_baku',
         'jumlah'
     ];
 
