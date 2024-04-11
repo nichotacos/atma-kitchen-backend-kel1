@@ -5,10 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
+use Laravel\Passport\HasApiTokens;
 
-class Karyawan extends Model
+class Karyawan extends Authenticatable
 {
-    use HasFactory;
+    use HasFactory, HasApiTokens, Notifiable;
 
     public $timestamps = false;
 
@@ -24,6 +27,16 @@ class Karyawan extends Model
         'tanggal_rekrut',
         'gaji_harian',
         'bonus_rajin',
+    ];
+
+    protected $hidden = [
+        'password',
+        'remember_token'
+    ];
+
+    protected $cast = [
+        'email_verified_at' => 'datetime',
+        'password' => 'hashed'
     ];
 
     public function role()

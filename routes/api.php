@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\AuthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DetailResepController;
@@ -8,6 +9,14 @@ use App\Http\Controllers\PenggajianController;
 use App\Http\Controllers\PresensiController;
 use App\Http\Controllers\CustomerController;
 
+
+//Register Customer
+Route::post('/register', [AuthController::class, 'register']);
+Route::post('/register-karyawan', [AuthController::class, 'registerKaryawan']);
+Route::post('/login-customer', [AuthController::class, 'loginCustomer']);
+Route::post('/login-karyawan', [AuthController::class, 'loginKaryawan']);
+
+// Nanti bakal pake passport, bukan sanctum
 Route::get('/karyawan', function (Request $request) {
     return $request->karyawan();
 })->middleware('auth:sanctum');
