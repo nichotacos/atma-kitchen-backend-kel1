@@ -44,6 +44,10 @@ return [
             'driver' => 'passport',
             'provider' => 'users',
         ],
+        'employee' => [
+            'driver' => 'session',
+            'provider' => 'employees',
+        ],
     ],
 
     /*
@@ -66,9 +70,13 @@ return [
     'providers' => [
         'users' => [
             'driver' => 'eloquent',
-            // 'model' => env('AUTH_MODEL', App\Models\Customer::class),
             'model' => App\Models\Customer::class
         ],
+        'employees' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Karyawan::class
+        ],
+
         Laravel\Passport\PassportServiceProvider::class,
 
         // 'users' => [

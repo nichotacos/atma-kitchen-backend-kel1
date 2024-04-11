@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Customer;
+use App\Models\Karyawan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
@@ -51,11 +52,62 @@ class AuthController extends Controller
         ], 201);
     }
 
+    public function registerKaryawan(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'id_role' => 'required|numeric|between:2,4',
+            'nama_karyawan' => 'required|string|max:255',
+            'nomor_telepon_karyawan' => ['required', 'regex:/^08\d{9,11}$/', 'unique:karyawans'],
+            'email' => 'required|string|email|max:255|unique:karyawans',
+            'username' => 'required|string|max:255|unique:karyawans',
+            'password' => 'required|string|min:8',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['error' => $validator->errors()], 400);
+        }
+
+        switch ($request->id_role) {
+            case 2:
+                $gajiHarian = 80000.00;
+                $bonusRajin = 50000.00;
+                break;
+            case 3:
+                $gajiHarian = 120000.00;
+                $bonusRajin = 75000.00;
+                break;
+            case 4:
+                $gajiHarian = 160000.00;
+                $bonusRajin = 100000.00;
+                break;
+            default:
+                $gajiHarian = 0.00;
+                $bonusRajin = 0.00;
+        }
+
+        $karyawan = Karyawan::create([
+            'id_role' => $request->id_role,
+            'nama_karyawan' => $request->nama_karyawan,
+            'nomor_telepon_karyawan' => $request->nomor_telepon_karyawan,
+            'email' => $request->email,
+            'username' => $request->username,
+            'password' => Hash::make($request->password),
+            'tanggal_rekrut' => now(),
+            'gaji_harian' => $gajiHarian,
+            'bonus_rajin' => $bonusRajin
+        ]);
+
+        return response([
+            'message' => 'Berhasil registrasi akun karyawan.',
+            'customers' => $karyawan
+        ], 201);
+    }
+
     public function loginCustomer(Request $request)
     {
-        $loginData = $request->all();
+        $loginCustomerData = $request->all();
 
-        $validator = Validator::make($loginData, [
+        $validator = Validator::make($loginCustomerData, [
             'username' => 'required|string|max:255',
             'password' => 'required|string'
         ]);
@@ -64,7 +116,7 @@ class AuthController extends Controller
             return response()->json(['error' => $validator->errors()], 400);
         }
 
-        if (!Auth::attempt($loginData)) {
+        if (!Auth::attempt($loginCustomerData)) {
             return response([
                 'message' => 'Data yang diinputkan tidak valid'
             ], 401);
@@ -75,8 +127,53 @@ class AuthController extends Controller
         $plainTextToken = $tokenResult->accessToken;
 
         return response([
-            'message' => 'Berhasil login',
+            'message' => 'Berhasil login sebagai Customer',
             'customer' => $customer,
+            'token_type' => 'Bearer',
+            'access_token' => $plainTextToken
+        ]);
+    }
+
+    public function loginKaryawan(Request $request)
+    {
+        $loginKaryawanData = $request->all();
+        $validator = Validator::make($loginKaryawanData, [
+            'username' => 'required|string|max:255',
+            'password' => 'required|string'
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['error' => $validator->errors()], 400);
+        }
+
+        if (!Auth::guard('employee')->attempt($loginKaryawanData)) {
+            return response([
+                'message' => 'Data yang diinputkan tidak valid'
+            ], 401);
+        }
+
+        $karyawan = Auth::guard('employee')->user();
+        $tokenResult = $karyawan->createToken('LaravelPersonalAccessToken');
+        $plainTextToken = $tokenResult->accessToken;
+
+        switch ($karyawan->id_role) {
+            case 1:
+                $message = 'Berhasil login sebagai Owner';
+                break;
+            case 2:
+                $message = 'Berhasil login sebagai karyawan biasa';
+                break;
+            case 3:
+                $message = 'Berhasil login sebagai Admin';
+                break;
+            case 4:
+                $message = 'Berhasil login sebagai Manajer Operasional';
+                break;
+        }
+
+        return response([
+            'message' => $message,
+            'karyawan' => $karyawan,
             'token_type' => 'Bearer',
             'access_token' => $plainTextToken
         ]);
