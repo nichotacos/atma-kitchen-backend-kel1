@@ -17,7 +17,6 @@ class Penitip extends Model
         'nama_penitip',
     ];
 
-
     public function produk()
     {
         return $this->belongsTo(Produk::class, 'id_produk');

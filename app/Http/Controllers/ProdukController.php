@@ -11,10 +11,18 @@ class ProdukController extends Controller
     public function index()
     {
         $products = Produk::all();
+
+        if (count($products) > 0) {
+            return response([
+                'message' => 'Berhasil menampilkan data',
+                'data' => $products
+            ], 200);
+        }
+
         return response([
-            'message' => 'Berhasil menampilkan data',
-            'data' => $products
-        ]);
+            'message' => 'Empty',
+            'data' => null
+        ], 400);
     }
 
     public function store(Request $request)
@@ -145,10 +153,9 @@ class ProdukController extends Controller
         }
     }
 
-    public function search(Request $request)
+    public function search($keyword)
     {
         try {
-            $keyword = $request->input('keyword');
             $products = Produk::where('nama_produk', 'like', '%' . $keyword . '%')->get();
             return response()->json([
                 "status" => true,

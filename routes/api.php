@@ -8,7 +8,9 @@ use App\Http\Controllers\KaryawanController;
 use App\Http\Controllers\PenggajianController;
 use App\Http\Controllers\PresensiController;
 use App\Http\Controllers\CustomerController;
-
+use App\Http\Controllers\ProdukController;
+use App\Http\Controllers\PromoPoinController;
+use App\Http\Controllers\RoleController;
 
 //Register Customer
 Route::post('/register', [AuthController::class, 'register']);
@@ -59,3 +61,27 @@ Route::post('/customers', [CustomerController::class, 'store']);
 Route::get('/customers/{id}', [CustomerController::class, 'show']);
 Route::put('/customers/update/{id}', [CustomerController::class, 'update']);
 Route::delete('/customers/delete/{id}', [CustomerController::class, 'delete']);
+
+//Produk
+Route::get('/products', [ProdukController::class, 'index']);
+Route::post('/products', [ProdukController::class, 'store']);
+Route::get('/products/{id}', [ProdukController::class, 'show']);
+Route::put('/products/update/{id}', [ProdukController::class, 'update']);
+Route::delete('/products/delete/{id}', [ProdukController::class, 'delete']);
+Route::get('/products/search/{nama_produk}', [ProdukController::class, 'search']);
+
+//Promo Poin
+Route::get('/promo-poin', [PromoPoinController::class, 'index']);
+Route::post('/promo-poin', [PromoPoinController::class, 'store']);
+Route::get('/promo-poin/{id}', [PromoPoinController::class, 'show']);
+Route::put('/promo-poin/update/{id}', [PromoPoinController::class, 'update']);
+Route::delete('/promo-poin/delete/{id}', [PromoPoinController::class, 'delete']);
+Route::get('/promo-poin/search/{batas_kelipatan}', [PromoPoinController::class, 'search']);
+
+//Role
+Route::get('/roles', [RoleController::class, 'index']);
+Route::post('/roles', [RoleController::class, 'store']);
+Route::get('/roles/{id}', [RoleController::class, 'show']);
+Route::put('/roles/update/{id}', [RoleController::class, 'update']);
+Route::delete('/roles/delete/{id}', [RoleController::class, 'delete']);
+Route::get('/roles/search/{nama_role}', [RoleController::class, 'search']);

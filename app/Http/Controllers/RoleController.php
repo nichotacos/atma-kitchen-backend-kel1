@@ -81,7 +81,7 @@ class RoleController extends Controller
                 return response()->json(['error' => $validator->errors()], 400);
             }
 
-            $role = Role::udpate($request->all());
+            $role->update($request->all());
 
             return response()->json([
                 "status" => true,
@@ -120,17 +120,10 @@ class RoleController extends Controller
         }
     }
 
-    public function search(Request $request)
+    public function search($keyword)
     {
         try {
-            $validator = Validator::make($request->all(), [
-                'nama_role' => 'required|string',
-            ]);
-            if ($validator->fails()) {
-                return response()->json(['error' => $validator->errors()], 400);
-            }
-            $nama_role = $request->nama_role;
-            $roles = Role::where('nama_role', 'like', "%$nama_role%")->get();
+            $roles = Role::where('nama_role', 'like', '%' . $keyword . '%')->get();
             return response()->json([
                 'status' => true,
                 'message' => 'Search results',

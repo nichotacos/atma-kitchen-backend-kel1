@@ -11,7 +11,18 @@ class PromoPoinController extends Controller
     public function index()
     {
         $promoPoin = PromoPoin::all();
-        return response()->json($promoPoin);
+
+        if (count($promoPoin) > 0) {
+            return response([
+                'message' => 'Berhasil menampilkan data',
+                'data' => $promoPoin
+            ], 200);
+        }
+
+        return response([
+            'message' => 'Data kosong',
+            'data' => null
+        ], 400);
     }
 
     public function store(Request $request)
@@ -118,17 +129,14 @@ class PromoPoinController extends Controller
         }
     }
 
-    public function search(Request $request)
+    public function search($keyword)
     {
         try {
-            $keyword = $request->input('keyword');
-            $promoPoin = PromoPoin::where('batas_kelipatan', 'LIKE', "%$keyword%")
-                ->orWhere('poin_diterima', 'LIKE', "%$keyword%")
-                ->get();
+            $promoPoin = PromoPoin::where('batas_kelipatan', 'like', '%' . $keyword . '%')->get();
             return response()->json([
-                "status" => true,
-                "message" => 'Berhasil mencari promo poin',
-                "data" => $promoPoin
+                'status' => true,
+                'message' => 'Search results',
+                'data' => $promoPoin
             ], 200);
         } catch (\Exception $e) {
             return response()->json([

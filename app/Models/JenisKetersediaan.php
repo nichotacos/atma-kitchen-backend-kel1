@@ -11,6 +11,8 @@ class JenisKetersediaan extends Model
 
     protected $primaryKey = 'id_jenis_ketersediaan';
 
+    public $timestamps = false;
+
     protected $fillable = [
         'detail_ketersediaan'
     ];

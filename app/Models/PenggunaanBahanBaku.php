@@ -12,6 +12,8 @@ class PenggunaanBahanBaku extends Model
 
     protected $primaryKey = 'id_penggunaan';
 
+    public $timestamps = false;
+
     protected $fillable = [
         'jumlah_penggunaan',
         'tanggal_penggunaan'
