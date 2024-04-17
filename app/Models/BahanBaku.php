@@ -23,4 +23,9 @@ class BahanBaku extends Model
     {
         return $this->hasMany(Unit::class, 'id_unit');
     }
+
+    public function detailResep(): HasMany
+    {
+        return $this->hasMany(DetailResep::class, 'id_detail_resep');
+    }
 }

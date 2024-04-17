@@ -28,7 +28,24 @@ class PenggajianController extends Controller
     //Store
     public function store(Request $request){
         try {
-            $penggajians = Penggajian::create($request->all());
+
+            $validator = Validator::make($request->all(), [
+                'id_karyawan' => 'required|numeric',
+                'jumlah_hadir' => 'required|numeric',
+                'jumlah_bolos' => 'required|numeric',
+                'bonus' => 'required|numeric',
+                'total_gaji' => 'required|numeric',
+                'tanggal_penggajian' => 'required|date'
+            ]);
+
+            if ($validator->fails()) {
+                return response()->json(['error' => $validator->errors()], 400);
+            }
+
+            $penggajians = Penggajian::create([
+                'id_role' => $request->id_role,
+                'jumlah' => $request->jumlah
+            ]);
 
             return response()->json([
                 "status" => true,
@@ -72,6 +89,15 @@ class PenggajianController extends Controller
 
             if (!$penggajians) throw new \Exception("Penggajian Not Found");
 
+            $validator = Validator::make($request->all(), [
+                'id_karyawan' => 'required|numeric',
+                'jumlah_hadir' => 'required|numeric',
+                'jumlah_bolos' => 'required|numeric',
+                'bonus' => 'required|numeric',
+                'total_gaji' => 'required|numeric',
+                'tanggal_penggajian' => 'required|date'
+            ]);
+
             $penggajians->update($request->all());
 
             return response()->json([
@@ -100,6 +126,28 @@ class PenggajianController extends Controller
             return response()->json([
                 "status" => true,
                 "message" => 'Delete Penggajian Success',
+                "data" => $penggajians
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                "status" => false,
+                "message" => $e->getMessage(),
+                "data" => []
+            ], 400);
+        }
+    }
+
+    //Search
+    public function search($keyword)
+    {
+        try {
+            $penggajians = Penggajian::whereHas('karyawan', function ($query) use ($keyword) {
+                $query->where('nama_karyawan', 'like', '%' . $keyword . '%');
+            })->get();
+
+            return response()->json([
+                "status" => true,
+                "message" => 'Berhasil mencari Penggajian',
                 "data" => $penggajians
             ], 200);
         } catch (\Exception $e) {
