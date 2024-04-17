@@ -11,6 +11,8 @@ class Unit extends Model
 
     protected $primaryKey = 'id_unit';
 
+    public $timestamps = false;
+
     protected $fillable = [
         'nama_unit'
     ];

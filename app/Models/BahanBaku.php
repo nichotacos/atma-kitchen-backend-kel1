@@ -12,6 +12,8 @@ class BahanBaku extends Model
 
     protected $primaryKey = 'id_bahan_baku';
 
+    public $timestamps = false;
+
     protected $fillable = [
         'nama_bahan_baku',
         'stok_bahan_baku'

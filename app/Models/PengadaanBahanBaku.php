@@ -12,6 +12,8 @@ class PengadaanBahanBaku extends Model
 
     protected $primaryKey = 'id_pengadaan';
 
+    public $timestamps = false;
+
     protected $fillable = [
         'jumlah_pengadaan',
         'harga_per_unit',
