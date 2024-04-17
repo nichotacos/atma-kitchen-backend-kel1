@@ -11,6 +11,8 @@ class Resep extends Model
 
     protected $primaryKey = ['id_detail_resep', 'id_produk'];
 
+    public $timestamps = false;
+
     public $incrementing = false;
 
     protected $fillable = ['id_detail_resep', 'id_produk'];

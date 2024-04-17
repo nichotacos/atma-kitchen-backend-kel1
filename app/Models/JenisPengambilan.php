@@ -13,9 +13,8 @@ class JenisPengambilan extends Model
      *
      * @var array<int, string>
      */
-    protected $primaryKey = [
-        'id_pengambilan',
-    ];
+    protected $primaryKey = 'id_pengambilan';
+    public $timestamps = false;
 
     /**
      * The attributes that are mass assignable.

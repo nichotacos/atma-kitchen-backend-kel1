@@ -12,6 +12,8 @@ class DetailCart extends Model
 
     protected $primaryKey = 'id_detail_cart';
 
+    public $timestamps = false;
+
     protected $fillable = [
         'jumlah_produk',
         'harga_produk_terkini',

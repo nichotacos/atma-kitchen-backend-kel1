@@ -14,9 +14,9 @@ class JenisPengeluaran extends Model
      *
      * @var array<int, string>
      */
-    protected $primaryKey = [
-        'id_pengeluaran',
-    ];
+    protected $primaryKey = 'id_pengeluaran';
+
+    public $timestamps = false;
 
     /**
      * The attributes that are mass assignable.
