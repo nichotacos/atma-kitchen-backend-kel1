@@ -13,6 +13,7 @@ use App\Models\Customer;
 use App\Models\Karyawan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use App\Models\Transaksi;
 
 class AuthController extends Controller
 {
@@ -135,47 +136,79 @@ class AuthController extends Controller
     }
 
     public function loginKaryawan(Request $request)
-    {
-        $loginKaryawanData = $request->all();
-        $validator = Validator::make($loginKaryawanData, [
-            'username' => 'required|string|max:255',
-            'password' => 'required|string'
-        ]);
+        {
+            $loginKaryawanData = $request->all();
+            $validator = Validator::make($loginKaryawanData, [
+                'username' => 'required|string|max:255',
+                'password' => 'required|string'
+            ]);
 
-        if ($validator->fails()) {
-            return response()->json(['error' => $validator->errors()], 400);
-        }
+            if ($validator->fails()) {
+                return response()->json(['error' => $validator->errors()], 400);
+            }
 
-        if (!Auth::guard('employee')->attempt($loginKaryawanData)) {
+            if (!Auth::guard('employee')->attempt($loginKaryawanData)) {
+                return response([
+                    'message' => 'Data yang diinputkan tidak valid'
+                ], 401);
+            }
+
+            $karyawan = Auth::guard('employee')->user();
+            $tokenResult = $karyawan->createToken('LaravelPersonalAccessToken');
+            $plainTextToken = $tokenResult->accessToken;
+
+            switch ($karyawan->id_role) {
+                case 1:
+                    $message = 'Berhasil login sebagai Owner';
+                    break;
+                case 2:
+                    $message = 'Berhasil login sebagai karyawan biasa';
+                    break;
+                case 3:
+                    $message = 'Berhasil login sebagai Admin';
+                    break;
+                case 4:
+                    $message = 'Berhasil login sebagai Manajer Operasional';
+                    break;
+            }
+
             return response([
-                'message' => 'Data yang diinputkan tidak valid'
-            ], 401);
+                'message' => $message,
+                'karyawan' => $karyawan,
+                'token_type' => 'Bearer',
+                'access_token' => $plainTextToken
+            ]);
         }
 
-        $karyawan = Auth::guard('employee')->user();
-        $tokenResult = $karyawan->createToken('LaravelPersonalAccessToken');
-        $plainTextToken = $tokenResult->accessToken;
+    public function changePasswordKaryawan(Request $request)
+    {
+        try {
+            $validator = Validator::make($request->all(), [
+                'old_password' => 'required|string',
+                'new_password' => 'required|string|min:8',
+            ]);
 
-        switch ($karyawan->id_role) {
-            case 1:
-                $message = 'Berhasil login sebagai Owner';
-                break;
-            case 2:
-                $message = 'Berhasil login sebagai karyawan biasa';
-                break;
-            case 3:
-                $message = 'Berhasil login sebagai Admin';
-                break;
-            case 4:
-                $message = 'Berhasil login sebagai Manajer Operasional';
-                break;
+            if ($validator->fails()) {
+                return response()->json(['error' => $validator->errors()], 400);
+            }
+
+            $karyawan = Auth::guard('employee')->user();
+
+            if (!$karyawan) {
+                return response()->json(['error' => 'Unauthorized'], 401);
+            }
+
+            if (!Hash::check($request->old_password, $karyawan->password)) {
+                return response()->json(['error' => 'Password Lama Salah.'], 400);
+            }
+
+            $karyawan->password = Hash::make($request->new_password);
+            $karyawan->save();
+
+            return response()->json(['message' => 'Password Berhasil Diganti.'], 200);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Something went wrong.'], 500);
         }
-
-        return response([
-            'message' => $message,
-            'karyawan' => $karyawan,
-            'token_type' => 'Bearer',
-            'access_token' => $plainTextToken
-        ]);
     }
+
 }

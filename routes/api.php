@@ -16,16 +16,12 @@ use App\Http\Controllers\RoleController;
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/register-karyawan', [AuthController::class, 'registerKaryawan']);
 Route::post('/login-customer', [AuthController::class, 'loginCustomer']);
-Route::post('/login-karyawan', [AuthController::class, 'loginKaryawan']);
+Route::post('/login-karyawan', [AuthController::class, 'loginKaryawan'])->name('login');
 
-// Nanti bakal pake passport, bukan sanctum
-Route::get('/karyawan', function (Request $request) {
-    return $request->karyawan();
-})->middleware('auth:sanctum');
-
-Route::get('/customer', function (Request $request) {
-    return $request->customer();
-})->middleware('auth:sanctum');
+//Change Password Karyawan
+//Route::middleware('auth:employee')->post('/change-password-karyawan', [AuthController::class, 'changePasswordKaryawan']);
+Route::post('/change-password-karyawan', [AuthController::class, 'changePasswordKaryawan'])->middleware('auth:employee');
+Route::get('/showTransaksisByCustomer', [AuthController::class, 'showTransaksisByCustomer'])->middleware('auth:api');
 
 //Detail Resep
 Route::get('/detail_reseps', [DetailResepController::class, 'index']);

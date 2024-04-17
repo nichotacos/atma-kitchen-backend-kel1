@@ -29,7 +29,9 @@ class PresensiController extends Controller
     //Store
     public function store(Request $request){
         try {
-            $presensis = Presensi::create($request->all());
+            $presensis = Presensi::create($request->all(), [
+                'tanggal_presensi' => 'required|date|before_or_equal:'.now(),
+            ]);
 
             return response()->json([
                 "status" => true,
@@ -73,7 +75,9 @@ class PresensiController extends Controller
 
             if (!$presensis) throw new \Exception("Presensi Not Found");
 
-            $presensis->update($request->all());
+            $presensis = Presensi::create($request->all(), [
+                'tanggal_presensi' => 'required|date|before_or_equal:'.now(),
+            ]);
 
             return response()->json([
                 "status" => true,

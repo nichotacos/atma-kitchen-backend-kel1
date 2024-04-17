@@ -111,4 +111,55 @@ class CustomerController extends Controller
             ], 400);
         }
     }
+
+   //Show History Pesanan
+   public function showTransaksisByCustomer(){
+        try {
+            $id_customer = Auth::guard('api')->user()->id;
+            $transaksis = Transaksi::where('id_customer', $id_customer)->get();
+
+            if ($transaksis->isEmpty()) {
+                throw new \Exception($id_customer);
+            }
+
+            return response()->json([
+                "status" => true,
+                "message" => "Transaksi Ditemukan",
+                "data" => $transaksis
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                "status" => false,
+                "message" => $e->getMessage(),
+                "data" => []
+            ], 400);
+        }
+    }
+
+    //Show History Pesanan
+   public function showTransaksisCustomerByProduct(){
+        try {
+            $id_customer = Auth::guard('api')->user()->id;
+            $transaksis = Transaksi::where('id_customer', $id_customer)->get();
+
+            if ($transaksis->isEmpty()) {
+                throw new \Exception($id_customer);
+            }
+
+
+
+            return response()->json([
+                "status" => true,
+                "message" => "Transaksi Ditemukan",
+                "data" => $transaksis
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                "status" => false,
+                "message" => $e->getMessage(),
+                "data" => []
+            ], 400);
+        }
+    }
+
 }
