@@ -28,7 +28,20 @@ class DetailResepController extends Controller
     //Store
     public function store(Request $request){
         try {
-            $detailReseps = DetailResep::create($request->all());
+
+            $validator = Validator::make($request->all(), [
+                'id_role' => 'required|numeric|between:1,21',
+                'jumlah' => 'required|numeric'
+            ]);
+
+            if ($validator->fails()) {
+                return response()->json(['error' => $validator->errors()], 400);
+            }
+
+            $detailReseps = DetailResep::create([
+                'id_role' => $request->id_role,
+                'jumlah' => $request->jumlah
+            ]);
 
             return response()->json([
                 "status" => true,
@@ -44,7 +57,7 @@ class DetailResepController extends Controller
         }
     }
 
-    //Search
+    //ShowById
     public function show($id){
         try {
             $detailReseps = DetailResep::find($id);
@@ -71,6 +84,15 @@ class DetailResepController extends Controller
             $detailReseps = DetailResep::find($id);
 
             if (!$detailReseps) throw new \Exception("Detail Resep Not Found");
+
+            $validator = Validator::make($request->all(), [
+                'id_role' => 'required|numeric|between:1,21',
+                'jumlah' => 'required|numeric'
+            ]);
+
+            if ($validator->fails()) {
+                return response()->json(['error' => $validator->errors()], 400);
+            }
 
             $detailReseps->update($request->all());
 
@@ -101,6 +123,28 @@ class DetailResepController extends Controller
             return response()->json([
                 "status" => true,
                 "message" => 'Delete Detail Resep Success',
+                "data" => $detailReseps
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                "status" => false,
+                "message" => $e->getMessage(),
+                "data" => []
+            ], 400);
+        }
+    }
+
+    //Search
+    public function search($keyword)
+    {
+        try {
+            $detailReseps = DetailResep::whereHas('bahanBaku', function ($query) use ($keyword) {
+                $query->where('nama_bahan_baku', 'like', '%' . $keyword . '%');
+            })->get();
+
+            return response()->json([
+                "status" => true,
+                "message" => 'Berhasil mencari Detail Reseps',
                 "data" => $detailReseps
             ], 200);
         } catch (\Exception $e) {
