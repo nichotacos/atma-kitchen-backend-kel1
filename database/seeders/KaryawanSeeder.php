@@ -6,6 +6,7 @@ use App\Models\Karyawan;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class KaryawanSeeder extends Seeder
 {
@@ -22,7 +23,7 @@ class KaryawanSeeder extends Seeder
                 'nomor_telepon_karyawan' => '081234567890',
                 'email' => 'ahmad@example.com',
                 'username' => 'ahmad_sudirman',
-                'password' => 'password123',
+                'password' => Hash::make('ahmad123'),
                 'tanggal_rekrut' => '2019-04-10',
                 'gaji_harian' => 0,
                 'bonus_rajin' => 0,
@@ -35,7 +36,7 @@ class KaryawanSeeder extends Seeder
                 'nomor_telepon_karyawan' => '085678901234',
                 'email' => 'siti@example.com',
                 'username' => 'siti_nurhaliza',
-                'password' => 'siti123',
+                'password' => Hash::make('siti123'),
                 'tanggal_rekrut' => '2022-03-15',
                 'gaji_harian' => 80000,
                 'bonus_rajin' => 50000,
@@ -48,7 +49,7 @@ class KaryawanSeeder extends Seeder
                 'nomor_telepon_karyawan' => '081112223344',
                 'email' => 'dewi@example.com',
                 'username' => 'dewi_purnama',
-                'password' => 'dewi123',
+                'password' => Hash::make('dewi123'),
                 'tanggal_rekrut' => '2023-05-20',
                 'gaji_harian' => 120000,
                 'bonus_rajin' => 75000,
@@ -61,7 +62,7 @@ class KaryawanSeeder extends Seeder
                 'nomor_telepon_karyawan' => '081334455667',
                 'email' => 'agus@example.com',
                 'username' => 'agus_pratama',
-                'password' => 'agus123',
+                'password' => Hash::make('agus123'),
                 'tanggal_rekrut' => '2023-08-10',
                 'gaji_harian' => 160000,
                 'bonus_rajin' => 100000,
@@ -74,7 +75,7 @@ class KaryawanSeeder extends Seeder
                 'nomor_telepon_karyawan' => '081556677889',
                 'email' => 'rina@example.com',
                 'username' => 'rina_setiawan',
-                'password' => 'rina123',
+                'password' => Hash::make('rina123'),
                 'tanggal_rekrut' => '2024-01-05',
                 'gaji_harian' => 160000,
                 'bonus_rajin' => 100000,

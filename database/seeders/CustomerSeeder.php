@@ -7,6 +7,7 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Hash;
 
 Carbon::setLocale('id');
 
@@ -23,7 +24,7 @@ class CustomerSeeder extends Seeder
                 'nomor_telepon' => '085678901234',
                 'email' => 'budi@example.com',
                 'username' => 'budi88',
-                'password' => 'budi123',
+                'password' => Hash::make('budi123'),
                 'tanggal_registrasi' => Carbon::now()->format('Y-m-d'),
                 'tanggal_lahir' => '1988-03-22',
                 'poin' => 0,
@@ -36,7 +37,7 @@ class CustomerSeeder extends Seeder
                 'nomor_telepon' => '081112223344',
                 'email' => 'cindy@example.com',
                 'username' => 'cindy89',
-                'password' => 'cindy123',
+                'password' => Hash::make('cindy123'),
                 'tanggal_registrasi' => Carbon::now()->format('Y-m-d'),
                 'tanggal_lahir' => '1989-07-05',
                 'poin' => 0,
@@ -49,7 +50,7 @@ class CustomerSeeder extends Seeder
                 'nomor_telepon' => '081334455667',
                 'email' => 'dewi@example.com',
                 'username' => 'dewi90',
-                'password' => 'dewi123',
+                'password' => Hash::make('dewi123'),
                 'tanggal_registrasi' => Carbon::now()->format('Y-m-d'),
                 'tanggal_lahir' => '1990-11-18',
                 'poin' => 0,
@@ -62,7 +63,7 @@ class CustomerSeeder extends Seeder
                 'nomor_telepon' => '081556677889',
                 'email' => 'eka@example.com',
                 'username' => 'eka91',
-                'password' => 'eka123',
+                'password' => Hash::make('eka123'),
                 'tanggal_registrasi' => Carbon::now()->format('Y-m-d'),
                 'tanggal_lahir' => '1991-04-30',
                 'poin' => 0,
@@ -75,7 +76,7 @@ class CustomerSeeder extends Seeder
                 'nomor_telepon' => '081778899001',
                 'email' => 'fani@example.com',
                 'username' => 'fani92',
-                'password' => 'fani123',
+                'password' => Hash::make('fani123'),
                 'tanggal_registrasi' => Carbon::now()->format('Y-m-d'),
                 'tanggal_lahir' => '1992-10-15',
                 'poin' => 0,
