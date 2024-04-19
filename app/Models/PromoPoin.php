@@ -14,7 +14,7 @@ class PromoPoin extends Model
      * @var array<int, string>
      */
     protected $primaryKey = 'id_promo';
-    public $timestamps = false;
+    public $timestamps = true;
 
     /**
      * The attributes that are mass assignable.

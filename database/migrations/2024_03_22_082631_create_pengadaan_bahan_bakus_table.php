@@ -19,6 +19,7 @@ return new class extends Migration
             $table->double('harga_per_unit');
             $table->double('harga_total');
             $table->date('tanggal_pengadaan');
+            $table->timestamps();
         });
     }
 

@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id('id_promo');
             $table->integer('batas_kelipatan');
             $table->integer('poin_diterima');
+            $table->timestamps();
         });
     }
 

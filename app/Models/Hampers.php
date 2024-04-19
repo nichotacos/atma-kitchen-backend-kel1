@@ -16,7 +16,7 @@ class   Hampers extends Model
      * @var array<int, string>
      */
     protected $primaryKey = 'id_hampers';
-    public $timestamps = false;
+    public $timestamps = true;
 
     /**
      * The attributes that are mass assignable.

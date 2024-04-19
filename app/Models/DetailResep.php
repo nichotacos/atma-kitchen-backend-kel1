@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 class DetailResep extends Model
 {
     use HasFactory;
-    public $timestamps = false;
+    public $timestamps = true;
 
     protected $primaryKey = 'id_detail_resep';
 

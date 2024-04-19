@@ -15,6 +15,7 @@ return new class extends Migration
             $table->foreignId('id_hampers')->references('id_hampers')->on('hampers')->onUpdate('cascade')->onDelete('cascade');
             $table->foreignId('id_produk')->references('id_produk')->on('produks')->onUpdate('cascade')->onDelete('cascade');
             $table->primary(['id_hampers', 'id_produk']);
+            $table->timestamps();
         });
     }
 

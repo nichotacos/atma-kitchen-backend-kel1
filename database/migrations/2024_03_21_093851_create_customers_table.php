@@ -22,6 +22,7 @@ return new class extends Migration
             $table->date('tanggal_lahir');
             $table->integer('poin');
             $table->double('saldo');
+            $table->timestamps();
         });
     }
 

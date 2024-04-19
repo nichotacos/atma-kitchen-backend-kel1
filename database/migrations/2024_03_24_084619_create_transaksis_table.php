@@ -30,6 +30,7 @@ return new class extends Migration
             $table->integer('perolehan_poin');
             $table->double('nominal_tip');
             $table->string('bukti_pembayaran');
+            $table->timestamps();
         });
     }
 

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use App\Models\Customer;
+use App\Models\Transaksi;
 
 class CustomerController extends Controller
 {
@@ -88,6 +89,19 @@ class CustomerController extends Controller
 
             if (!$customers) throw new \Exception("Customer Not Found");
 
+            $validator = Validator::make($request->all(), [
+                'nama' => 'required|string|max:255',
+                'username' => 'required|string|max:255|unique:customers',
+                'email' => 'required|string|email|max:255|unique:customers',
+                'password' => 'required|string|min:8',
+                'nomor_telepon' => ['required', 'regex:/^08\d{9,11}$/', 'unique:customers'],
+                'tanggal_lahir' => 'required|date'
+            ]);
+
+            if ($validator->fails()) {
+                return response()->json(['error' => $validator->errors()], 400);
+            }
+
             $customers->update($request->all());
 
             return response()->json([
@@ -132,7 +146,8 @@ class CustomerController extends Controller
     public function showTransaksisByCustomer()
     {
         try {
-            $id_customer = Auth::guard('api')->user()->id;
+            // $id_customer = Auth::guard('api')->user()->id;
+            $id_customer = '6';
             $transaksis = Transaksi::where('id_customer', $id_customer)->get();
 
             if ($transaksis->isEmpty()) {
@@ -154,17 +169,18 @@ class CustomerController extends Controller
     }
 
     //Show History Pesanan
-    public function showTransaksisCustomerByProduct()
+    public function searchTransaksisCustomerByProduct($keyword)
     {
         try {
             $id_customer = Auth::guard('api')->user()->id;
+            $id_customer = '1';
             $transaksis = Transaksi::where('id_customer', $id_customer)->get();
 
             if ($transaksis->isEmpty()) {
-                throw new \Exception($id_customer);
+                throw new \Exception('Transaksi Tidak Ditemukan');
             }
 
-
+            $products = Produk::where('nama_produk', 'like', '%' . $keyword . '%')->get();
 
             return response()->json([
                 "status" => true,

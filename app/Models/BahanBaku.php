@@ -12,7 +12,7 @@ class BahanBaku extends Model
 
     protected $primaryKey = 'id_bahan_baku';
 
-    public $timestamps = false;
+    public $timestamps = true;
 
     protected $fillable = [
         'nama_bahan_baku',
@@ -22,5 +22,10 @@ class BahanBaku extends Model
     public function unit(): HasMany
     {
         return $this->hasMany(Unit::class, 'id_unit');
+    }
+
+    public function detailResep(): HasMany
+    {
+        return $this->hasMany(DetailResep::class, 'id_detail_resep');
     }
 }

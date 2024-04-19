@@ -12,7 +12,7 @@ class DetailCart extends Model
 
     protected $primaryKey = 'id_detail_cart';
 
-    public $timestamps = false;
+    public $timestamps = true;
 
     protected $fillable = [
         'jumlah_produk',

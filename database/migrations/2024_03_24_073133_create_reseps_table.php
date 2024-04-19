@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('reseps', function (Blueprint $table) {
             $table->foreignId('id_detail_resep')->references('id_detail_resep')->on('detail_reseps')->onUpdate('cascade')->onDelete('cascade');
             $table->foreignId('id_produk')->references('id_produk')->on('produks')->onUpdate('cascade')->onDelete('cascade');
-
             $table->primary(['id_detail_resep', 'id_produk']);
+            $table->timestamps();
         });
     }
 

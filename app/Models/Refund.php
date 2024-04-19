@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Refund extends Model
 {
     use HasFactory;
-    public $timestamps = false;
+    public $timestamps = true;
     protected $primaryKey = 'id_refund';
 
     protected $fillable = [

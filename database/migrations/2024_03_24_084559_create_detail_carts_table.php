@@ -19,6 +19,7 @@ return new class extends Migration
             $table->integer('jumlah_produk');
             $table->double('harga_produk_terkini');
             $table->double('harga_total_terkini');
+            $table->timestamps();
         });
     }
 

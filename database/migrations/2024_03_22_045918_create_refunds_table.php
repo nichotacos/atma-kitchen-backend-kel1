@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('no_rekening_tujuan');
             $table->double('nominal_refund');
             $table->date('tanggal_refund');
+            $table->timestamps();
         });
     }
 

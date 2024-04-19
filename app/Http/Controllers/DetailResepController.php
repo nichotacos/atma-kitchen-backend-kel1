@@ -55,7 +55,20 @@ class DetailResepController extends Controller
     public function store(Request $request)
     {
         try {
-            $detailReseps = DetailResep::create($request->all());
+
+            $validator = Validator::make($request->all(), [
+                'id_bahan_baku' => 'required|numeric|between:1,21',
+                'jumlah' => 'required|numeric'
+            ]);
+
+            if ($validator->fails()) {
+                return response()->json(['error' => $validator->errors()], 400);
+            }
+
+            $detailReseps = DetailResep::create([
+                'id_bahan_baku' => $request->id_bahan_baku,
+                'jumlah' => $request->jumlah
+            ]);
 
             return response()->json([
                 "status" => true,
@@ -101,6 +114,15 @@ class DetailResepController extends Controller
 
             if (!$detailReseps) throw new \Exception("Detail Resep Not Found");
 
+            $validator = Validator::make($request->all(), [
+                'id_bahan_baku' => 'required|numeric|between:1,21',
+                'jumlah' => 'required|numeric'
+            ]);
+
+            if ($validator->fails()) {
+                return response()->json(['error' => $validator->errors()], 400);
+            }
+
             $detailReseps->update($request->all());
 
             return response()->json([
@@ -130,6 +152,28 @@ class DetailResepController extends Controller
             return response()->json([
                 "status" => true,
                 "message" => 'Delete Detail Resep Success',
+                "data" => $detailReseps
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                "status" => false,
+                "message" => $e->getMessage(),
+                "data" => []
+            ], 400);
+        }
+    }
+
+    //Search
+    public function search($keyword)
+    {
+        try {
+            $detailReseps = DetailResep::whereHas('bahanBaku', function ($query) use ($keyword) {
+                $query->where('nama_bahan_baku', 'like', '%' . $keyword . '%');
+            })->get();
+
+            return response()->json([
+                "status" => true,
+                "message" => 'Berhasil mencari Detail Reseps',
                 "data" => $detailReseps
             ], 200);
         } catch (\Exception $e) {
