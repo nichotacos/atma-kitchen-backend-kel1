@@ -45,7 +45,7 @@
 
             <h2>Forgot Your Password ?</h2>
             <p>please enter your mail to password reset request</p>
-            <form action="" method="post"> 
+            <form action="{{ route('password.email') }}" method="post"> 
                 @scrf
                 <label for="email" class="form-label">Email</label>
                 <input type="email" class="form-control" name="email">
