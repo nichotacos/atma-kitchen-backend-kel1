@@ -15,19 +15,29 @@ class CartSeeder extends Seeder
     {
         DB::table('carts')->insert([
             [
-                'harga_total_cart' => 910000
+                'harga_total_cart' => 910000,
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             [
-                'harga_total_cart' => 500000
+                'harga_total_cart' => 500000,
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             [
-                'harga_total_cart' => 1450000
+                'harga_total_cart' => 1450000,
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             [
-                'harga_total_cart' => 650000
+                'harga_total_cart' => 650000,
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             [
-                'harga_total_cart' => 325000
+                'harga_total_cart' => 325000,
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
         ]);
     }

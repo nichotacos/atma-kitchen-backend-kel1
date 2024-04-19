@@ -14,8 +14,12 @@ class JenisPengambilanSeeder extends Seeder
     public function run(): void
     {
         DB::table('jenis_pengambilans')->insert([
-            ["detail_pengambilan" => "Delivery"],
-            ["detail_pengambilan" => "Pick-Up"],
+            ["detail_pengambilan" => "Delivery",
+            'created_at' => now(),
+            'updated_at' => now(),],
+            ["detail_pengambilan" => "Pick-Up",
+            'created_at' => now(),
+            'updated_at' => now(),],
         ]);
     }
 }

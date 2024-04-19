@@ -14,12 +14,24 @@ class JenisPengeluaranSeeder extends Seeder
     public function run(): void
     {
         DB::table('jenis_pengeluarans')->insert([
-            ['detail_jenis_pengeluaran' => 'Listrik'],
-            ['detail_jenis_pengeluaran' => 'Gaji Karyawan'],
-            ['detail_jenis_pengeluaran' => 'Bahan Baku'],
-            ['detail_jenis_pengeluaran' => 'Iuran RT'],
-            ['detail_jenis_pengeluaran' => 'Bensin'],
-            ['detail_jenis_pengeluaran' => 'Gas']
+            ['detail_jenis_pengeluaran' => 'Listrik',
+            'created_at' => now(),
+            'updated_at' => now(),],
+            ['detail_jenis_pengeluaran' => 'Gaji Karyawan',
+            'created_at' => now(),
+            'updated_at' => now(),],
+            ['detail_jenis_pengeluaran' => 'Bahan Baku',
+            'created_at' => now(),
+            'updated_at' => now(),],
+            ['detail_jenis_pengeluaran' => 'Iuran RT',
+            'created_at' => now(),
+            'updated_at' => now(),],
+            ['detail_jenis_pengeluaran' => 'Bensin',
+            'created_at' => now(),
+            'updated_at' => now(),],
+            ['detail_jenis_pengeluaran' => 'Gas',
+            'created_at' => now(),
+            'updated_at' => now(),]
         ]);
     }
 }

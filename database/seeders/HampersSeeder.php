@@ -17,17 +17,23 @@ class HampersSeeder extends Seeder
             [
                 'id_kemasan' => 5,
                 'harga_hampers' => 650000,
-                'nama_hampers' => 'Paket A'
+                'nama_hampers' => 'Paket A',
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             [
                 'id_kemasan' => 5,
                 'harga_hampers' => 500000,
-                'nama_hampers' => 'Paket B'
+                'nama_hampers' => 'Paket B',
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             [
                 'id_kemasan' => 5,
                 'harga_hampers' => 350000,
-                'nama_hampers' => 'Paket C'
+                'nama_hampers' => 'Paket C',
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
         ]);
     }

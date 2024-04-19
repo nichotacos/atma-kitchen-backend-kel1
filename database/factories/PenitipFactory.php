@@ -17,7 +17,9 @@ class PenitipFactory extends Factory
     public function definition(): array
     {
         return [
-            'nama_penitip' => $this->faker->name(10)
+            'nama_penitip' => $this->faker->name(10),
+            'created_at' => now(),
+            'updated_at' => now(),
         ];
     }
 }

@@ -20,6 +20,8 @@ class PengeluaranFactory extends Factory
             'id_jenis_pengeluaran' =>$this->faker->numberBetween(1,5),
             'tanggal_pengeluaran' => $this->faker->date('Y-m-d'),
             'nominal_pengeluaran' => $this->faker->numberBetween(1000,1000000),
+            'created_at' => now(),
+            'updated_at' => now(),
         ];
     }
 }

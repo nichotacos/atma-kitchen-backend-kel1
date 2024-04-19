@@ -24,7 +24,9 @@ class ProdukSeeder extends Seeder
                 'id_ukuran' => 1,
                 'kuota_harian' => 10, //masih dummy, gatau ada di dokumen apa kaga
                 'nama_produk' => 'Lapis Legit',
-                'stok' => 0 //karna PO
+                'stok' => 0, //karna PO,
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             [
                 'deskripsi_produk' => 'nanti diisi deh',
@@ -36,7 +38,9 @@ class ProdukSeeder extends Seeder
                 'id_ukuran' => 2,
                 'kuota_harian' => 10, //masih dummy, gatau ada di dokumen apa kaga
                 'nama_produk' => 'Lapis Legit',
-                'stok' => 0 //karna PO
+                'stok' => 0, //karna PO,
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             [
                 'deskripsi_produk' => 'nanti diisi deh',
@@ -48,7 +52,9 @@ class ProdukSeeder extends Seeder
                 'id_ukuran' => 1,
                 'kuota_harian' => 10, //masih dummy, gatau ada di dokumen apa kaga
                 'nama_produk' => 'Lapis Surabaya',
-                'stok' => 0 //karna PO
+                'stok' => 0, //karna PO,
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             [
                 'deskripsi_produk' => 'nanti diisi deh',
@@ -60,7 +66,9 @@ class ProdukSeeder extends Seeder
                 'id_ukuran' => 2,
                 'kuota_harian' => 10, //masih dummy, gatau ada di dokumen apa kaga
                 'nama_produk' => 'Lapis Surabaya',
-                'stok' => 0 //karna PO
+                'stok' => 0, //karna PO,
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             [
                 'deskripsi_produk' => 'nanti diisi deh',
@@ -72,7 +80,9 @@ class ProdukSeeder extends Seeder
                 'id_ukuran' => 1,
                 'kuota_harian' => 10, //masih dummy, gatau ada di dokumen apa kaga
                 'nama_produk' => 'Brownies',
-                'stok' => 0 //karna PO
+                'stok' => 0, //karna PO,
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             [
                 'deskripsi_produk' => 'nanti diisi deh',
@@ -84,7 +94,9 @@ class ProdukSeeder extends Seeder
                 'id_ukuran' => 2,
                 'kuota_harian' => 10, //masih dummy, gatau ada di dokumen apa kaga
                 'nama_produk' => 'Brownies',
-                'stok' => 0 //karna PO
+                'stok' => 0, //karna PO
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             [
                 'deskripsi_produk' => 'nanti diisi deh',
@@ -96,7 +108,9 @@ class ProdukSeeder extends Seeder
                 'id_ukuran' => 1,
                 'kuota_harian' => 10, //masih dummy, gatau ada di dokumen apa kaga
                 'nama_produk' => 'Mandarin',
-                'stok' => 0 //karna PO
+                'stok' => 0, //karna PO
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             [
                 'deskripsi_produk' => 'nanti diisi deh',
@@ -108,7 +122,9 @@ class ProdukSeeder extends Seeder
                 'id_ukuran' => 2,
                 'kuota_harian' => 10, //masih dummy, gatau ada di dokumen apa kaga
                 'nama_produk' => 'Mandarin',
-                'stok' => 0 //karna PO
+                'stok' => 0, //karna PO
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             [
                 'deskripsi_produk' => 'nanti diisi deh',
@@ -120,7 +136,9 @@ class ProdukSeeder extends Seeder
                 'id_ukuran' => 1,
                 'kuota_harian' => 10, //masih dummy, gatau ada di dokumen apa kaga
                 'nama_produk' => 'Spikoe',
-                'stok' => 0 //karna PO
+                'stok' => 0, //karna PO
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             [
                 'deskripsi_produk' => 'nanti diisi deh',
@@ -132,7 +150,9 @@ class ProdukSeeder extends Seeder
                 'id_ukuran' => 2,
                 'kuota_harian' => 10, //masih dummy, gatau ada di dokumen apa kaga
                 'nama_produk' => 'Spikoe',
-                'stok' => 0 //karna PO
+                'stok' => 0, //karna PO
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             [
                 'deskripsi_produk' => 'nanti diisi deh',
@@ -144,7 +164,9 @@ class ProdukSeeder extends Seeder
                 'id_ukuran' => 3,
                 'kuota_harian' => 10, //masih dummy, gatau ada di dokumen apa kaga
                 'nama_produk' => 'Roti Sosis',
-                'stok' => 20
+                'stok' => 20,
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             [
                 'deskripsi_produk' => 'nanti diisi deh',
@@ -156,7 +178,9 @@ class ProdukSeeder extends Seeder
                 'id_ukuran' => 3,
                 'kuota_harian' => 10, //masih dummy, gatau ada di dokumen apa kaga
                 'nama_produk' => 'Milk Bun',
-                'stok' => 20
+                'stok' => 20,
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             [
                 'deskripsi_produk' => 'nanti diisi deh',
@@ -168,7 +192,9 @@ class ProdukSeeder extends Seeder
                 'id_ukuran' => 3,
                 'kuota_harian' => 10, //masih dummy, gatau ada di dokumen apa kaga
                 'nama_produk' => 'Roti Keju',
-                'stok' => 20
+                'stok' => 20,
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             [
                 'deskripsi_produk' => 'nanti diisi deh',
@@ -180,7 +206,9 @@ class ProdukSeeder extends Seeder
                 'id_ukuran' => 4,
                 'kuota_harian' => 10, //masih dummy, gatau ada di dokumen apa kaga
                 'nama_produk' => 'Choco Creamy Latte',
-                'stok' => 20
+                'stok' => 20,
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             [
                 'deskripsi_produk' => 'nanti diisi deh',
@@ -192,7 +220,9 @@ class ProdukSeeder extends Seeder
                 'id_ukuran' => 4,
                 'kuota_harian' => 10, //masih dummy, gatau ada di dokumen apa kaga
                 'nama_produk' => 'Matcha Creamy Latte',
-                'stok' => 20
+                'stok' => 20,
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             [
                 'deskripsi_produk' => 'nanti diisi deh',
@@ -204,7 +234,9 @@ class ProdukSeeder extends Seeder
                 'id_ukuran' => 5,
                 'kuota_harian' => 0, //masih dummy, gatau ada di dokumen apa kaga
                 'nama_produk' => 'Kripik Kentang 250 gr',
-                'stok' => 15
+                'stok' => 15,
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             [
                 'deskripsi_produk' => 'nanti diisi deh',
@@ -216,7 +248,9 @@ class ProdukSeeder extends Seeder
                 'id_ukuran' => 5,
                 'kuota_harian' => 0, //masih dummy, gatau ada di dokumen apa kaga
                 'nama_produk' => 'Kopi Luwak Bubuk 250 gr',
-                'stok' => 15
+                'stok' => 15,
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             [
                 'deskripsi_produk' => 'nanti diisi deh',
@@ -228,7 +262,9 @@ class ProdukSeeder extends Seeder
                 'id_ukuran' => 5,
                 'kuota_harian' => 0, //masih dummy, gatau ada di dokumen apa kaga
                 'nama_produk' => 'Matcha Organik Bubuk 100 gr',
-                'stok' => 15
+                'stok' => 15,
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             [
                 'deskripsi_produk' => 'nanti diisi deh',
@@ -240,7 +276,9 @@ class ProdukSeeder extends Seeder
                 'id_ukuran' => 5,
                 'kuota_harian' => 0, //masih dummy, gatau ada di dokumen apa kaga
                 'nama_produk' => 'Chocolate Bar 100 gr',
-                'stok' => 15
+                'stok' => 15,
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
         ]);
     }

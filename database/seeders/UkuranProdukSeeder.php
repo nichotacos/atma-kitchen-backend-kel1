@@ -14,11 +14,21 @@ class UkuranProdukSeeder extends Seeder
     public function run(): void
     {
         DB::table('ukuran_produks')->insert([
-            ["detail_ukuran" => 'Per Loyang'],
-            ["detail_ukuran" => 'Per 1/2 Loyang'],
-            ["detail_ukuran" => 'Per Box'],
-            ["detail_ukuran" => 'Per Liter'],
-            ["detail_ukuran" => 'Per Bungkus'],
+            ["detail_ukuran" => 'Per Loyang',
+            'created_at' => now(),
+            'updated_at' => now(),],
+            ["detail_ukuran" => 'Per 1/2 Loyang',
+            'created_at' => now(),
+            'updated_at' => now(),],
+            ["detail_ukuran" => 'Per Box',
+            'created_at' => now(),
+            'updated_at' => now(),],
+            ["detail_ukuran" => 'Per Liter',
+            'created_at' => now(),
+            'updated_at' => now(),],
+            ["detail_ukuran" => 'Per Bungkus',
+            'created_at' => now(),
+            'updated_at' => now(),],
         ]);
     }
 }

@@ -19,6 +19,8 @@ class PresensiFactory extends Factory
         return [
             'id_karyawan' =>$this->faker->numberBetween(1,5),
             'tanggal_bolos' => $this->faker->date('2024-m-d'),
+            'created_at' => now(),
+            'updated_at' => now(),
         ];
     }
 }

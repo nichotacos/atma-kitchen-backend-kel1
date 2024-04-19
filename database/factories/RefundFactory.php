@@ -23,6 +23,8 @@ class RefundFactory extends Factory
             'no_rekening_tujuan' =>$this->faker->unique()->bankAccountNumber,
             'nominal_refund' =>$this->faker->numberBetween(500,100000),
             'tanggal_refund' => $this->faker->date('Y-m-d'),
+            'created_at' => now(),
+            'updated_at' => now(),
         ];
     }
 }

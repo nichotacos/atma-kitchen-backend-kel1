@@ -14,8 +14,14 @@ class JenisKetersediaanSeeder extends Seeder
     public function run(): void
     {
         DB::table('jenis_ketersediaans')->insert([
-            ["detail_ketersediaan" => "Ready Stock"],
-            ["detail_ketersediaan" => "Pre-Order"]
+            ["detail_ketersediaan" => "Ready Stock",
+            'created_at' => now(),
+            'updated_at' => now(),
+            ],
+            ["detail_ketersediaan" => "Pre-Order",
+            'created_at' => now(),
+            'updated_at' => now(),
+            ]
         ]);
     }
 }

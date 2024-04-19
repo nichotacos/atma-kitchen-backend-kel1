@@ -20,7 +20,9 @@ class PengadaanBahanBakuSeeder extends Seeder
                 'jumlah_pengadaan' => 2000,
                 'harga_per_unit' => 30,
                 'harga_total' => 2000 * 30,
-                'tanggal_pengadaan' => '2023-11-07'
+                'tanggal_pengadaan' => '2023-11-07',
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             [
                 'id_bahan_baku' => 6,
@@ -28,7 +30,9 @@ class PengadaanBahanBakuSeeder extends Seeder
                 'jumlah_pengadaan' => 2000,
                 'harga_per_unit' => 40,
                 'harga_total' => 2000 * 40,
-                'tanggal_pengadaan' => '2024-01-21'
+                'tanggal_pengadaan' => '2024-01-21',
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             [
                 'id_bahan_baku' => 7,
@@ -36,7 +40,9 @@ class PengadaanBahanBakuSeeder extends Seeder
                 'jumlah_pengadaan' => 1200,
                 'harga_per_unit' => 20,
                 'harga_total' => 1200 * 20,
-                'tanggal_pengadaan' => '2024-02-01'
+                'tanggal_pengadaan' => '2024-02-01',
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             [
                 'id_bahan_baku' => 11,
@@ -44,7 +50,9 @@ class PengadaanBahanBakuSeeder extends Seeder
                 'jumlah_pengadaan' => 1100,
                 'harga_per_unit' => 35,
                 'harga_total' => 1100 * 35,
-                'tanggal_pengadaan' => '2024-02-01'
+                'tanggal_pengadaan' => '2024-02-01',
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             [
                 'id_bahan_baku' => 3,
@@ -52,7 +60,9 @@ class PengadaanBahanBakuSeeder extends Seeder
                 'jumlah_pengadaan' => 23,
                 'harga_per_unit' => 2500,
                 'harga_total' => 23 * 2500,
-                'tanggal_pengadaan' => '2024-02-06'
+                'tanggal_pengadaan' => '2024-02-06',
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
         ]);
     }
