@@ -22,6 +22,7 @@ return new class extends Migration
             $table->date('tanggal_rekrut');
             $table->double('gaji_harian');
             $table->double('bonus_rajin');
+            $table->timestamps();
         });
     }
 

@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('penitips', function (Blueprint $table) {
             $table->id('id_penitip');
             $table->string('nama_penitip');
+            $table->timestamps();
         });
     }
 

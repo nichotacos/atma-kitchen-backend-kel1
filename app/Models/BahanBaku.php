@@ -12,7 +12,7 @@ class BahanBaku extends Model
 
     protected $primaryKey = 'id_bahan_baku';
 
-    public $timestamps = false;
+    public $timestamps = true;
 
     protected $fillable = [
         'nama_bahan_baku',

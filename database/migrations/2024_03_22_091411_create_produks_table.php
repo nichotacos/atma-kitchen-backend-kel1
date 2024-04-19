@@ -23,6 +23,7 @@ return new class extends Migration
             $table->double('harga_produk');
             $table->integer('stok');
             $table->integer('kuota_harian');
+            $table->timestamps();
         });
     }
 

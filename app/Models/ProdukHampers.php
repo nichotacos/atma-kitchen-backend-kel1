@@ -11,7 +11,7 @@ class ProdukHampers extends Model
 
     protected $primaryKey = ['id_produk', 'id_hampers'];
 
-    public $timestamps = false;
+    public $timestamps = true;
 
     public $incrementing = false;
 

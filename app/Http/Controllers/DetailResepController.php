@@ -30,7 +30,7 @@ class DetailResepController extends Controller
         try {
 
             $validator = Validator::make($request->all(), [
-                'id_role' => 'required|numeric|between:1,21',
+                'id_bahan_baku' => 'required|numeric|between:1,21',
                 'jumlah' => 'required|numeric'
             ]);
 
@@ -39,7 +39,7 @@ class DetailResepController extends Controller
             }
 
             $detailReseps = DetailResep::create([
-                'id_role' => $request->id_role,
+                'id_bahan_baku' => $request->id_bahan_baku,
                 'jumlah' => $request->jumlah
             ]);
 
@@ -86,7 +86,7 @@ class DetailResepController extends Controller
             if (!$detailReseps) throw new \Exception("Detail Resep Not Found");
 
             $validator = Validator::make($request->all(), [
-                'id_role' => 'required|numeric|between:1,21',
+                'id_bahan_baku' => 'required|numeric|between:1,21',
                 'jumlah' => 'required|numeric'
             ]);
 

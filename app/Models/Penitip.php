@@ -11,7 +11,7 @@ class Penitip extends Model
 
     protected $primaryKey = 'id_penitip';
 
-    public $timestamps = false;
+    public $timestamps = true;
 
     protected $fillable = [
         'nama_penitip',

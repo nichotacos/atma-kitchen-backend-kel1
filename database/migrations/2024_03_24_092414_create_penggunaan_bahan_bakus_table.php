@@ -18,6 +18,7 @@ return new class extends Migration
             $table->foreignId('id_transaksi')->references('id_transaksi')->on('transaksis')->onUpdate('cascade')->onDelete('cascade');
             $table->double('jumlah_penggunaan');
             $table->dateTime('tanggal_penggunaan');
+            $table->timestamps();
         });
     }
 

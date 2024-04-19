@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('jenis_ketersediaans', function (Blueprint $table) {
             $table->id('id_jenis_ketersediaan');
             $table->string('detail_ketersediaan');
+            $table->timestamps();
         });
     }
 

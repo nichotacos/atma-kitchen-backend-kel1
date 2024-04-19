@@ -11,7 +11,7 @@ class Resep extends Model
 
     protected $primaryKey = ['id_detail_resep', 'id_produk'];
 
-    public $timestamps = false;
+    public $timestamps = true;
 
     public $incrementing = false;
 

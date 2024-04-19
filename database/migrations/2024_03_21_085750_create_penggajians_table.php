@@ -19,6 +19,7 @@ return new class extends Migration
             $table->double('bonus');
             $table->double('total_gaji');
             $table->date('tanggal_penggajian');
+            $table->timestamps();
         });
     }
 
