@@ -178,7 +178,7 @@ class CustomerController extends Controller
             $transaksis = Transaksi::where('id_customer', $id_customer)->get();
 
             if ($transaksis->isEmpty()) {
-                throw new \Exception($id_customer);
+                throw new \Exception('Transaksi Tidak Ditemukan');
             }
 
             $products = Produk::where('nama_produk', 'like', '%' . $keyword . '%')->get();
