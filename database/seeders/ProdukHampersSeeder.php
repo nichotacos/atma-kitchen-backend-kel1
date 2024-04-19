@@ -16,27 +16,39 @@ class ProdukHampersSeeder extends Seeder
         DB::table('produk_hampers')->insert([
             [
                 'id_hampers' => 1,
-                'id_produk' => 2
+                'id_produk' => 2,
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             [
                 'id_hampers' => 1,
-                'id_produk' => 6
+                'id_produk' => 6,
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             [
                 'id_hampers' => 2,
-                'id_produk' => 4
+                'id_produk' => 4,
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             [
                 'id_hampers' => 2,
-                'id_produk' => 11
+                'id_produk' => 11,
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             [
                 'id_hampers' => 3,
-                'id_produk' => 10
+                'id_produk' => 10,
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             [
                 'id_hampers' => 3,
-                'id_produk' => 15
+                'id_produk' => 15,
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
         ]);
     }
