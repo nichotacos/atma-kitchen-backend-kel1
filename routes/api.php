@@ -8,9 +8,11 @@ use App\Http\Controllers\KaryawanController;
 use App\Http\Controllers\PenggajianController;
 use App\Http\Controllers\PresensiController;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\HampersController;
 use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\PromoPoinController;
 use App\Http\Controllers\RoleController;
+use App\Models\ProdukHampers;
 
 //Register Customer
 Route::post('/register', [AuthController::class, 'register']);
@@ -24,60 +26,58 @@ Route::post('/change-password-karyawan', [AuthController::class, 'changePassword
 Route::get('/showTransaksisByCustomer', [AuthController::class, 'showTransaksisByCustomer'])->middleware('auth:api');
 
 //Detail Resep
-Route::get('/detail_reseps', [DetailResepController::class, 'index']);
-Route::post('/detail_reseps', [DetailResepController::class, 'store']);
-Route::get('/detail_reseps/{id}', [DetailResepController::class, 'show']);
-Route::put('/detail_reseps/update/{id}', [DetailResepController::class, 'update']);
-Route::delete('/detail_reseps/delete/{id}', [DetailResepController::class, 'delete']);
+Route::get('/detail-reseps', [DetailResepController::class, 'index']);
+Route::post('/detail-reseps', [DetailResepController::class, 'store']);
+Route::put('/detail-reseps/update/{id}', [DetailResepController::class, 'update']);
+Route::delete('/detail-reseps/delete/{id}', [DetailResepController::class, 'destroy']);
 
 //Karyawan
 Route::get('/karyawans', [KaryawanController::class, 'index']);
 Route::post('/karyawans', [KaryawanController::class, 'store']);
-Route::get('/karyawans/{id}', [KaryawanController::class, 'show']);
 Route::put('/karyawans/update/{id}', [KaryawanController::class, 'update']);
-Route::delete('/karyawans/delete/{id}', [KaryawanController::class, 'delete']);
+Route::delete('/karyawans/delete/{id}', [KaryawanController::class, 'destroy']);
 
 //Gaji atau bonus
 Route::get('/penggajians', [PenggajianController::class, 'index']);
 Route::post('/penggajians', [PenggajianController::class, 'store']);
-Route::get('/penggajians/{id}', [PenggajianController::class, 'show']);
 Route::put('/penggajians/update/{id}', [PenggajianController::class, 'update']);
-Route::delete('/penggajians/delete/{id}', [PenggajianController::class, 'delete']);
+Route::delete('/penggajians/delete/{id}', [PenggajianController::class, 'destroy']);
 
 //Presensi
 Route::get('/presensis', [PresensiController::class, 'index']);
 Route::post('/presensis', [PresensiController::class, 'store']);
-Route::get('/presensis/{id}', [PresensiController::class, 'show']);
 Route::put('/presensis/update/{id}', [PresensiController::class, 'update']);
-Route::delete('/presensis/delete/{id}', [PresensiController::class, 'delete']);
+Route::delete('/presensis/delete/{id}', [PresensiController::class, 'destroy']);
 
 //Customer
 Route::get('/customers', [CustomerController::class, 'index']);
 Route::post('/customers', [CustomerController::class, 'store']);
-Route::get('/customers/{id}', [CustomerController::class, 'show']);
 Route::put('/customers/update/{id}', [CustomerController::class, 'update']);
-Route::delete('/customers/delete/{id}', [CustomerController::class, 'delete']);
+Route::delete('/customers/delete/{id}', [CustomerController::class, 'destroy']);
 
 //Produk
 Route::get('/products', [ProdukController::class, 'index']);
 Route::post('/products', [ProdukController::class, 'store']);
-Route::get('/products/{id}', [ProdukController::class, 'show']);
 Route::put('/products/update/{id}', [ProdukController::class, 'update']);
-Route::delete('/products/delete/{id}', [ProdukController::class, 'delete']);
-Route::get('/products/search/{nama_produk}', [ProdukController::class, 'search']);
+Route::delete('/products/delete/{id}', [ProdukController::class, 'destroy']);
 
 //Promo Poin
 Route::get('/promo-poin', [PromoPoinController::class, 'index']);
 Route::post('/promo-poin', [PromoPoinController::class, 'store']);
-Route::get('/promo-poin/{id}', [PromoPoinController::class, 'show']);
 Route::put('/promo-poin/update/{id}', [PromoPoinController::class, 'update']);
-Route::delete('/promo-poin/delete/{id}', [PromoPoinController::class, 'delete']);
-Route::get('/promo-poin/search/{batas_kelipatan}', [PromoPoinController::class, 'search']);
+Route::delete('/promo-poin/delete/{id}', [PromoPoinController::class, 'destroy']);
 
 //Role
 Route::get('/roles', [RoleController::class, 'index']);
 Route::post('/roles', [RoleController::class, 'store']);
-Route::get('/roles/{id}', [RoleController::class, 'show']);
 Route::put('/roles/update/{id}', [RoleController::class, 'update']);
-Route::delete('/roles/delete/{id}', [RoleController::class, 'delete']);
-Route::get('/roles/search/{nama_role}', [RoleController::class, 'search']);
+Route::delete('/roles/delete/{id}', [RoleController::class, 'destroy']);
+
+//Hampers
+Route::get('/hampers', [HampersController::class, 'index']);
+Route::post('/hampers', [HampersController::class, 'store']);
+//update hampers disini
+// Buat delete hampers dan produk yang menyangkut padanya
+Route::delete('/hampers/delete/{idHampers}', [HampersController::class, 'destroy']);
+// Buat delete 1 produk di hampers tertentu
+Route::delete('hampers/deleteProduct/', [HampersController::class, 'destroyCertain']);

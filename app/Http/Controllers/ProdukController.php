@@ -3,28 +3,58 @@
 namespace App\Http\Controllers;
 
 use App\Models\Produk;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
 class ProdukController extends Controller
 {
-    public function index()
+    // Show, Search, and Sort
+    public function index(Request $request)
     {
-        $products = Produk::all();
+        try {
+            $products = Produk::query()->with(['JenisKetersediaan', 'UkuranProduk', 'Kategori', 'Kemasan']);
+            if ($request->search) {
+                $products->where('nama_produk', 'like', '%' . $request->search . '%');
+            }
 
-        if (count($products) > 0) {
-            return response([
-                'message' => 'Berhasil menampilkan data',
-                'data' => $products
+            if ($request->jenis_ketersediaan) {
+                $products->whereHas('jenis_ketersediaan', function (Builder $query) use ($request) {
+                    $query->where('detail_ketersediaan', 'like', '%' . $request->jenis_ketersediaan . '%');
+                });
+            }
+
+            if ($request->sort_by && in_array($request->sort_by, ['id_produk', 'nama_produk'])) {
+                $sort_by = $request->sort_by;
+            } else {
+                $sort_by = 'id_produk';
+            }
+
+            if ($request->sort_order && in_array($request->sort_order, ['asc', 'desc'])) {
+                $sort_order = $request->sort_order;
+            } else {
+                $sort_order = 'asc';
+            }
+
+            $data = $products->orderBy($sort_by, $sort_order)->get();
+
+            if ($data->isEmpty()) throw new \Exception('Produk tidak ditemukan');
+
+            return response()->json([
+                'status' => true,
+                'message' => 'Berhasil menampilkan data produk',
+                'data' => $data
             ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                "status" => false,
+                "message" => $e->getMessage(),
+                "data" => []
+            ], 400);
         }
-
-        return response([
-            'message' => 'Empty',
-            'data' => null
-        ], 400);
     }
 
+    // Store
     public function store(Request $request)
     {
         try {
@@ -70,27 +100,7 @@ class ProdukController extends Controller
         }
     }
 
-    public function show($id)
-    {
-        try {
-            $products = Produk::find($id);
-
-            if (!$products) throw new \Exception("Produk tidak ditemukan!");
-
-            return response()->json([
-                "status" => true,
-                "message" => 'Produk ditemukan',
-                "data" => $products
-            ], 200);
-        } catch (\Exception $e) {
-            return response()->json([
-                "status" => false,
-                "message" => $e->getMessage(),
-                "data" => []
-            ], 400);
-        }
-    }
-
+    // Update
     public function update(Request $request, int $id)
     {
         try {
@@ -130,6 +140,7 @@ class ProdukController extends Controller
         }
     }
 
+    // Delete
     public function destroy($id)
     {
         try {
@@ -142,24 +153,6 @@ class ProdukController extends Controller
             return response()->json([
                 "status" => true,
                 "message" => 'Berhasil delete produk',
-                "data" => $products
-            ], 200);
-        } catch (\Exception $e) {
-            return response()->json([
-                "status" => false,
-                "message" => $e->getMessage(),
-                "data" => []
-            ], 400);
-        }
-    }
-
-    public function search($keyword)
-    {
-        try {
-            $products = Produk::where('nama_produk', 'like', '%' . $keyword . '%')->get();
-            return response()->json([
-                "status" => true,
-                "message" => 'Berhasil mencari produk',
                 "data" => $products
             ], 200);
         } catch (\Exception $e) {

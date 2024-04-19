@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
-class Hampers extends Model
+class   Hampers extends Model
 {
     use HasFactory;
     /**
@@ -30,7 +30,7 @@ class Hampers extends Model
 
     public function produk(): BelongsToMany
     {
-        return $this->belongsToMany(Produk::class, 'id_produk');
+        return $this->belongsToMany(Produk::class, 'produk_hampers', 'id_hampers', 'id_produk');
     }
 
     public function kemasan(): BelongsTo
