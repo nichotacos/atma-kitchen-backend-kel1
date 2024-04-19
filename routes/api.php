@@ -19,6 +19,7 @@ Route::post('/register-karyawan', [AuthController::class, 'registerKaryawan']);
 Route::post('/login-customer', [AuthController::class, 'loginCustomer']);
 Route::post('/login-karyawan', [AuthController::class, 'loginKaryawan'])->name('login');
 
+//test
 //Change Password Karyawan
 //Route::middleware('auth:employee')->post('/change-password-karyawan', [AuthController::class, 'changePasswordKaryawan']);
 Route::post('/change-password-karyawan', [AuthController::class, 'changePasswordKaryawan'])->middleware('auth:employee');
