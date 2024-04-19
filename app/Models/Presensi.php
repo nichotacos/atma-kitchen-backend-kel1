@@ -13,10 +13,10 @@ class Presensi extends Model
      *
      * @var array<int, string>
      */
-    public $timestamps = false;
+    public $timestamps = true;
 
     protected $primaryKey = 'id_presensi';
-    
+
     protected $fillable = [
         'id_karyawan',
         'tanggal_bolos',

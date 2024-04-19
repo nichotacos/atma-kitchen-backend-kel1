@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id('id_kemasan');
             $table->string('detail_kemasan');
             $table->integer('stok_kemasan');
+            $table->timestamps();
         });
     }
 

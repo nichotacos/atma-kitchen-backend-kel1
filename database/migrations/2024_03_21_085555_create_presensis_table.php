@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id('id_presensi');
             $table->foreignId('id_karyawan')->references('id_karyawan')->on('karyawans')->onDelete('cascade')->onUpdate('cascade');
             $table->date('tanggal_bolos');
+            $table->timestamps();
         });
     }
 

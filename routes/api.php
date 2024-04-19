@@ -11,6 +11,7 @@ use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\PromoPoinController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\ResepController;
 
 //Register Customer
 Route::post('/register', [AuthController::class, 'register']);
@@ -29,6 +30,13 @@ Route::get('/detail_reseps/{id}', [DetailResepController::class, 'show']);
 Route::put('/detail_reseps/update/{id}', [DetailResepController::class, 'update']);
 Route::delete('/detail_reseps/delete/{id}', [DetailResepController::class, 'delete']);
 Route::get('/detail_reseps/search/{nama_bahan_baku}', [DetailResepController::class, 'search']);
+
+//Resep
+Route::get('/reseps', [ResepController::class, 'index']);
+Route::post('/reseps', [ResepController::class, 'store']);
+Route::get('/reseps/{id}', [ResepController::class, 'show']);
+Route::put('/reseps/update/{id}', [ResepController::class, 'update']);
+Route::delete('/reseps/delete/{id}', [ResepController::class, 'delete']);
 
 //Karyawan
 Route::get('/karyawans', [KaryawanController::class, 'index']);
@@ -55,14 +63,14 @@ Route::delete('/presensis/delete/{id}', [PresensiController::class, 'delete']);
 Route::get('/presensis/search/{nama_karyawan}', [PresensiController::class, 'search']);
 
 //Customer
+Route::get('/customers/showTransaksisByCustomer', [CustomerController::class, 'showTransaksisByCustomer'])->middleware('auth:api');
+Route::get('/customers/showTransaksisByCustomer/{nama_produk}', [CustomerController::class, 'searchTransaksisCustomerByProduct'])->middleware('auth:api');
 Route::get('/customers', [CustomerController::class, 'index']);
 Route::post('/customers', [CustomerController::class, 'store']);
 Route::get('/customers/{id}', [CustomerController::class, 'show']);
 Route::put('/customers/update/{id}', [CustomerController::class, 'update']);
 Route::delete('/customers/delete/{id}', [CustomerController::class, 'delete']);
 Route::get('/customers/search/{nama}', [CustomerController::class, 'search']);
-Route::get('/customers/showTransaksisByCustomer', [CustomerController::class, 'showTransaksisByCustomer'])->middleware('auth:api');
-Route::get('/customers/showTransaksisByCustomer/{nama_produk}', [CustomerController::class, 'searchTransaksisCustomerByProduct'])->middleware('auth:api');
 
 //Produk
 Route::get('/products', [ProdukController::class, 'index']);

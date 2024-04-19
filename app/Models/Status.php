@@ -12,7 +12,7 @@ class Status extends Model
 
     protected $primaryKey = 'id_status';
 
-    public $timestamps = false;
+    public $timestamps = true;
 
     protected $fillable = [
         'detail_status'

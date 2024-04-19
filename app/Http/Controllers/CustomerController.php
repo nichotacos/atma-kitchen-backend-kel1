@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use App\Models\Customer;
+use App\Models\Transaksi;
 
 class CustomerController extends Controller
 {
@@ -147,7 +148,8 @@ class CustomerController extends Controller
    //Show History Pesanan
    public function showTransaksisByCustomer(){
         try {
-            $id_customer = Auth::guard('api')->user()->id;
+            // $id_customer = Auth::guard('api')->user()->id;
+            $id_customer = '6';
             $transaksis = Transaksi::where('id_customer', $id_customer)->get();
 
             if ($transaksis->isEmpty()) {
@@ -172,6 +174,7 @@ class CustomerController extends Controller
    public function searchTransaksisCustomerByProduct($keyword){
         try {
             $id_customer = Auth::guard('api')->user()->id;
+            $id_customer = '1';
             $transaksis = Transaksi::where('id_customer', $id_customer)->get();
 
             if ($transaksis->isEmpty()) {

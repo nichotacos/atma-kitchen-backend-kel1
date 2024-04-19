@@ -12,7 +12,7 @@ class Cart extends Model
 
     protected $primaryKey = 'id_cart';
 
-    public $timestamps = false;
+    public $timestamps = true;
 
     protected $fillable = [
         'harga_total_cart'

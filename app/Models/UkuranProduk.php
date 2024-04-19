@@ -11,7 +11,7 @@ class UkuranProduk extends Model
 
     protected $primaryKey = 'id_ukuran';
 
-    public $timestamps = false;
+    public $timestamps = true;
 
     protected $fillable = [
         'detail_ukuran',

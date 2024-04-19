@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignId('id_jenis_pengeluaran')->references('id_jenis_pengeluaran')->on('jenis_pengeluarans')->onDelete('cascade')->onUpdate('cascade');
             $table->date('tanggal_pengeluaran');
             $table->double('nominal_pengeluaran');
+            $table->timestamps();
         });
     }
 

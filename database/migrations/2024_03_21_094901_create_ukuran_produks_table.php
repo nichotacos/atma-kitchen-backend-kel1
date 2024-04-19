@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('ukuran_produks', function (Blueprint $table) {
             $table->id('id_ukuran');
             $table->string('detail_ukuran');
+            $table->timestamps();
         });
     }
 

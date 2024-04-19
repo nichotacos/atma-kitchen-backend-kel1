@@ -16,7 +16,7 @@ class Customer extends Authenticatable
 
     protected $primaryKey = 'id_customer';
 
-    public $timestamps = false;
+    public $timestamps = true;
 
     protected $fillable = [
         'nama',

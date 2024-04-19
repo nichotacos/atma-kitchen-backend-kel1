@@ -11,7 +11,7 @@ class Kemasan extends Model
 
     protected $primaryKey = 'id_kemasan';
 
-    public $timestamps = false;
+    public $timestamps = true;
 
     protected $fillable = [
         'detail_kemasan',

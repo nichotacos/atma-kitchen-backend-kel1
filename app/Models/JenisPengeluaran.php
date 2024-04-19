@@ -16,7 +16,7 @@ class JenisPengeluaran extends Model
      */
     protected $primaryKey = 'id_pengeluaran';
 
-    public $timestamps = false;
+    public $timestamps = true;
 
     /**
      * The attributes that are mass assignable.

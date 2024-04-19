@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id('id_alamat');
             $table->foreignId('id_customer')->references('id_customer')->on('customers')->onDelete('cascade')->onUpdate('cascade');
             $table->string('detail_alamat');
+            $table->timestamps();
         });
     }
 
