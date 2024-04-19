@@ -5,17 +5,52 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Role;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\DB;
 
 use Exception;
 
 class RoleController extends Controller
 {
-    public function index()
+    // Show, Search, and Sort
+    public function index(Request $request)
     {
-        $roles = Role::all();
-        return response()->json($roles);
+        try {
+            $roles = Role::query();
+            if ($request->search) {
+                $roles->where('nama_role', 'like', '%' . $request->search . '%');
+            }
+
+            if ($request->sort_by && in_array($request->sort_by, ['id_role', 'nama_role'])) {
+                $sort_by = $request->sort_by;
+            } else {
+                $sort_by = 'id_role';
+            }
+
+            if ($request->sort_order && in_array($request->sort_order, ['asc', 'desc'])) {
+                $sort_order = $request->sort_order;
+            } else {
+                $sort_order = 'asc';
+            }
+
+            $data = $roles->orderBy($sort_by, $sort_order)->get();
+
+            if ($data->isEmpty()) throw new \Exception('Role tidak ditemukan');
+
+            return response()->json([
+                'status' => true,
+                'message' => 'Berhasil menampilkan data role',
+                'data' => $data
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                "status" => false,
+                "message" => $e->getMessage(),
+                "data" => []
+            ], 400);
+        }
     }
 
+    // Store
     public function store(Request $request)
     {
         try {
@@ -45,27 +80,7 @@ class RoleController extends Controller
         }
     }
 
-    public function show($id)
-    {
-        try {
-            $role = Role::find($id);
-
-            if (!$role) throw new \Exception('Role tidak ditemukan');
-
-            return response()->json([
-                'status' => true,
-                'message' => 'Role ditemukan',
-                'data' => $role
-            ], 200);
-        } catch (\Exception $e) {
-            return response()->json([
-                "status" => false,
-                "message" => $e->getMessage(),
-                "data" => []
-            ], 400);
-        }
-    }
-
+    // Update
     public function update(Request $request, $id)
     {
         try {
@@ -97,12 +112,13 @@ class RoleController extends Controller
         }
     }
 
+    // Delete
     public function destroy($id)
     {
         try {
             $role = Role::find($id);
 
-            if (!$role) throw new \Exception('Role tidak ditemukan');
+            if (!$role) throw new \Exception('Role tidak ditemukan1');
 
             $role->delete();
 
@@ -110,24 +126,6 @@ class RoleController extends Controller
                 "status" => true,
                 "message" => 'Berhasil delete role',
                 "data" => $role
-            ], 200);
-        } catch (\Exception $e) {
-            return response()->json([
-                "status" => false,
-                "message" => $e->getMessage(),
-                "data" => []
-            ], 400);
-        }
-    }
-
-    public function search($keyword)
-    {
-        try {
-            $roles = Role::where('nama_role', 'like', '%' . $keyword . '%')->get();
-            return response()->json([
-                'status' => true,
-                'message' => 'Search results',
-                'data' => $roles
             ], 200);
         } catch (\Exception $e) {
             return response()->json([

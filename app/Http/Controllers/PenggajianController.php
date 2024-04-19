@@ -1,32 +1,63 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use App\Models\Penggajian;
+use Illuminate\Database\Eloquent\Builder;
 
 class PenggajianController extends Controller
 {
     //Show
-    public function index(){
-        $penggajians = Penggajian::all();
+    public function index(Request $request)
+    {
+        try {
+            $penggajians = Penggajian::query()->with('karyawan.role');
+            if ($request->search) {
+                $penggajians->whereHas('karyawans', function (Builder $query) use ($request) {
+                    $query->where('nama_karyawan', 'like', '%' . $request->search . '%');
+                });
+            }
 
-        if(count($penggajians) > 0){
-            return response([
-                'message' => 'Retrieve All Success',
-                'data' => $penggajians
+            if ($request->tanggal_penggajian) {
+                $penggajians->where('tanggal_penggajian', '=', $request->tanggal_penggajian);
+            }
+
+            if ($request->sort_by && in_array($request->sort_by, ['id_penggajian', 'karyawans.nama_karyawan', 'tanggal_penggajian', 'roles.id_role'])) {
+                $sort_by = $request->sort_by;
+            } else {
+                $sort_by = 'id_penggajian';
+            }
+
+            if ($request->sort_order && in_array($request->sort_order, ['asc', 'desc'])) {
+                $sort_order = $request->sort_order;
+            } else {
+                $sort_order = 'asc';
+            }
+
+            $data = $penggajians->orderBy($sort_by, $sort_order)->get();
+
+            if ($data->isEmpty()) throw new \Exception('Data Penggajian tidak ditemukan');
+
+            return response()->json([
+                'status' => true,
+                'message' => 'Berhasil menampilkan data penggajian',
+                'data' => $data
             ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                "status" => false,
+                "message" => $e->getMessage(),
+                "data" => []
+            ], 400);
         }
-
-        return response([
-            'message' => 'Empty',
-            'data' => null
-        ], 400);
     }
 
     //Store
-    public function store(Request $request){
+    public function store(Request $request)
+    {
         try {
 
             $validator = Validator::make($request->all(), [
@@ -62,7 +93,8 @@ class PenggajianController extends Controller
     }
 
     //Search
-    public function show($id){
+    public function show($id)
+    {
         try {
             $penggajians = Penggajian::find($id);
 
@@ -83,7 +115,8 @@ class PenggajianController extends Controller
     }
 
     //Update
-    public function update(Request $request, String $id){
+    public function update(Request $request, String $id)
+    {
         try {
             $penggajians = Penggajian::find($id);
 
@@ -115,7 +148,8 @@ class PenggajianController extends Controller
     }
 
     //Delete
-    public function delete($id){
+    public function delete($id)
+    {
         try {
             $penggajians = Penggajian::find($id);
 
@@ -126,28 +160,6 @@ class PenggajianController extends Controller
             return response()->json([
                 "status" => true,
                 "message" => 'Delete Penggajian Success',
-                "data" => $penggajians
-            ], 200);
-        } catch (\Exception $e) {
-            return response()->json([
-                "status" => false,
-                "message" => $e->getMessage(),
-                "data" => []
-            ], 400);
-        }
-    }
-
-    //Search
-    public function search($keyword)
-    {
-        try {
-            $penggajians = Penggajian::whereHas('karyawan', function ($query) use ($keyword) {
-                $query->where('nama_karyawan', 'like', '%' . $keyword . '%');
-            })->get();
-
-            return response()->json([
-                "status" => true,
-                "message" => 'Berhasil mencari Penggajian',
                 "data" => $penggajians
             ], 200);
         } catch (\Exception $e) {

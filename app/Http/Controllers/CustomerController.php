@@ -11,24 +11,59 @@ use App\Models\Transaksi;
 class CustomerController extends Controller
 {
     //Show
-    public function index(){
-        $customers = Customer::all();
+    public function index(Request $request)
+    {
+        try {
+            $customers = Customer::query();
+            if ($request->search) {
+                $customers->where('username', 'like', '%' . $request->search . '%');
+            }
 
-        if(count($customers) > 0){
-            return response([
-                'message' => 'Retrieve All Success',
-                'data' => $customers
+            if ($request->nama) {
+                $customers->where('nama', 'like', '%' . $request->nama . '%');
+            }
+
+            if ($request->nomor_telepon) {
+                $customers->where('nomor_telepon', 'like', '%' . $request->nomor_telepon . '%');
+            }
+
+            if ($request->email) {
+                $customers->where('email', 'like', '%' . $request->email . '%');
+            }
+
+            if ($request->sort_by && in_array($request->sort_by, ['id_customer', 'tanggal_registrasi'])) {
+                $sort_by = $request->sort_by;
+            } else {
+                $sort_by = 'id_customer';
+            }
+
+            if ($request->sort_order && in_array($request->sort_order, ['asc', 'desc'])) {
+                $sort_order = $request->sort_order;
+            } else {
+                $sort_order = 'asc';
+            }
+
+            $data = $customers->orderBy($sort_by, $sort_order)->get();
+
+            if ($data->isEmpty()) throw new \Exception('Customer tidak ditemukan');
+
+            return response()->json([
+                'status' => true,
+                'message' => 'Berhasil menampilkan data customer',
+                'data' => $data
             ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                "status" => false,
+                "message" => $e->getMessage(),
+                "data" => []
+            ], 400);
         }
-
-        return response([
-            'message' => 'Empty',
-            'data' => null
-        ], 400);
     }
 
     //Store
-    public function store(Request $request){
+    public function store(Request $request)
+    {
         try {
             $customers = Customer::create($request->all());
 
@@ -46,29 +81,9 @@ class CustomerController extends Controller
         }
     }
 
-    //Search
-    public function show($id){
-        try {
-            $customers = Customer::find($id);
-
-            if (!$customers) throw new \Exception("Customer Not Found");
-
-            return response()->json([
-                "status" => true,
-                "message" => 'Customer Found',
-                "data" => $customers
-            ], 200);
-        } catch (\Exception $e) {
-            return response()->json([
-                "status" => false,
-                "message" => $e->getMessage(),
-                "data" => []
-            ], 400);
-        }
-    }
-
     //Update
-    public function update(Request $request, String $id){
+    public function update(Request $request, String $id)
+    {
         try {
             $customers = Customer::find($id);
 
@@ -104,7 +119,8 @@ class CustomerController extends Controller
     }
 
     //Delete
-    public function delete($id){
+    public function delete($id)
+    {
         try {
             $customers = Customer::find($id);
 
@@ -126,27 +142,9 @@ class CustomerController extends Controller
         }
     }
 
-    //Search
-    public function search($keyword)
+    //Show History Pesanan
+    public function showTransaksisByCustomer()
     {
-        try {
-            $customers = Customer::where('nama', 'like', '%' . $keyword . '%')->get();
-            return response()->json([
-                "status" => true,
-                "message" => 'Berhasil mencari Customer',
-                "data" => $customers
-            ], 200);
-        } catch (\Exception $e) {
-            return response()->json([
-                "status" => false,
-                "message" => $e->getMessage(),
-                "data" => []
-            ], 400);
-        }
-    }
-
-   //Show History Pesanan
-   public function showTransaksisByCustomer(){
         try {
             // $id_customer = Auth::guard('api')->user()->id;
             $id_customer = '6';
@@ -171,7 +169,8 @@ class CustomerController extends Controller
     }
 
     //Show History Pesanan
-   public function searchTransaksisCustomerByProduct($keyword){
+    public function searchTransaksisCustomerByProduct($keyword)
+    {
         try {
             $id_customer = Auth::guard('api')->user()->id;
             $id_customer = '1';
@@ -196,5 +195,4 @@ class CustomerController extends Controller
             ], 400);
         }
     }
-
 }

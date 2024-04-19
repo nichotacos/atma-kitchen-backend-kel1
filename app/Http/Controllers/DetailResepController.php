@@ -1,32 +1,59 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use Illuminate\Http\Request;
 use App\Models\DetailResep;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 
 class DetailResepController extends Controller
 {
     //Show
-    public function index(){
-        $detailReseps = DetailResep::all();
+    public function index(Request $request)
+    {
+        try {
+            $detailReseps = DetailResep::query()->with('bahanBaku');
+            if ($request->search) {
+                $detailReseps->whereHas('bahanBaku', function (Builder $query) use ($request) {
+                    $query->where('nama_bahan_baku', 'like', '%' . $request->search . '%');
+                });
+            }
 
-        if(count($detailReseps) > 0){
-            return response([
-                'message' => 'Retrieve All Success',
-                'data' => $detailReseps
+            if ($request->sort_by && in_array($request->sort_by, ['id_detail_resep', 'bahan_bakus.nama_bahan_baku'])) {
+                $sort_by = $request->sort_by;
+            } else {
+                $sort_by = 'id_detail_resep';
+            }
+
+            if ($request->sort_order && in_array($request->sort_order, ['asc', 'desc'])) {
+                $sort_order = $request->sort_order;
+            } else {
+                $sort_order = 'asc';
+            }
+
+            $data = $detailReseps->orderBy($sort_by, $sort_order)->get();
+
+            if ($data->isEmpty()) throw new \Exception('Data Detail Resep tidak ditemukan');
+
+            return response()->json([
+                'status' => true,
+                'message' => 'Berhasil menampilkan data detail resep',
+                'data' => $data
             ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                "status" => false,
+                "message" => $e->getMessage(),
+                "data" => []
+            ], 400);
         }
-
-        return response([
-            'message' => 'Empty',
-            'data' => null
-        ], 400);
     }
 
     //Store
-    public function store(Request $request){
+    public function store(Request $request)
+    {
         try {
 
             $validator = Validator::make($request->all(), [
@@ -57,8 +84,9 @@ class DetailResepController extends Controller
         }
     }
 
-    //ShowById
-    public function show($id){
+    //Search
+    public function show($id)
+    {
         try {
             $detailReseps = DetailResep::find($id);
 
@@ -79,7 +107,8 @@ class DetailResepController extends Controller
     }
 
     //Update
-    public function update(Request $request, String $id){
+    public function update(Request $request, String $id)
+    {
         try {
             $detailReseps = DetailResep::find($id);
 
@@ -108,11 +137,11 @@ class DetailResepController extends Controller
                 "data" => []
             ], 400);
         }
-
     }
 
     //Delete
-    public function delete($id){
+    public function delete($id)
+    {
         try {
             $detailReseps = DetailResep::find($id);
 

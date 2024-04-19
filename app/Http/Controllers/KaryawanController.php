@@ -1,32 +1,78 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Models\Karyawan;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use Illuminate\Http\Request;
 
 class KaryawanController extends Controller
 {
-    //Show
-    public function index(){
-        $karyawans = Karyawan::all();
+    public function index(Request $request)
+    {
+        try {
+            $karyawans = Karyawan::query()->with('role');
+            if ($request->search) {
+                $karyawans->where('nama_karyawan', 'like', '%' . $request->search . '%');
+            }
 
-        if(count($karyawans) > 0){
-            return response([
-                'message' => 'Retrieve All Success',
-                'data' => $karyawans
+            if ($request->nama_role) {
+                $karyawans->whereHas('roles', function (Builder $query) use ($request) {
+                    $query->where('nama_role', 'like', '%' . $request->nama_role . '%');
+                });
+            }
+
+            if ($request->nomor_telepon_karyawan) {
+                $karyawans->where('nomor_telepon_karyawan', 'like', '%' . $request->nomor_telepon_karyawan . '%');
+            }
+
+            if ($request->email) {
+                $karyawans->where('email', 'like', '%' . $request->email . '%');
+            }
+
+            if ($request->username) {
+                $karyawans->where('username', 'like', '%' . $request->username . '%');
+            }
+
+            if ($request->tanggal_rekrut) {
+                $karyawans->where('tanggal_rekrut', '=', $request->tanggal_rekrut);
+            }
+
+            if ($request->sort_by && in_array($request->sort_by, ['id_karyawan', 'role.id_role', 'nama_karyawan'])) {
+                $sort_by = $request->sort_by;
+            } else {
+                $sort_by = 'id_karyawan';
+            }
+
+            if ($request->sort_order && in_array($request->sort_order, ['asc', 'desc'])) {
+                $sort_order = $request->sort_order;
+            } else {
+                $sort_order = 'asc';
+            }
+
+            $data = $karyawans->orderBy($sort_by, $sort_order)->get();
+
+            if ($data->isEmpty()) throw new \Exception('Karyawan tidak ditemukan');
+
+            return response()->json([
+                'status' => true,
+                'message' => 'Berhasil menampilkan data karyawan',
+                'data' => $data
             ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                "status" => false,
+                "message" => $e->getMessage(),
+                "data" => []
+            ], 400);
         }
-
-        return response([
-            'message' => 'Empty',
-            'data' => null
-        ], 400);
     }
 
     //Store
-    public function store(Request $request){
+    public function store(Request $request)
+    {
         try {
             $karyawans = Karyawan::create($request->all());
 
@@ -44,29 +90,9 @@ class KaryawanController extends Controller
         }
     }
 
-    //Search
-    public function show($id){
-        try {
-            $karyawans = Karyawan::find($id);
-
-            if (!$karyawans) throw new \Exception("Karyawan Not Found");
-
-            return response()->json([
-                "status" => true,
-                "message" => 'Karyawan Found',
-                "data" => $karyawans
-            ], 200);
-        } catch (\Exception $e) {
-            return response()->json([
-                "status" => false,
-                "message" => $e->getMessage(),
-                "data" => []
-            ], 400);
-        }
-    }
-
     //Update
-    public function update(Request $request, String $id){
+    public function update(Request $request, String $id)
+    {
         try {
             $karyawans = Karyawan::find($id);
 
@@ -101,11 +127,11 @@ class KaryawanController extends Controller
                 "data" => []
             ], 400);
         }
-
     }
 
     //Delete
-    public function delete($id){
+    public function delete($id)
+    {
         try {
             $karyawans = Karyawan::find($id);
 
