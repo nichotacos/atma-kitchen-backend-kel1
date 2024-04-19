@@ -17,7 +17,9 @@ class PenitipSeeder extends Seeder
     {
         Penitip::factory()->count(5)->create();
         DB::table('penitips')->insert([
-            'nama_penitip' => 'Tanpa Penitip'
+            'nama_penitip' => 'Tanpa Penitip',
+            'created_at' => now(),
+            'updated_at' => now(),
         ]);
     }
 }

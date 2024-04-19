@@ -26,6 +26,8 @@ class KaryawanSeeder extends Seeder
                 'tanggal_rekrut' => '2019-04-10',
                 'gaji_harian' => 0,
                 'bonus_rajin' => 0,
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             [
                 'id_role' => 2,
@@ -37,6 +39,8 @@ class KaryawanSeeder extends Seeder
                 'tanggal_rekrut' => '2022-03-15',
                 'gaji_harian' => 80000,
                 'bonus_rajin' => 50000,
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             [
                 'id_role' => 3,
@@ -48,6 +52,8 @@ class KaryawanSeeder extends Seeder
                 'tanggal_rekrut' => '2023-05-20',
                 'gaji_harian' => 120000,
                 'bonus_rajin' => 75000,
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             [
                 'id_role' => 4,
@@ -59,6 +65,8 @@ class KaryawanSeeder extends Seeder
                 'tanggal_rekrut' => '2023-08-10',
                 'gaji_harian' => 160000,
                 'bonus_rajin' => 100000,
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             [
                 'id_role' => 4,
@@ -70,6 +78,8 @@ class KaryawanSeeder extends Seeder
                 'tanggal_rekrut' => '2024-01-05',
                 'gaji_harian' => 160000,
                 'bonus_rajin' => 100000,
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
         ]);
     }

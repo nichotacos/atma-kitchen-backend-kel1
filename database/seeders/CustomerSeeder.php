@@ -28,6 +28,8 @@ class CustomerSeeder extends Seeder
                 'tanggal_lahir' => '1988-03-22',
                 'poin' => 0,
                 'saldo' => 0,
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             [
                 'nama' => 'Cindy Wijaya',
@@ -39,6 +41,8 @@ class CustomerSeeder extends Seeder
                 'tanggal_lahir' => '1989-07-05',
                 'poin' => 0,
                 'saldo' => 0,
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             [
                 'nama' => 'Dewi Cahyani',
@@ -50,6 +54,8 @@ class CustomerSeeder extends Seeder
                 'tanggal_lahir' => '1990-11-18',
                 'poin' => 0,
                 'saldo' => 0,
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             [
                 'nama' => 'Eka Sari',
@@ -61,6 +67,8 @@ class CustomerSeeder extends Seeder
                 'tanggal_lahir' => '1991-04-30',
                 'poin' => 0,
                 'saldo' => 0,
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             [
                 'nama' => 'Fani Lestari',
@@ -72,6 +80,8 @@ class CustomerSeeder extends Seeder
                 'tanggal_lahir' => '1992-10-15',
                 'poin' => 0,
                 'saldo' => 0,
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
         ]);
     }

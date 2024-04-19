@@ -33,6 +33,8 @@ class TransaksiSeeder extends Seeder
                 'total_harga_final' => 933800,
                 'total_harga_produk' => 910000,
                 'total_setelah_ongkir' => 935000,
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             [
                 //id =  2
@@ -53,6 +55,8 @@ class TransaksiSeeder extends Seeder
                 'total_harga_final' => 500000,
                 'total_harga_produk' => 500000,
                 'total_setelah_ongkir' => 500000,
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             [
                 //id =  3
@@ -73,6 +77,8 @@ class TransaksiSeeder extends Seeder
                 'total_harga_final' => 1250000,
                 'total_harga_produk' => 1450000,
                 'total_setelah_ongkir' => 1450000,
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             [
                 //id =  3
@@ -93,6 +99,8 @@ class TransaksiSeeder extends Seeder
                 'total_harga_final' => 645000,
                 'total_harga_produk' => 650000,
                 'total_setelah_ongkir' => 650000,
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             [
                 //id =  3
@@ -113,6 +121,8 @@ class TransaksiSeeder extends Seeder
                 'total_harga_final' => 645000,
                 'total_harga_produk' => 650000,
                 'total_setelah_ongkir' => 650000,
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
         ]);
     }

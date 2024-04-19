@@ -16,31 +16,45 @@ class KemasanSeeder extends Seeder
         DB::table('kemasans')->insert([
             [
                 'detail_kemasan' => 'Box 20x20 cm',
-                'stok_kemasan' => 5
+                'stok_kemasan' => 5,
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             [
                 'detail_kemasan' => 'Box 20x10 cm',
-                'stok_kemasan' => 4
+                'stok_kemasan' => 4,
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             [
                 'detail_kemasan' => 'Box 10x10 cm',
-                'stok_kemasan' => 6
+                'stok_kemasan' => 6,
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             [
                 'detail_kemasan' => 'Botol 1 Liter',
-                'stok_kemasan' => 5
+                'stok_kemasan' => 5,
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             [
                 'detail_kemasan' => 'Box premium & kartu ucapan',
-                'stok_kemasan' => 5
+                'stok_kemasan' => 5,
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             [
                 'detail_kemasan' => 'Tas spundbound',
-                'stok_kemasan' => 10
+                'stok_kemasan' => 10,
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             [
                 'detail_kemasan' => 'Tanpa kemasan',
-                'stok_kemasan' => 0
+                'stok_kemasan' => 0,
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
         ]);
     }

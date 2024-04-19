@@ -20,7 +20,9 @@ class DetailCartSeeder extends Seeder
                 'id_cart' => 1,
                 'jumlah_produk' => 1,
                 'harga_produk_terkini' => 550000,
-                'harga_total_terkini' => 550000
+                'harga_total_terkini' => 550000,
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             [
                 'id_hampers' => null,
@@ -28,7 +30,9 @@ class DetailCartSeeder extends Seeder
                 'id_cart' => 1,
                 'jumlah_produk' => 2,
                 'harga_produk_terkini' => 180000,
-                'harga_total_terkini' => 360000
+                'harga_total_terkini' => 360000,
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             [
                 'id_hampers' => 2,
@@ -36,7 +40,9 @@ class DetailCartSeeder extends Seeder
                 'id_cart' => 2,
                 'jumlah_produk' => 1,
                 'harga_produk_terkini' => 500000,
-                'harga_total_terkini' => 500000
+                'harga_total_terkini' => 500000,
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             [
                 'id_hampers' => null,
@@ -44,7 +50,9 @@ class DetailCartSeeder extends Seeder
                 'id_cart' => 3,
                 'jumlah_produk' => 1,
                 'harga_produk_terkini' => 850000,
-                'harga_total_terkini' => 850000
+                'harga_total_terkini' => 850000,
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             [
                 'id_hampers' => null,
@@ -52,7 +60,9 @@ class DetailCartSeeder extends Seeder
                 'id_cart' => 3,
                 'jumlah_produk' => 2,
                 'harga_produk_terkini' => 300000,
-                'harga_total_terkini' => 600000
+                'harga_total_terkini' => 600000,
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             [
                 'id_hampers' => 1,
@@ -60,7 +70,9 @@ class DetailCartSeeder extends Seeder
                 'id_cart' => 4,
                 'jumlah_produk' => 1,
                 'harga_produk_terkini' => 650000,
-                'harga_total_terkini' => 650000
+                'harga_total_terkini' => 650000,
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             [
                 'id_hampers' => null,
@@ -68,7 +80,9 @@ class DetailCartSeeder extends Seeder
                 'id_cart' => 5,
                 'jumlah_produk' => 1,
                 'harga_produk_terkini' => 75000,
-                'harga_total_terkini' => 75000
+                'harga_total_terkini' => 75000,
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             [
                 'id_hampers' => null,
@@ -76,7 +90,9 @@ class DetailCartSeeder extends Seeder
                 'id_cart' => 5,
                 'jumlah_produk' => 1,
                 'harga_produk_terkini' => 250000,
-                'harga_total_terkini' => 250000
+                'harga_total_terkini' => 250000,
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
         ]);
     }

@@ -14,10 +14,18 @@ class UnitSeeder extends Seeder
     public function run(): void
     {
         DB::table('units')->insert([
-            ['nama_unit' => 'gram'],
-            ['nama_unit' => 'butir'],
-            ['nama_unit' => 'ml'],
-            ['nama_unit' => 'buah'],
+            ['nama_unit' => 'gram',
+            'created_at' => now(),
+            'updated_at' => now(),],
+            ['nama_unit' => 'butir',
+            'created_at' => now(),
+            'updated_at' => now(),],
+            ['nama_unit' => 'ml',
+            'created_at' => now(),
+            'updated_at' => now(),],
+            ['nama_unit' => 'buah',
+            'created_at' => now(),
+            'updated_at' => now(),],
         ]);
     }
 }

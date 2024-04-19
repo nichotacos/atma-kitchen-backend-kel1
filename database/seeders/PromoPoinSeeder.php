@@ -15,13 +15,21 @@ class PromoPoinSeeder extends Seeder
     {
         DB::table('promo_poins')->insert([
                 ['batas_kelipatan' => '10000',
-                'poin_diterima'   => '1'],
+                'poin_diterima'   => '1',
+                'created_at' => now(),
+                'updated_at' => now(),],
                 ['batas_kelipatan' => '100000',
-                'poin_diterima'   => '15'],
+                'poin_diterima'   => '15',
+                'created_at' => now(),
+                'updated_at' => now(),],
                 ['batas_kelipatan' => '500000',
-                'poin_diterima'   => '75'],
+                'poin_diterima'   => '75',
+                'created_at' => now(),
+                'updated_at' => now(),],
                 ['batas_kelipatan' => '1000000',
-                'poin_diterima'   => '200']
+                'poin_diterima'   => '200',
+                'created_at' => now(),
+                'updated_at' => now(),]
             ]
         );
     }

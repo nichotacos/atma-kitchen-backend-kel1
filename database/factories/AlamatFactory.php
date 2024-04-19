@@ -19,6 +19,8 @@ class AlamatFactory extends Factory
         return [
             'id_customer' =>$this->faker->numberBetween(1,5),
             'detail_alamat' => $this->faker->address(),
+            'created_at' => now(),
+            'updated_at' => now()
         ];
     }
 }
