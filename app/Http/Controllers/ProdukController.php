@@ -13,7 +13,7 @@ class ProdukController extends Controller
     public function index(Request $request)
     {
         try {
-            $products = Produk::query()->with(['JenisKetersediaan', 'UkuranProduk', 'Kategori', 'Kemasan']);
+            $products = Produk::query()->with(['JenisKetersediaan', 'UkuranProduk', 'Kategori', 'Kemasan', 'DetailResep']);
             if ($request->search) {
                 $products->where('nama_produk', 'like', '%' . $request->search . '%');
             }

@@ -3,28 +3,28 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+use App\Models\Resep;
 
 class ResepController extends Controller
 {
     //Show
-    public function index(){
-        $reseps = Resep::all();
-
-        if(count($reseps) > 0){
-            return response([
-                'message' => 'Retrieve All Success',
-                'data' => $reseps
-            ], 200);
+    public function index()
+    {
+        try {
+            $reseps = Resep::query()->with(['DetailResep', 'Produk']);
+        } catch (\Exception $e) {
+            return response()->json([
+                "status" => false,
+                "message" => $e->getMessage(),
+                "data" => []
+            ], 400);
         }
-
-        return response([
-            'message' => 'Empty',
-            'data' => null
-        ], 400);
     }
 
     //Store
-    public function store(Request $request){
+    public function store(Request $request)
+    {
         try {
 
             $validator = Validator::make($request->all(), [
@@ -55,29 +55,9 @@ class ResepController extends Controller
         }
     }
 
-    //ShowById
-    public function show($id){
-        try {
-            $reseps = Resep::find($id);
-
-            if (!$reseps) throw new \Exception("Resep Not Found");
-
-            return response()->json([
-                "status" => true,
-                "message" => 'Resep Found',
-                "data" => $reseps
-            ], 200);
-        } catch (\Exception $e) {
-            return response()->json([
-                "status" => false,
-                "message" => $e->getMessage(),
-                "data" => []
-            ], 400);
-        }
-    }
-
     //Update
-    public function update(Request $request, String $id){
+    public function update(Request $request, String $id)
+    {
         try {
             $reseps = Resep::find($id);
 
@@ -106,11 +86,11 @@ class ResepController extends Controller
                 "data" => []
             ], 400);
         }
-
     }
 
     //Delete
-    public function delete($id){
+    public function delete($id)
+    {
         try {
             $reseps = Resep::find($id);
 
@@ -131,5 +111,4 @@ class ResepController extends Controller
             ], 400);
         }
     }
-
 }

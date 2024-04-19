@@ -170,26 +170,4 @@ class PenggajianController extends Controller
             ], 400);
         }
     }
-
-    //Search
-    public function search($keyword)
-    {
-        try {
-            $penggajians = Penggajian::whereHas('karyawan', function ($query) use ($keyword) {
-                $query->where('nama_karyawan', 'like', '%' . $keyword . '%');
-            })->get();
-
-            return response()->json([
-                "status" => true,
-                "message" => 'Berhasil mencari Penggajian',
-                "data" => $penggajians
-            ], 200);
-        } catch (\Exception $e) {
-            return response()->json([
-                "status" => false,
-                "message" => $e->getMessage(),
-                "data" => []
-            ], 400);
-        }
-    }
 }
