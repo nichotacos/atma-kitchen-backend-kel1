@@ -19,14 +19,13 @@ use App\Http\Controllers\ResepController;
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/register-karyawan', [AuthController::class, 'registerKaryawan']);
 Route::post('/login', [AuthController::class, 'login']);
-Route::post('/login-karyawan', [AuthController::class, 'loginKaryawan'])->name('login');
 
 //test
 //Change Password Karyawan
 //Route::middleware('auth:employee')->post('/change-password-karyawan', [AuthController::class, 'changePasswordKaryawan']);
 Route::post('/change-password-karyawan', [AuthController::class, 'changePasswordKaryawan'])->middleware('auth:employee');
 
-Route::middleware(['middleware' => 'auth:customer-api'], function () {
+Route::group(['middleware' => 'auth:customer-api'], function () {
     //Customer
     Route::get('/customers/showTransaksisByCustomer', [CustomerController::class, 'showTransaksisByCustomer']);
     Route::get('/customers/showTransaksisByCustomer/{nama_produk}', [CustomerController::class, 'searchTransaksisCustomerByProduct']);
@@ -37,7 +36,7 @@ Route::middleware(['middleware' => 'auth:customer-api'], function () {
     Route::delete('/customers/delete/{id}', [CustomerController::class, 'destroy']);
 });
 
-Route::middleware(['middleware' => 'auth:employee-api'], function () {
+Route::group(['middleware' => 'auth:employee-api'], function () {
 
     //Customer
     Route::get('/customers/search/{nama}', [CustomerController::class, 'search']);
