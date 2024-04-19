@@ -18,7 +18,7 @@ use App\Http\Controllers\ResepController;
 //Register Customer
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/register-karyawan', [AuthController::class, 'registerKaryawan']);
-Route::post('/login-customer', [AuthController::class, 'loginCustomer']);
+Route::post('/login', [AuthController::class, 'login']);
 Route::post('/login-karyawan', [AuthController::class, 'loginKaryawan'])->name('login');
 
 //test
