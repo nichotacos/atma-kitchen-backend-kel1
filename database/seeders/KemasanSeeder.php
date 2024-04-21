@@ -15,6 +15,12 @@ class KemasanSeeder extends Seeder
     {
         DB::table('kemasans')->insert([
             [
+                'detail_kemasan' => 'Tanpa kemasan',
+                'stok_kemasan' => 0,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
                 'detail_kemasan' => 'Box 20x20 cm',
                 'stok_kemasan' => 5,
                 'created_at' => now(),
@@ -50,12 +56,7 @@ class KemasanSeeder extends Seeder
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
-            [
-                'detail_kemasan' => 'Tanpa kemasan',
-                'stok_kemasan' => 0,
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
+
         ]);
     }
 }
