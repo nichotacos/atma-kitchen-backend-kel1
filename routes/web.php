@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\BahanBakuController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -19,3 +20,5 @@ Route::post('/forgot-password', function (Request $request) {
     // Handle POST request logic here
     return response('POST request received');
   });
+
+  Route::get('bahanbaku',[BahanBakuController::class, 'index'])->name('pegawai');
