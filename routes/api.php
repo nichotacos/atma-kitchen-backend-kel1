@@ -62,6 +62,7 @@ Route::group(['middleware' => 'auth:employee-api'], function () {
     Route::put('/karyawans/update/{id}', [KaryawanController::class, 'update']);
     Route::delete('/karyawans/delete/{id}', [KaryawanController::class, 'destroy']);
     Route::get('/karyawans/search/{nama_karyawan}', [KaryawanController::class, 'search']);
+    Route::put('/karyawans/editGajiBonus/{id}', [KaryawanController::class, 'editGajiBonus']);
 
     //Penggajian
     Route::get('/penggajians', [PenggajianController::class, 'index']);

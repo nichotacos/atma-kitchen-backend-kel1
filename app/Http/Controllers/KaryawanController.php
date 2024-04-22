@@ -130,7 +130,7 @@ class KaryawanController extends Controller
     }
 
     //Delete
-    public function delete($id)
+    public function destroy($id)
     {
         try {
             $karyawans = Karyawan::find($id);
@@ -160,6 +160,34 @@ class KaryawanController extends Controller
             return response()->json([
                 "status" => true,
                 "message" => 'Berhasil mencari karyawan',
+                "data" => $karyawans
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                "status" => false,
+                "message" => $e->getMessage(),
+                "data" => []
+            ], 400);
+        }
+    }
+
+    public function editGajiBonus(Request $request, $id)
+    {
+        try {
+            $karyawans = Karyawan::find($id);
+
+            $validator = Validator::make($request->all(), [
+                'gaji_harian' => 'required_without:bonus|numeric',
+                'bonus_rajin' => 'required_without:gaji|numeric'
+            ]);
+
+            $karyawans->update($request->all());
+
+            if (!$karyawans) throw new \Exception("Karyawan Not Found");
+
+            return response()->json([
+                "status" => true,
+                "message" => 'Berhasil mengupdate gaji dan bonus karyawan',
                 "data" => $karyawans
             ], 200);
         } catch (\Exception $e) {
