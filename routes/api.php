@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\BahanBakuController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DetailResepController;
@@ -81,3 +82,11 @@ Route::get('/roles/{id}', [RoleController::class, 'show']);
 Route::put('/roles/update/{id}', [RoleController::class, 'update']);
 Route::delete('/roles/delete/{id}', [RoleController::class, 'delete']);
 Route::get('/roles/search/{nama_role}', [RoleController::class, 'search']);
+
+
+//Bahan Baku
+Route::get('/bahan_bakus', [BahanBakuController::class, 'index']);
+Route::post('/bahan_bakus', [BahanBakuController::class, 'store']);
+Route::put('/bahan_bakus/update/{id}', [BahanBakuController::class, 'update']);
+Route::delete('/bahan_bakus/delete/{id}', [BahanBakuController::class, 'destroy']);
+Route::get('/bahan_bakus/search/{id}', [BahanBakuController::class, 'search']);
