@@ -29,7 +29,6 @@ class BahanBakuController extends Controller
     {
         try {
             $validator = Validator::make($request->all(), [
-                'id_unit' => 'required|numeric|between:1,4',
                 'nama_bahan_baku' => 'required|string',
                 'stok_bahan_baku' => 'required|numeric'
             ]);
@@ -39,7 +38,6 @@ class BahanBakuController extends Controller
             }
 
             $bahan_bakus = BahanBaku::create([
-                'id_unit' => $request->id_unit,
                 'nama_bahan_baku' => $request->nama_bahan_baku,
                 'stok_bahan_baku' => $request->stok_bahan_baku
             ]);
@@ -87,9 +85,8 @@ class BahanBakuController extends Controller
             if (!$bahan_bakus) throw new \Exception("Bahan Baku tidak tersedia!");
 
             $validator = Validator::make($request->all(), [
-                'id_unit' => $request->id_unit,
-                'nama_bahan_baku' => $request->nama_bahan_baku,
-                'stok_bahan_baku' => $request->stok_bahan_baku
+                'nama_bahan_baku' => 'required|string',
+                'stok_bahan_baku' => 'required|numeric'
             ]);
 
             if ($validator->fails()) {
