@@ -93,7 +93,6 @@ class CustomerController extends Controller
                 'nama' => 'required|string|max:255',
                 'username' => 'required|string|max:255|unique:customers',
                 'email' => 'required|string|email|max:255|unique:customers',
-                'password' => 'required|string|min:8',
                 'nomor_telepon' => ['required', 'regex:/^08\d{9,11}$/', 'unique:customers'],
                 'tanggal_lahir' => 'required|date'
             ]);

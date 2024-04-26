@@ -6,6 +6,7 @@ use App\Models\Karyawan;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 
 class KaryawanController extends Controller
@@ -19,7 +20,7 @@ class KaryawanController extends Controller
             }
 
             if ($request->nama_role) {
-                $karyawans->whereHas('roles', function (Builder $query) use ($request) {
+                $karyawans->whereHas('role', function (Builder $query) use ($request) {
                     $query->where('nama_role', 'like', '%' . $request->nama_role . '%');
                 });
             }
@@ -101,19 +102,41 @@ class KaryawanController extends Controller
             $validator = Validator::make($request->all(), [
                 'id_role' => 'required|numeric|between:2,4',
                 'nama_karyawan' => 'required|string|max:255',
-                'nomor_telepon_karyawan' => ['required', 'regex:/^08\d{9,11}$/', 'unique:karyawans'],
-                'email' => 'required|string|email|max:255|unique:karyawans',
-                'username' => 'required|string|max:255|unique:karyawans',
+                'nomor_telepon_karyawan' => [
+                    'required',
+                    'regex:/^08\d{9,11}$/',
+                    Rule::unique('karyawans')->ignore($karyawans->id)
+                ],
+                'email' => [
+                    'required',
+                    'string',
+                    'email',
+                    'max:255',
+                    Rule::unique('karyawans')->ignore($karyawans->id)
+                ],
+                'username' => [
+                    'required',
+                    'string',
+                    'max:255',
+                    Rule::unique('karyawans')->ignore($karyawans->id)
+                ],
                 'password' => 'required|string|min:8',
             ]);
-
-            $karyawans->update($request->all());
 
             if ($validator->fails()) {
                 return response()->json(['error' => $validator->errors()], 400);
             }
 
-            $customers->update($request->all());
+            $hashedPassword = Hash::make($request->input('password'));
+
+            $karyawans->update([
+                'id_role' => $request->input('id_role'),
+                'nama_karyawan' => $request->input('nama_karyawan'),
+                'nomor_telepon_karyawan' => $request->input('nomor_telepon_karyawan'),
+                'email' => $request->input('email'),
+                'username' => $request->input('username'),
+                'password' => $hashedPassword,
+            ]);
 
             return response()->json([
                 "status" => true,
