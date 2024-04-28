@@ -14,6 +14,7 @@ use App\Http\Controllers\PromoPoinController;
 use App\Http\Controllers\RoleController;
 use App\Models\ProdukHampers;
 use App\Http\Controllers\ResepController;
+use App\Http\Controllers\BahanBakuController;
 
 //Register Customer
 Route::post('/register', [AuthController::class, 'register']);
@@ -25,9 +26,11 @@ Route::post('/login', [AuthController::class, 'login']);
 //Route::middleware('auth:employee')->post('/change-password-karyawan', [AuthController::class, 'changePasswordKaryawan']);
 
 Route::group(['middleware' => 'auth:customer-api'], function () {
+    //Auth
+    Route::put('/update-profile', [AuthController::class, 'updateProfile']);
+    Route::get('/show-transaksi-customer', [AuthController::class, 'showTransaksiCustomer']);
+
     //Customer
-    Route::get('/customers/showTransaksisByCustomer', [CustomerController::class, 'showTransaksisByCustomer']);
-    Route::get('/customers/showTransaksisByCustomer/{nama_produk}', [CustomerController::class, 'searchTransaksisCustomerByProduct']);
     Route::get('/customers/search/{nama}', [CustomerController::class, 'search']);
     Route::get('/customers', [CustomerController::class, 'index']);
     Route::post('/customers', [CustomerController::class, 'store']);
@@ -38,6 +41,9 @@ Route::group(['middleware' => 'auth:customer-api'], function () {
 Route::group(['middleware' => 'auth:employee-api'], function () {
     //Change Password
     Route::post('/change-password-karyawan', [AuthController::class, 'changePasswordKaryawan']);
+
+    //Bahan Baku
+    Route::get('/bahan-bakus', [BahanBakuController::class, 'index']);
 
     //Customer
     Route::get('/customers/search/{nama}', [CustomerController::class, 'search']);

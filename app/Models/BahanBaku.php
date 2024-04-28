@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class BahanBaku extends Model
 {
@@ -15,13 +16,14 @@ class BahanBaku extends Model
     public $timestamps = true;
 
     protected $fillable = [
+        'id_unit',
         'nama_bahan_baku',
         'stok_bahan_baku'
     ];
 
-    public function unit(): HasMany
+    public function unit(): BelongsTo
     {
-        return $this->hasMany(Unit::class, 'id_unit');
+        return $this->belongsTo(Unit::class, 'id_unit');
     }
 
     public function detailResep(): HasMany
