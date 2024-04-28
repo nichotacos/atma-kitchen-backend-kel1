@@ -23,7 +23,6 @@ Route::post('/login', [AuthController::class, 'login']);
 //test
 //Change Password Karyawan
 //Route::middleware('auth:employee')->post('/change-password-karyawan', [AuthController::class, 'changePasswordKaryawan']);
-Route::post('/change-password-karyawan', [AuthController::class, 'changePasswordKaryawan'])->middleware('auth:employee');
 
 Route::group(['middleware' => 'auth:customer-api'], function () {
     //Customer
@@ -37,6 +36,8 @@ Route::group(['middleware' => 'auth:customer-api'], function () {
 });
 
 Route::group(['middleware' => 'auth:employee-api'], function () {
+    //Change Password
+    Route::post('/change-password-karyawan', [AuthController::class, 'changePasswordKaryawan']);
 
     //Customer
     Route::get('/customers/search/{nama}', [CustomerController::class, 'search']);

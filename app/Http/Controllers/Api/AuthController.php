@@ -205,7 +205,7 @@ class AuthController extends Controller
                 return response()->json(['error' => $validator->errors()], 400);
             }
 
-            $karyawan = Auth::guard('employee')->user();
+            $karyawan = Auth::guard('employee-api')->user();
 
             if (!$karyawan) {
                 return response()->json(['error' => 'Unauthorized'], 401);
