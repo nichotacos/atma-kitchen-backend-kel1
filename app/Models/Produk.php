@@ -27,9 +27,9 @@ class Produk extends Model
         'kuota_harian',
     ];
 
-    public function DetailResep(): BelongsToMany
+    public function DetailResep(): hasMany
     {
-        return $this->belongsToMany(DetailResep::class, 'reseps', 'id_produk', 'id_detail_resep');
+        return $this->hasMany(DetailResep::class, 'id_detail_resep');
     }
 
     public function Hampers(): BelongsToMany
