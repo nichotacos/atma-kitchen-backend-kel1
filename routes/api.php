@@ -27,8 +27,8 @@ Route::post('/login', [AuthController::class, 'login']);
 
 Route::group(['middleware' => 'auth:customer-api'], function () {
     //Auth
-    Route::put('/update-profile', [AuthController::class, 'updateProfile']);
-    Route::get('/show-transaksi-customer', [AuthController::class, 'showTransaksiCustomer']);
+    Route::put('/update-profile', [CustomerController::class, 'updateProfile']);
+    Route::get('/show-transaksi-customer', [CustomerController::class, 'showTransaksiCustomer']);
 
     //Customer
     Route::get('/customers/search/{nama}', [CustomerController::class, 'search']);
