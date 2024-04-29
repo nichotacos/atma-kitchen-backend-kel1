@@ -190,7 +190,7 @@ class AuthController extends Controller
             'data' => $finalLogin,
             'token_type' => 'Bearer',
             'access_token' => $plainTextToken
-        ]);
+        ], 200);
     }
 
     public function changePasswordKaryawan(Request $request)
