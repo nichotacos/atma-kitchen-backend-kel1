@@ -186,12 +186,38 @@ class CustomerController extends Controller
             $customers = Auth::guard('customer-api')->user();
             $id_customer = $customers->id_customer;
 
-            $transaksis = Transaksi::with(['cart.detailCart.produk.hampers', 'cart.detailCart.hampers'])->where('id_customer', $id_customer);
+            $transaksis = Transaksi::with(['cart.detailCart.produk', 'cart.detailCart.hampers.produk'])->where('id_customer', $id_customer);
 
             if ($request->search) {
                 $transaksis->whereHas('cart.detailCart.produk', function ($query) use ($request) {
                     $query->where('nama_produk', 'like', '%' . $request->search . '%');
                 });
+            }
+
+            foreach ($transaksis as $transaksi) {
+                $detailCart = $transaksi->cart->detailCart;
+
+                // Check if produk exists in detailCart
+                if ($detailCart->produk) {
+                    // If produk exists, show produk
+                    $data[] = [
+                        'id_transaksi' => $transaksi->id_transaksi,
+                        'id_produk' => $detailCart->produk->id_produk,
+                        'nama_produk' => $detailCart->produk->nama_produk,
+                        // Add other properties of produk as needed
+                    ];
+                } elseif ($detailCart->hampers) {
+                    // If produk doesn't exist and hampers exists, show hampers
+                    $data[] = [
+                        'id_transaksi' => $transaksi->id_transaksi,
+                        'id_hampers' => $detailCart->hampers->id_hampers,
+                        'nama_hampers' => $detailCart->hampers->nama_hampers,
+                        // Add other properties of hampers as needed
+                    ];
+                } else {
+                    // Handle case when neither produk nor hampers exist
+                    // You can decide how to handle this case based on your requirements
+                }
             }
 
             $data = $transaksis->orderBy('id_transaksi', 'desc')->get();
