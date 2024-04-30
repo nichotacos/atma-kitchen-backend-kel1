@@ -143,6 +143,28 @@ class CustomerController extends Controller
     }
 
     //Baru
+    //Show Profile
+    public function showProfile()
+    {
+        try {
+            $customers = Auth::guard('customer-api')->user();
+
+            if (!$customers) throw new \Exception("Customer Not Found");
+
+            return response()->json([
+                "status" => true,
+                "message" => 'Show Profile Success',
+                "data" => $customers
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                "status" => false,
+                "message" => $e->getMessage(),
+                "data" => []
+            ], 400);
+        }
+    }
+
     //Update
     public function updateProfile(Request $request)
     {
@@ -197,26 +219,25 @@ class CustomerController extends Controller
             foreach ($transaksis as $transaksi) {
                 $detailCart = $transaksi->cart->detailCart;
 
-                // Check if produk exists in detailCart
+
                 if ($detailCart->produk) {
-                    // If produk exists, show produk
+
                     $data[] = [
                         'id_transaksi' => $transaksi->id_transaksi,
                         'id_produk' => $detailCart->produk->id_produk,
                         'nama_produk' => $detailCart->produk->nama_produk,
-                        // Add other properties of produk as needed
+
                     ];
                 } elseif ($detailCart->hampers) {
-                    // If produk doesn't exist and hampers exists, show hampers
+
                     $data[] = [
                         'id_transaksi' => $transaksi->id_transaksi,
                         'id_hampers' => $detailCart->hampers->id_hampers,
                         'nama_hampers' => $detailCart->hampers->nama_hampers,
-                        // Add other properties of hampers as needed
+
                     ];
                 } else {
-                    // Handle case when neither produk nor hampers exist
-                    // You can decide how to handle this case based on your requirements
+
                 }
             }
 
