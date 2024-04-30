@@ -45,7 +45,11 @@ Route::group(['middleware' => 'auth:employee-api'], function () {
 
     //Bahan Baku
     Route::get('/bahan-bakus', [BahanBakuController::class, 'index']);
-
+    Route::post('/bahan-bakus', [BahanBakuController::class, 'store']);
+    Route::put('/bahan-bakus/update/{id}', [BahanBakuController::class, 'update']);
+    Route::delete('/bahan-bakus/delete/{id}', [BahanBakuController::class, 'destroy']);
+    Route::get('/bahan-bakus/search/{id}', [BahanBakuController::class, 'search']);
+    
     //Customer
     Route::get('/customers/search/{nama}', [CustomerController::class, 'search']);
     Route::get('/customers', [CustomerController::class, 'index']);
@@ -111,11 +115,4 @@ Route::put('/roles/update/{id}', [RoleController::class, 'update']);
 Route::delete('/roles/delete/{id}', [RoleController::class, 'delete']);
 Route::get('/roles/search/{nama_role}', [RoleController::class, 'search']);
 
-
-//Bahan Baku
-Route::get('/bahan_bakus', [BahanBakuController::class, 'index']);
-Route::post('/bahan_bakus', [BahanBakuController::class, 'store']);
-Route::put('/bahan_bakus/update/{id}', [BahanBakuController::class, 'update']);
-Route::delete('/bahan_bakus/delete/{id}', [BahanBakuController::class, 'destroy']);
-Route::get('/bahan_bakus/search/{id}', [BahanBakuController::class, 'search']);
 });
