@@ -20,6 +20,6 @@ class Cart extends Model
 
     public function detailCart(): HasMany
     {
-        return $this->hasMany(DetailCart::class, 'id_detail_cart');
+        return $this->hasMany(DetailCart::class, 'id_cart');
     }
 }

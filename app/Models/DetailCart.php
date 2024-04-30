@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class DetailCart extends Model
@@ -20,13 +21,13 @@ class DetailCart extends Model
         'harga_total_terkini',
     ];
 
-    public function produk(): HasOne
+    public function produk(): BelongsTo
     {
-        return $this->hasOne(Produk::class, 'id_produk');
+        return $this->belongsTo(Produk::class, 'id_produk');
     }
 
-    public function hampers(): HasOne
+    public function hampers(): BelongsTo
     {
-        return $this->hasOne(Hampers::class, 'id_hampers');
+        return $this->belongsTo(Hampers::class, 'id_hampers');
     }
 }

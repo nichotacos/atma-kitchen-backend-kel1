@@ -18,8 +18,8 @@ class DetailResep extends Model
         'jumlah'
     ];
 
-    public function produk(): BelongsToMany
+    public function produk(): BelongsTo
     {
-        return $this->belongsToMany(Produk::class, 'id_produk');
+        return $this->belongsTo(Produk::class, 'id_produk');
     }
 }

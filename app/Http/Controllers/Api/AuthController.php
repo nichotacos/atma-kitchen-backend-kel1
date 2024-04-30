@@ -172,13 +172,13 @@ class AuthController extends Controller
                     break;
             }
 
-            return response([
-                'message' => $message,
-                'karyawan' => $karyawan,
-                'token_type' => 'Bearer',
-                'access_token' => $plainTextToken
-            ]);
-        }
+        return response([
+            'message' => $message,
+            'data' => $finalLogin,
+            'token_type' => 'Bearer',
+            'access_token' => $plainTextToken
+        ], 200);
+    }
 
     public function changePasswordKaryawan(Request $request)
     {
@@ -192,7 +192,7 @@ class AuthController extends Controller
                 return response()->json(['error' => $validator->errors()], 400);
             }
 
-            $karyawan = Auth::guard('employee')->user();
+            $karyawan = Auth::guard('employee-api')->user();
 
             if (!$karyawan) {
                 return response()->json(['error' => 'Unauthorized'], 401);

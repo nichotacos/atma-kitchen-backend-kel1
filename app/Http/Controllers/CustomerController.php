@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use App\Models\Customer;
+use App\Models\Transaksi;
+use Illuminate\Support\Facades\Auth;
 
 class CustomerController extends Controller
 {
@@ -73,6 +75,18 @@ class CustomerController extends Controller
 
             if (!$customers) throw new \Exception("Customer Not Found");
 
+            $validator = Validator::make($request->all(), [
+                'nama' => 'required|string|max:255',
+                'username' => 'required|string|max:255|unique:customers',
+                'email' => 'required|string|email|max:255|unique:customers',
+                'nomor_telepon' => ['required', 'regex:/^08\d{9,11}$/', 'unique:customers'],
+                'tanggal_lahir' => 'required|date'
+            ]);
+
+            if ($validator->fails()) {
+                return response()->json(['error' => $validator->errors()], 400);
+            }
+
             $customers->update($request->all());
 
             return response()->json([
@@ -112,20 +126,33 @@ class CustomerController extends Controller
         }
     }
 
-   //Show History Pesanan
-   public function showTransaksisByCustomer(){
+    //Baru
+    //Update
+    public function updateProfile(Request $request)
+    {
         try {
-            $id_customer = Auth::guard('api')->user()->id;
-            $transaksis = Transaksi::where('id_customer', $id_customer)->get();
+            $customers = Auth::guard('customer-api')->user();
 
-            if ($transaksis->isEmpty()) {
-                throw new \Exception($id_customer);
+            if (!$customers) throw new \Exception("Customer Not Found");
+
+            $validator = Validator::make($request->all(), [
+                'nama' => 'required|string|max:255',
+                'username' => 'required|string|max:255|unique:customers',
+                'email' => 'required|string|email|max:255|unique:customers',
+                'nomor_telepon' => ['required', 'regex:/^08\d{9,11}$/', 'unique:customers'],
+                'tanggal_lahir' => 'required|date'
+            ]);
+
+            if ($validator->fails()) {
+                return response()->json(['error' => $validator->errors()], 400);
             }
+
+            $customers->update($request->all());
 
             return response()->json([
                 "status" => true,
-                "message" => "Transaksi Ditemukan",
-                "data" => $transaksis
+                "message" => 'Update Profile Success',
+                "data" => $customers
             ], 200);
         } catch (\Exception $e) {
             return response()->json([
@@ -136,22 +163,57 @@ class CustomerController extends Controller
         }
     }
 
-    //Show History Pesanan
-   public function showTransaksisCustomerByProduct(){
+    //Show History Pesanan and search by produk
+    public function showTransaksiCustomer(Request $request)
+    {
         try {
-            $id_customer = Auth::guard('api')->user()->id;
-            $transaksis = Transaksi::where('id_customer', $id_customer)->get();
+            $customers = Auth::guard('customer-api')->user();
+            $id_customer = $customers->id_customer;
 
-            if ($transaksis->isEmpty()) {
-                throw new \Exception($id_customer);
+            $transaksis = Transaksi::with(['cart.detailCart.produk', 'cart.detailCart.hampers.produk'])->where('id_customer', $id_customer);
+
+            if ($request->search) {
+                $transaksis->whereHas('cart.detailCart.produk', function ($query) use ($request) {
+                    $query->where('nama_produk', 'like', '%' . $request->search . '%');
+                });
             }
 
+            foreach ($transaksis as $transaksi) {
+                $detailCart = $transaksi->cart->detailCart;
 
+                // Check if produk exists in detailCart
+                if ($detailCart->produk) {
+                    // If produk exists, show produk
+                    $data[] = [
+                        'id_transaksi' => $transaksi->id_transaksi,
+                        'id_produk' => $detailCart->produk->id_produk,
+                        'nama_produk' => $detailCart->produk->nama_produk,
+                        // Add other properties of produk as needed
+                    ];
+                } elseif ($detailCart->hampers) {
+                    // If produk doesn't exist and hampers exists, show hampers
+                    $data[] = [
+                        'id_transaksi' => $transaksi->id_transaksi,
+                        'id_hampers' => $detailCart->hampers->id_hampers,
+                        'nama_hampers' => $detailCart->hampers->nama_hampers,
+                        // Add other properties of hampers as needed
+                    ];
+                } else {
+                    // Handle case when neither produk nor hampers exist
+                    // You can decide how to handle this case based on your requirements
+                }
+            }
+
+            $data = $transaksis->orderBy('id_transaksi', 'desc')->get();
+
+            if ($data->isEmpty()) {
+                throw new \Exception('Transaksi Tidak Ditemukan');
+            }
 
             return response()->json([
                 "status" => true,
                 "message" => "Transaksi Ditemukan",
-                "data" => $transaksis
+                "data" => $data
             ], 200);
         } catch (\Exception $e) {
             return response()->json([
