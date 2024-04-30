@@ -14,7 +14,6 @@ use App\Http\Controllers\PromoPoinController;
 use App\Http\Controllers\RoleController;
 use App\Models\ProdukHampers;
 use App\Http\Controllers\ResepController;
-use App\Http\Controllers\BahanBakuController;
 
 //Register Customer
 Route::post('/register', [AuthController::class, 'register']);
@@ -119,3 +118,4 @@ Route::post('/bahan_bakus', [BahanBakuController::class, 'store']);
 Route::put('/bahan_bakus/update/{id}', [BahanBakuController::class, 'update']);
 Route::delete('/bahan_bakus/delete/{id}', [BahanBakuController::class, 'destroy']);
 Route::get('/bahan_bakus/search/{id}', [BahanBakuController::class, 'search']);
+});
