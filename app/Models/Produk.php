@@ -56,4 +56,9 @@ class Produk extends Model
     {
         return $this->belongsTo(Kemasan::class, 'id_kemasan');
     }
+
+    public function Penitip(): BelongsTo
+    {
+        return $this->belongsTo(Penitip::class, 'id_penitip');
+    }
 }
