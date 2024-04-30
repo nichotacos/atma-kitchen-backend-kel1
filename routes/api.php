@@ -27,6 +27,7 @@ Route::post('/login', [AuthController::class, 'login']);
 
 Route::group(['middleware' => 'auth:customer-api'], function () {
     //Auth
+    Route::get('/show-profile', [CustomerController::class, 'showProfile']);
     Route::put('/update-profile', [CustomerController::class, 'updateProfile']);
     Route::get('/show-transaksi-customer', [CustomerController::class, 'showTransaksiCustomer']);
 
@@ -64,12 +65,12 @@ Route::group(['middleware' => 'auth:employee-api'], function () {
     Route::delete('/reseps/delete/{id}', [ResepController::class, 'destroy']);
 
     //Karyawan
+    Route::put('/karyawans/editGajiBonus/{id}', [KaryawanController::class, 'editGajiBonus']);
     Route::get('/karyawans', [KaryawanController::class, 'index']);
     Route::post('/karyawans', [KaryawanController::class, 'store']);
     Route::put('/karyawans/update/{id}', [KaryawanController::class, 'update']);
     Route::delete('/karyawans/delete/{id}', [KaryawanController::class, 'destroy']);
     Route::get('/karyawans/search/{nama_karyawan}', [KaryawanController::class, 'search']);
-    Route::put('/karyawans/editGajiBonus/{id}', [KaryawanController::class, 'editGajiBonus']);
 
     //Penggajian
     Route::get('/penggajians', [PenggajianController::class, 'index']);

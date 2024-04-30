@@ -199,14 +199,14 @@ class KaryawanController extends Controller
         try {
             $karyawans = Karyawan::find($id);
 
+            if (!$karyawans) throw new \Exception("Karyawan Not Found");
+
             $validator = Validator::make($request->all(), [
                 'gaji_harian' => 'required_without:bonus|numeric',
                 'bonus_rajin' => 'required_without:gaji|numeric'
             ]);
 
             $karyawans->update($request->all());
-
-            if (!$karyawans) throw new \Exception("Karyawan Not Found");
 
             return response()->json([
                 "status" => true,
