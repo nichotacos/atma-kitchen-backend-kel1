@@ -57,6 +57,7 @@ class DetailResepController extends Controller
         try {
 
             $validator = Validator::make($request->all(), [
+                'id_produk' => 'required|numeric',
                 'id_bahan_baku' => 'required|numeric|between:1,21',
                 'jumlah' => 'required|numeric'
             ]);
@@ -66,6 +67,7 @@ class DetailResepController extends Controller
             }
 
             $detailReseps = DetailResep::create([
+                'id_produk' => $request->id_produk,
                 'id_bahan_baku' => $request->id_bahan_baku,
                 'jumlah' => $request->jumlah
             ]);
@@ -115,8 +117,9 @@ class DetailResepController extends Controller
             if (!$detailReseps) throw new \Exception("Detail Resep Not Found");
 
             $validator = Validator::make($request->all(), [
-                'id_bahan_baku' => 'required|numeric|between:1,21',
-                'jumlah' => 'required|numeric'
+                'id_produk' => 'numeric',
+                'id_bahan_baku' => 'numeric|between:1,21',
+                'jumlah' => 'numeric'
             ]);
 
             if ($validator->fails()) {
@@ -140,7 +143,7 @@ class DetailResepController extends Controller
     }
 
     //Delete
-    public function delete($id)
+    public function destroy($id)
     {
         try {
             $detailReseps = DetailResep::find($id);

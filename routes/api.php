@@ -58,11 +58,11 @@ Route::group(['middleware' => 'auth:employee-api'], function () {
     Route::get('/detail_reseps/search/{nama_bahan_baku}', [DetailResepController::class, 'search']);
 
     //Resep
-    Route::get('/reseps', [ResepController::class, 'index']);
-    Route::post('/reseps', [ResepController::class, 'store']);
-    Route::get('/reseps/{id}', [ResepController::class, 'show']);
-    Route::put('/reseps/update/{id}', [ResepController::class, 'update']);
-    Route::delete('/reseps/delete/{id}', [ResepController::class, 'destroy']);
+    // Route::get('/reseps', [ResepController::class, 'index']);
+    // Route::post('/reseps', [ResepController::class, 'store']);
+    // Route::get('/reseps/{id}', [ResepController::class, 'show']);
+    // Route::put('/reseps/update/{id}', [ResepController::class, 'update']);
+    // Route::delete('/reseps/delete/{id}', [ResepController::class, 'destroy']);
 
     //Karyawan
     Route::put('/karyawans/editGajiBonus/{id}', [KaryawanController::class, 'editGajiBonus']);
