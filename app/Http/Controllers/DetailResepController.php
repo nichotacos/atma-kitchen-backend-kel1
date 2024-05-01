@@ -14,17 +14,19 @@ class DetailResepController extends Controller
     public function index(Request $request)
     {
         try {
-            $detailReseps = DetailResep::query()->with('bahanBaku');
-            if ($request->search) {
-                $detailReseps->whereHas('bahanBaku', function (Builder $query) use ($request) {
-                    $query->where('nama_bahan_baku', 'like', '%' . $request->search . '%');
+            $detailReseps = DetailResep::query()->with('produk', 'bahanBaku');
+
+            if ($request->has('search') && $request->search) {
+                $searchTerm = $request->search;
+                $detailReseps->whereHas('produk', function (Builder $query) use ($searchTerm) {
+                    $query->where('nama_produk', 'like', '%' . $searchTerm . '%');
                 });
             }
 
-            if ($request->sort_by && in_array($request->sort_by, ['id_detail_resep', 'bahan_bakus.nama_bahan_baku'])) {
+            if ($request->sort_by && in_array($request->sort_by, ['id_produk', 'nama_produk'])) {
                 $sort_by = $request->sort_by;
             } else {
-                $sort_by = 'id_detail_resep';
+                $sort_by = 'id_produk';
             }
 
             if ($request->sort_order && in_array($request->sort_order, ['asc', 'desc'])) {

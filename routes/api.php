@@ -15,6 +15,7 @@ use App\Http\Controllers\RoleController;
 use App\Models\ProdukHampers;
 use App\Http\Controllers\ResepController;
 use App\Http\Controllers\BahanBakuController;
+use App\Http\Controllers\UnitController;
 
 //Register Customer
 Route::post('/register', [AuthController::class, 'register']);
@@ -111,6 +112,9 @@ Route::group(['middleware' => 'auth:employee-api'], function () {
     Route::post('/products', [ProdukController::class, 'store']);
     Route::put('/products/update/{id}', [ProdukController::class, 'update']);
     Route::delete('/products/delete/{id}', [ProdukController::class, 'destroy']);
+
+    //Unit
+    Route::get('/units', [UnitController::class, 'index']);
 });
 
 
