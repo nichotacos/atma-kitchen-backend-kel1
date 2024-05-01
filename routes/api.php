@@ -15,6 +15,7 @@ use App\Http\Controllers\RoleController;
 use App\Models\ProdukHampers;
 use App\Http\Controllers\ResepController;
 use App\Http\Controllers\BahanBakuController;
+use App\Http\Controllers\UnitController;
 
 //Register Customer
 Route::post('/register', [AuthController::class, 'register']);
@@ -58,11 +59,11 @@ Route::group(['middleware' => 'auth:employee-api'], function () {
     Route::get('/detail_reseps/search/{nama_bahan_baku}', [DetailResepController::class, 'search']);
 
     //Resep
-    Route::get('/reseps', [ResepController::class, 'index']);
-    Route::post('/reseps', [ResepController::class, 'store']);
-    Route::get('/reseps/{id}', [ResepController::class, 'show']);
-    Route::put('/reseps/update/{id}', [ResepController::class, 'update']);
-    Route::delete('/reseps/delete/{id}', [ResepController::class, 'destroy']);
+    // Route::get('/reseps', [ResepController::class, 'index']);
+    // Route::post('/reseps', [ResepController::class, 'store']);
+    // Route::get('/reseps/{id}', [ResepController::class, 'show']);
+    // Route::put('/reseps/update/{id}', [ResepController::class, 'update']);
+    // Route::delete('/reseps/delete/{id}', [ResepController::class, 'destroy']);
 
     //Karyawan
     Route::put('/karyawans/editGajiBonus/{id}', [KaryawanController::class, 'editGajiBonus']);
@@ -111,6 +112,9 @@ Route::group(['middleware' => 'auth:employee-api'], function () {
     Route::post('/products', [ProdukController::class, 'store']);
     Route::put('/products/update/{id}', [ProdukController::class, 'update']);
     Route::delete('/products/delete/{id}', [ProdukController::class, 'destroy']);
+
+    //Unit
+    Route::get('/units', [UnitController::class, 'index']);
 });
 
 

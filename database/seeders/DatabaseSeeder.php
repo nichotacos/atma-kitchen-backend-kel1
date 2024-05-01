@@ -38,7 +38,6 @@ class DatabaseSeeder extends Seeder
             PengadaanBahanBakuSeeder::class,
             ProdukSeeder::class,
             DetailResepSeeder::class,
-            ResepSeeder::class,
             HampersSeeder::class,
             ProdukHampersSeeder::class,
             CartSeeder::class,
