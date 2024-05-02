@@ -15,6 +15,10 @@ use App\Http\Controllers\RoleController;
 use App\Models\ProdukHampers;
 use App\Http\Controllers\ResepController;
 use App\Http\Controllers\BahanBakuController;
+use App\Http\Controllers\JenisKetersediaanController;
+use App\Http\Controllers\KategoriController;
+use App\Http\Controllers\PenitipController;
+use App\Http\Controllers\UkuranProdukController;
 use App\Http\Controllers\UnitController;
 use App\Http\Controllers\StatusController;
 use App\Http\Controllers\AlamatController;
@@ -117,6 +121,27 @@ Route::group(['middleware' => 'auth:employee-api'], function () {
 
     //Unit
     Route::get('/units', [UnitController::class, 'index']);
+
+    //Jenis Ketersediaan
+    Route::get('/jenis-ketersediaans', [JenisKetersediaanController::class, 'index']);
+    Route::post('/jenis-ketersediaans', [JenisKetersediaanController::class, 'store']);
+    Route::put('/jenis-ketersediaans/update/{id}', [JenisKetersediaanController::class, 'update']);
+    Route::delete('/jenis-ketersediaans/delete/{id}', [JenisKetersediaanController::class, 'destroy']);
+
+    //Kategori
+    Route::get('/kategoris', [KategoriController::class, 'index']);
+    Route::post('/kategoris', [KategoriController::class, 'store']);
+    Route::put('/kategoris/update/{id}', [KategoriController::class, 'update']);
+    Route::delete('/kategoris/delete/{id}', [KategoriController::class, 'destroy']);
+
+    //Ukuran 
+    Route::get('/ukurans', [UkuranProdukController::class, 'index']);
+    Route::post('/ukurans', [UkuranProdukController::class, 'store']);
+    Route::put('/ukurans/update/{id}', [UkuranProdukController::class, 'update']);
+    Route::delete('/ukurans/delete/{id}', [UkuranProdukController::class, 'destroy']);
+
+    //Penitip
+    Route::get('/penitips', [PenitipController::class, 'index']);
 });
 
 //Alamat
