@@ -211,14 +211,22 @@ class CustomerController extends Controller
             $transaksis = Transaksi::with(['cart.detailCart.produk', 'cart.detailCart.hampers.produk'])->where('id_customer', $id_customer);
 
             if ($request->search) {
-                $transaksis->whereHas('cart.detailCart.produk', function ($query) use ($request) {
-                    $query->where('nama_produk', 'like', '%' . $request->search . '%');
+                $transaksis->whereHas('cart.detailCart', function ($query) use ($request) {
+                    $query->where(function ($q) use ($request) {
+                        $q->whereHas('produk', function ($subquery) use ($request) {
+                                $subquery->where('nama_produk', 'like', '%' . $request->search . '%');
+                            })
+                            ->orWhereHas('hampers', function ($subquery) use ($request) {
+                                $subquery->whereHas('produk', function ($subsubquery) use ($request) {
+                                    $subsubquery->where('nama_produk', 'like', '%' . $request->search . '%');
+                                });
+                            });
+                    });
                 });
             }
 
             foreach ($transaksis as $transaksi) {
                 $detailCart = $transaksi->cart->detailCart;
-
 
                 if ($detailCart->produk) {
 
@@ -234,7 +242,6 @@ class CustomerController extends Controller
                         'id_transaksi' => $transaksi->id_transaksi,
                         'id_hampers' => $detailCart->hampers->id_hampers,
                         'nama_hampers' => $detailCart->hampers->nama_hampers,
-
                     ];
                 } else {
 
