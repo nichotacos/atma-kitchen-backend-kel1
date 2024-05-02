@@ -202,8 +202,8 @@ class KaryawanController extends Controller
             if (!$karyawans) throw new \Exception("Karyawan Not Found");
 
             $validator = Validator::make($request->all(), [
-                'gaji_harian' => 'required_without:bonus|numeric',
-                'bonus_rajin' => 'required_without:gaji|numeric'
+                'gaji_harian' => 'required|numeric',
+                'bonus_rajin' => 'required|numeric'
             ]);
 
             $karyawans->update($request->all());
