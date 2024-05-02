@@ -16,6 +16,8 @@ use App\Models\ProdukHampers;
 use App\Http\Controllers\ResepController;
 use App\Http\Controllers\BahanBakuController;
 use App\Http\Controllers\UnitController;
+use App\Http\Controllers\StatusController;
+use App\Http\Controllers\AlamatController;
 
 //Register Customer
 Route::post('/register', [AuthController::class, 'register']);
@@ -117,6 +119,11 @@ Route::group(['middleware' => 'auth:employee-api'], function () {
     Route::get('/units', [UnitController::class, 'index']);
 });
 
+//Alamat
+Route::get('/alamats', [AlamatController::class, 'index']);
+
+//Statuses
+Route::get('/statuses', [StatusController::class, 'index']);
 
 //Produk
 Route::get('/products', [ProdukController::class, 'index']);
