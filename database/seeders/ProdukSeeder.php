@@ -245,7 +245,7 @@ class ProdukSeeder extends Seeder
                 'gambar_produk' => '56750061d41d399455453db13de972ae.jpg',
                 'id_jenis_ketersediaan' => 1,
                 'id_kategori' => 4,
-                'id_kemasan' => 6,
+                'id_kemasan' => 7,
                 'id_penitip' => 1,
                 'id_ukuran' => 5,
                 'kuota_harian' => 0, //masih dummy, gatau ada di dokumen apa kaga
@@ -260,7 +260,7 @@ class ProdukSeeder extends Seeder
                 'gambar_produk' => '56750061d41d399455453db13de972ae.jpg',
                 'id_jenis_ketersediaan' => 1,
                 'id_kategori' => 4,
-                'id_kemasan' => 6,
+                'id_kemasan' => 7,
                 'id_penitip' => 2,
                 'id_ukuran' => 5,
                 'kuota_harian' => 0, //masih dummy, gatau ada di dokumen apa kaga
@@ -275,7 +275,7 @@ class ProdukSeeder extends Seeder
                 'gambar_produk' => '56750061d41d399455453db13de972ae.jpg',
                 'id_jenis_ketersediaan' => 1,
                 'id_kategori' => 4,
-                'id_kemasan' => 6,
+                'id_kemasan' => 7,
                 'id_penitip' => 3,
                 'id_ukuran' => 5,
                 'kuota_harian' => 0, //masih dummy, gatau ada di dokumen apa kaga
@@ -290,7 +290,7 @@ class ProdukSeeder extends Seeder
                 'gambar_produk' => '56750061d41d399455453db13de972ae.jpg',
                 'id_jenis_ketersediaan' => 1,
                 'id_kategori' => 4,
-                'id_kemasan' => 6,
+                'id_kemasan' => 7,
                 'id_penitip' => 4,
                 'id_ukuran' => 5,
                 'kuota_harian' => 0, //masih dummy, gatau ada di dokumen apa kaga
