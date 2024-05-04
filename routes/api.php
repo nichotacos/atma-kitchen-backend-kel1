@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AlamatController;
 use App\Http\Controllers\Api\AuthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -19,10 +20,9 @@ use App\Http\Controllers\JenisKetersediaanController;
 use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\KemasanController;
 use App\Http\Controllers\PenitipController;
+use App\Http\Controllers\StatusController;
 use App\Http\Controllers\UkuranProdukController;
 use App\Http\Controllers\UnitController;
-use App\Http\Controllers\StatusController;
-use App\Http\Controllers\AlamatController;
 
 //Register Customer
 Route::post('/register', [AuthController::class, 'register']);
@@ -146,6 +146,9 @@ Route::group(['middleware' => 'auth:employee-api'], function () {
 
     //Kemasan
     Route::get('/kemasans', [KemasanController::class, 'index']);
+
+    //Detail Hampers
+    Route::Get('/detail-hampers', [HampersController::class, 'indexDetailHampers']);
 });
 
 //Alamat
