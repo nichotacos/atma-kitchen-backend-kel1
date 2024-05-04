@@ -17,6 +17,7 @@ use App\Http\Controllers\ResepController;
 use App\Http\Controllers\BahanBakuController;
 use App\Http\Controllers\JenisKetersediaanController;
 use App\Http\Controllers\KategoriController;
+use App\Http\Controllers\KemasanController;
 use App\Http\Controllers\PenitipController;
 use App\Http\Controllers\UkuranProdukController;
 use App\Http\Controllers\UnitController;
@@ -140,6 +141,9 @@ Route::group(['middleware' => 'auth:employee-api'], function () {
 
     //Penitip
     Route::get('/penitips', [PenitipController::class, 'index']);
+
+    //Kemasan
+    Route::get('/kemasans', [KemasanController::class, 'index']);
 });
 
 

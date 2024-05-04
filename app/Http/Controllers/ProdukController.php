@@ -59,33 +59,32 @@ class ProdukController extends Controller
     public function store(Request $request)
     {
         try {
-            $validator = Validator::make($request->all(), [
-                'jenis_ketersediaan' => 'required|numeric|between:1,2',
+            $data = $request->all();
+            $validator = Validator::make($data, [
+                'id_jenis_ketersediaan' => 'required|numeric|between:1,2',
                 'id_ukuran' => 'required|numeric|between:1,5',
                 'id_kategori' => 'required|numeric|between:1,4',
                 'id_kemasan' => 'required|numeric|between:1,6',
                 'id_penitip' => 'required|numeric',
-                'deskripsi' => 'required|string',
+                'deskripsi_produk' => 'required|string',
                 'harga_produk' => 'required|numeric',
                 'stok' => 'required|numeric',
-                'kuota_harian' => 'required|numeric'
+                'kuota_harian' => 'required|numeric',
+                'gambar_produk' => 'required|image:jpeg,png,jpg,gif,svg|max:2048'
             ]);
 
             if ($validator->fails()) {
                 return response()->json(['error' => $validator->errors()], 400);
             }
 
-            $products = Produk::create([
-                'jenis_ketersediaan' => $request->jenis_ketersediaan,
-                'id_ukuran' => $request->id_ukuran,
-                'id_kategori' => $request->id_kategori,
-                'id_kemasan' => $request->id_kemasan,
-                'id_penitip' => $request->id_penitip,
-                'deskripsi' => $request->deskripsi,
-                'harga_produk' => $request->harga_produk,
-                'stok' => $request->stok,
-                'kuota_harian' => $request->kuota_harian
-            ]);
+            $image = $request->file('gambar_produk');
+            $fileName = $image->hashName();
+            $image->move(public_path('img/produk'), $fileName);
+            $uploadedImageResponse = basename($fileName);
+
+            $data['gambar_produk'] = $uploadedImageResponse;
+
+            $products = Produk::create($data);
 
             return response()->json([
                 "status" => true,
