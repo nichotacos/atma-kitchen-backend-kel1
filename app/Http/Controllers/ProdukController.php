@@ -6,6 +6,7 @@ use App\Models\Produk;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Storage;
 
 class ProdukController extends Controller
 {
@@ -62,9 +63,9 @@ class ProdukController extends Controller
             $data = $request->all();
             $validator = Validator::make($data, [
                 'id_jenis_ketersediaan' => 'required|numeric|between:1,2',
-                'id_ukuran' => 'required|numeric|between:1,5',
-                'id_kategori' => 'required|numeric|between:1,4',
-                'id_kemasan' => 'required|numeric|between:1,6',
+                'id_ukuran' => 'required|numeric',
+                'id_kategori' => 'required|numeric',
+                'id_kemasan' => 'required|numeric|',
                 'id_penitip' => 'required|numeric',
                 'deskripsi_produk' => 'required|string',
                 'harga_produk' => 'required|numeric',
@@ -88,7 +89,7 @@ class ProdukController extends Controller
 
             return response()->json([
                 "status" => true,
-                "message" => 'Insert Data Success',
+                "message" => 'Berhasil menambahkan produk',
                 "data" => $products
             ], 201);
         } catch (\Exception $e) {
@@ -109,15 +110,15 @@ class ProdukController extends Controller
             if (!$products) throw new \Exception("Produk tidak ditemukan!");
 
             $validator = Validator::make($request->all(), [
-                'jenis_ketersediaan' => 'required|numeric|between:1,2',
-                'id_ukuran' => 'required|numeric|between:1,5',
-                'id_kategori' => 'required|numeric|between:1,4',
-                'id_kemasan' => 'required|numeric|between:1,6',
+                'id_jenis_ketersediaan' => 'required|numeric|between:1,2',
+                'id_ukuran' => 'required|numeric',
+                'id_kategori' => 'required|numeric',
+                'id_kemasan' => 'required|numeric|',
                 'id_penitip' => 'required|numeric',
-                'deskripsi' => 'required|string',
+                'deskripsi_produk' => 'required|string',
                 'harga_produk' => 'required|numeric',
                 'stok' => 'required|numeric',
-                'kuota_harian' => 'required|numeric'
+                'kuota_harian' => 'required|numeric',
             ]);
 
             if ($validator->fails()) {
@@ -148,11 +149,13 @@ class ProdukController extends Controller
 
             if (!$products) throw new \Exception("Produk tidak ditemukan!");
 
+            Storage::disk('public')->delete('img/produk' . $products->gambar_produk);
+
             $products->delete();
 
             return response()->json([
                 "status" => true,
-                "message" => 'Berhasil delete produk',
+                "message" => 'Produk berhasil dihapus',
                 "data" => $products
             ], 200);
         } catch (\Exception $e) {

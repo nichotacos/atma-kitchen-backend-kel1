@@ -52,11 +52,19 @@ class HampersController extends Controller
             $validator = Validator::make($request->all(), [
                 'nama_hampers' => 'required|string|max:255',
                 'harga_hampers' => 'required|integer',
+                'gambar_hampers' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
             ]);
 
             if ($validator->fails()) {
                 return response()->json(['error' => $validator->errors()], 400);
             }
+
+            $image = $request->file('gambar_hampers');
+            $fileName = $image->hashName();
+            $image->move(public_path('img/hampers'), $fileName);
+            $uploadedImageResponse = basename($fileName);
+
+            $data['gambar_hampers'] = $uploadedImageResponse;
 
             $hampers = Hampers::create([
                 'nama_hampers' => $request->nama_hampers,
@@ -84,7 +92,7 @@ class HampersController extends Controller
         try {
             $validator = Validator::make($request->all(), [
                 'id_hampers' => 'required|integer',
-                'id_produk' => 'required|integer'
+                'id_produk' => 'required|integer',
             ]);
 
             if ($validator->fails()) {
