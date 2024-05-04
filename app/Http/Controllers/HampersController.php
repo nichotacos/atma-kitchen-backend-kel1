@@ -64,12 +64,14 @@ class HampersController extends Controller
             $image->move(public_path('img/hampers'), $fileName);
             $uploadedImageResponse = basename($fileName);
 
+            $data = $request->all();
             $data['gambar_hampers'] = $uploadedImageResponse;
 
             $hampers = Hampers::create([
                 'nama_hampers' => $request->nama_hampers,
                 'harga_hampers' => $request->harga_hampers,
-                'id_kemasan' => 5
+                'gambar_hampers' => $data['gambar_hampers'],
+                'id_kemasan' => 6
             ]);
 
             return response()->json([
@@ -130,7 +132,7 @@ class HampersController extends Controller
     public function update(Request $request, $idHampers)
     {
         try {
-            $hampers = ProdukHampers::find($idHampers);
+            $hampers = Hampers::find($idHampers);
 
             if (!$hampers) throw new \Exception('Hampers tidak ditemukan');
 
@@ -187,15 +189,15 @@ class HampersController extends Controller
     }
 
     // Ini nanti buat pivot table
-    public function destroyCertain(Request $request)
+    public function destroyCertain($idHampers, $idProduct)
     {
         try {
-            $hampers = Hampers::find($request->id_hampers);
-            $produk_hampers = ProdukHampers::where('id_hampers', $request->id_hampers)->where('id_produk', $request->id_produk)->get();
+            $hampers = Hampers::find($idHampers);
+            $produk_hampers = ProdukHampers::where('id_hampers', $idHampers)->where('id_produk', $idProduct)->get();
 
             if (!$produk_hampers) throw new \Exception('Data hampers dan produk tidak ditemukan');
 
-            $hampers->produk()->detach($request->id_produk);
+            $hampers->produk()->detach($idProduct);
 
             return response()->json([
                 "status" => true,
