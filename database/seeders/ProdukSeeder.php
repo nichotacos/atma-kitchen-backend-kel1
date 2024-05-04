@@ -24,7 +24,7 @@ class ProdukSeeder extends Seeder
                 'id_penitip' => 6,
                 'id_ukuran' => 1,
                 'kuota_harian' => 10, //masih dummy, gatau ada di dokumen apa kaga
-                'nama_produk' => 'Lapis Legit',
+                'nama_produk' => 'Lapis Legit 1 Loyang',
                 'stok' => 0, //karna PO,
                 'created_at' => now(),
                 'updated_at' => now(),
@@ -39,7 +39,7 @@ class ProdukSeeder extends Seeder
                 'id_penitip' => 6,
                 'id_ukuran' => 2,
                 'kuota_harian' => 10, //masih dummy, gatau ada di dokumen apa kaga
-                'nama_produk' => 'Lapis Legit',
+                'nama_produk' => 'Lapis Legit ½ Loyang',
                 'stok' => 0, //karna PO,
                 'created_at' => now(),
                 'updated_at' => now(),
@@ -54,7 +54,7 @@ class ProdukSeeder extends Seeder
                 'id_penitip' => 6,
                 'id_ukuran' => 1,
                 'kuota_harian' => 10, //masih dummy, gatau ada di dokumen apa kaga
-                'nama_produk' => 'Lapis Surabaya',
+                'nama_produk' => 'Lapis Surabaya 1 Loyang',
                 'stok' => 0, //karna PO,
                 'created_at' => now(),
                 'updated_at' => now(),
@@ -69,7 +69,7 @@ class ProdukSeeder extends Seeder
                 'id_penitip' => 6,
                 'id_ukuran' => 2,
                 'kuota_harian' => 10, //masih dummy, gatau ada di dokumen apa kaga
-                'nama_produk' => 'Lapis Surabaya',
+                'nama_produk' => 'Lapis Surabaya ½ Loyang',
                 'stok' => 0, //karna PO,
                 'created_at' => now(),
                 'updated_at' => now(),
@@ -84,7 +84,7 @@ class ProdukSeeder extends Seeder
                 'id_penitip' => 6,
                 'id_ukuran' => 1,
                 'kuota_harian' => 10, //masih dummy, gatau ada di dokumen apa kaga
-                'nama_produk' => 'Brownies',
+                'nama_produk' => 'Brownies 1 Loyang',
                 'stok' => 0, //karna PO,
                 'created_at' => now(),
                 'updated_at' => now(),
@@ -99,7 +99,7 @@ class ProdukSeeder extends Seeder
                 'id_penitip' => 6,
                 'id_ukuran' => 2,
                 'kuota_harian' => 10, //masih dummy, gatau ada di dokumen apa kaga
-                'nama_produk' => 'Brownies',
+                'nama_produk' => 'Brownies ½ Loyang',
                 'stok' => 0, //karna PO
                 'created_at' => now(),
                 'updated_at' => now(),
@@ -114,7 +114,7 @@ class ProdukSeeder extends Seeder
                 'id_penitip' => 6,
                 'id_ukuran' => 1,
                 'kuota_harian' => 10, //masih dummy, gatau ada di dokumen apa kaga
-                'nama_produk' => 'Mandarin',
+                'nama_produk' => 'Mandarin 1 Loyang',
                 'stok' => 0, //karna PO
                 'created_at' => now(),
                 'updated_at' => now(),
@@ -129,7 +129,7 @@ class ProdukSeeder extends Seeder
                 'id_penitip' => 6,
                 'id_ukuran' => 2,
                 'kuota_harian' => 10, //masih dummy, gatau ada di dokumen apa kaga
-                'nama_produk' => 'Mandarin',
+                'nama_produk' => 'Mandarin ½ Loyang',
                 'stok' => 0, //karna PO
                 'created_at' => now(),
                 'updated_at' => now(),
@@ -144,7 +144,7 @@ class ProdukSeeder extends Seeder
                 'id_penitip' => 6,
                 'id_ukuran' => 1,
                 'kuota_harian' => 10, //masih dummy, gatau ada di dokumen apa kaga
-                'nama_produk' => 'Spikoe',
+                'nama_produk' => 'Spikoe 1 Loyang',
                 'stok' => 0, //karna PO
                 'created_at' => now(),
                 'updated_at' => now(),
@@ -159,7 +159,7 @@ class ProdukSeeder extends Seeder
                 'id_penitip' => 6,
                 'id_ukuran' => 2,
                 'kuota_harian' => 10, //masih dummy, gatau ada di dokumen apa kaga
-                'nama_produk' => 'Spikoe',
+                'nama_produk' => 'Spikoe ½ Loyang',
                 'stok' => 0, //karna PO
                 'created_at' => now(),
                 'updated_at' => now(),
