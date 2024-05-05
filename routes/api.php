@@ -21,6 +21,9 @@ use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\KemasanController;
 use App\Http\Controllers\PenitipController;
 use App\Http\Controllers\StatusController;
+use App\Http\Controllers\AlamatController;
+use App\Http\Controllers\DetailCartController;
+use App\Http\Controllers\ProdukHampersController;
 use App\Http\Controllers\UkuranProdukController;
 use App\Http\Controllers\UnitController;
 
@@ -92,6 +95,7 @@ Route::group(['middleware' => 'auth:employee-api'], function () {
     Route::post('/presensis', [PresensiController::class, 'store']);
     Route::put('/presensis/update/{id}', [PresensiController::class, 'update']);
     Route::delete('/presensis/delete/{id}', [PresensiController::class, 'destroy']);
+
     Route::get('/presensis/search/{nama_karyawan}', [PresensiController::class, 'search']);
 
     //Promo Poin
@@ -163,3 +167,9 @@ Route::get('/products', [ProdukController::class, 'index']);
 
 //Hampers
 Route::get('/hampers', [HampersController::class, 'index']);
+
+//DetailCarts
+Route::get('/detail-carts', [DetailCartController::class, 'index']);
+
+//ProdukHampers
+Route::get('/produk-hampers',[ProdukHampersController::class, 'index']);

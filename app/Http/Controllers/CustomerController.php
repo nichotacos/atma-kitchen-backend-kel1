@@ -208,7 +208,7 @@ class CustomerController extends Controller
             $customers = Auth::guard('customer-api')->user();
             $id_customer = $customers->id_customer;
 
-            $transaksis = Transaksi::with(['cart.detailCart.produk', 'cart.detailCart.hampers.produk'])->where('id_customer', $id_customer);
+            $transaksis = Transaksi::with(['cart.detailCart.produk', 'cart.detailCart.hampers.produk', 'alamat', 'status', 'jenisPengambilan', 'cart.detailCart.hampers.kemasan'])->where('id_customer', $id_customer);
 
             if ($request->search) {
                 $transaksis->whereHas('cart.detailCart', function ($query) use ($request) {
