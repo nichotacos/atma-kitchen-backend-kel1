@@ -14,8 +14,9 @@ return new class extends Migration
         Schema::create('hampers', function (Blueprint $table) {
             $table->id('id_hampers');
             $table->foreignId('id_kemasan')->references('id_kemasan')->on('kemasans')->onUpdate('cascade')->onDelete('cascade');
-            $table->double('harga_hampers');
             $table->string('nama_hampers');
+            $table->double('harga_hampers');
+            $table->string('gambar_hampers');
             $table->timestamps();
         });
     }

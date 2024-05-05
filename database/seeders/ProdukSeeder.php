@@ -17,13 +17,14 @@ class ProdukSeeder extends Seeder
             [
                 'deskripsi_produk' => 'nanti diisi deh',
                 'harga_produk' => 850000,
+                'gambar_produk' => '56750061d41d399455453db13de972ae.jpg',
                 'id_jenis_ketersediaan' => 2,
                 'id_kategori' => 1,
                 'id_kemasan' => 1,
                 'id_penitip' => 6,
                 'id_ukuran' => 1,
                 'kuota_harian' => 10, //masih dummy, gatau ada di dokumen apa kaga
-                'nama_produk' => 'Lapis Legit',
+                'nama_produk' => 'Lapis Legit 1 Loyang',
                 'stok' => 0, //karna PO,
                 'created_at' => now(),
                 'updated_at' => now(),
@@ -31,13 +32,14 @@ class ProdukSeeder extends Seeder
             [
                 'deskripsi_produk' => 'nanti diisi deh',
                 'harga_produk' => 450000,
+                'gambar_produk' => '56750061d41d399455453db13de972ae.jpg',
                 'id_jenis_ketersediaan' => 2,
                 'id_kategori' => 1,
                 'id_kemasan' => 2,
                 'id_penitip' => 6,
                 'id_ukuran' => 2,
                 'kuota_harian' => 10, //masih dummy, gatau ada di dokumen apa kaga
-                'nama_produk' => 'Lapis Legit',
+                'nama_produk' => 'Lapis Legit ½ Loyang',
                 'stok' => 0, //karna PO,
                 'created_at' => now(),
                 'updated_at' => now(),
@@ -45,13 +47,14 @@ class ProdukSeeder extends Seeder
             [
                 'deskripsi_produk' => 'nanti diisi deh',
                 'harga_produk' => 550000,
+                'gambar_produk' => '56750061d41d399455453db13de972ae.jpg',
                 'id_jenis_ketersediaan' => 2,
                 'id_kategori' => 1,
                 'id_kemasan' => 1,
                 'id_penitip' => 6,
                 'id_ukuran' => 1,
                 'kuota_harian' => 10, //masih dummy, gatau ada di dokumen apa kaga
-                'nama_produk' => 'Lapis Surabaya',
+                'nama_produk' => 'Lapis Surabaya 1 Loyang',
                 'stok' => 0, //karna PO,
                 'created_at' => now(),
                 'updated_at' => now(),
@@ -59,13 +62,14 @@ class ProdukSeeder extends Seeder
             [
                 'deskripsi_produk' => 'nanti diisi deh',
                 'harga_produk' => 350000,
+                'gambar_produk' => '56750061d41d399455453db13de972ae.jpg',
                 'id_jenis_ketersediaan' => 2,
                 'id_kategori' => 1,
                 'id_kemasan' => 2,
                 'id_penitip' => 6,
                 'id_ukuran' => 2,
                 'kuota_harian' => 10, //masih dummy, gatau ada di dokumen apa kaga
-                'nama_produk' => 'Lapis Surabaya',
+                'nama_produk' => 'Lapis Surabaya ½ Loyang',
                 'stok' => 0, //karna PO,
                 'created_at' => now(),
                 'updated_at' => now(),
@@ -73,13 +77,14 @@ class ProdukSeeder extends Seeder
             [
                 'deskripsi_produk' => 'nanti diisi deh',
                 'harga_produk' => 250000,
+                'gambar_produk' => '56750061d41d399455453db13de972ae.jpg',
                 'id_jenis_ketersediaan' => 2,
                 'id_kategori' => 1,
                 'id_kemasan' => 1,
                 'id_penitip' => 6,
                 'id_ukuran' => 1,
                 'kuota_harian' => 10, //masih dummy, gatau ada di dokumen apa kaga
-                'nama_produk' => 'Brownies',
+                'nama_produk' => 'Brownies 1 Loyang',
                 'stok' => 0, //karna PO,
                 'created_at' => now(),
                 'updated_at' => now(),
@@ -87,13 +92,14 @@ class ProdukSeeder extends Seeder
             [
                 'deskripsi_produk' => 'nanti diisi deh',
                 'harga_produk' => 150000,
+                'gambar_produk' => '56750061d41d399455453db13de972ae.jpg',
                 'id_jenis_ketersediaan' => 2,
                 'id_kategori' => 1,
                 'id_kemasan' => 2,
                 'id_penitip' => 6,
                 'id_ukuran' => 2,
                 'kuota_harian' => 10, //masih dummy, gatau ada di dokumen apa kaga
-                'nama_produk' => 'Brownies',
+                'nama_produk' => 'Brownies ½ Loyang',
                 'stok' => 0, //karna PO
                 'created_at' => now(),
                 'updated_at' => now(),
@@ -101,13 +107,14 @@ class ProdukSeeder extends Seeder
             [
                 'deskripsi_produk' => 'nanti diisi deh',
                 'harga_produk' => 450000,
+                'gambar_produk' => '56750061d41d399455453db13de972ae.jpg',
                 'id_jenis_ketersediaan' => 2,
                 'id_kategori' => 1,
                 'id_kemasan' => 1,
                 'id_penitip' => 6,
                 'id_ukuran' => 1,
                 'kuota_harian' => 10, //masih dummy, gatau ada di dokumen apa kaga
-                'nama_produk' => 'Mandarin',
+                'nama_produk' => 'Mandarin 1 Loyang',
                 'stok' => 0, //karna PO
                 'created_at' => now(),
                 'updated_at' => now(),
@@ -115,13 +122,14 @@ class ProdukSeeder extends Seeder
             [
                 'deskripsi_produk' => 'nanti diisi deh',
                 'harga_produk' => 250000,
+                'gambar_produk' => '56750061d41d399455453db13de972ae.jpg',
                 'id_jenis_ketersediaan' => 2,
                 'id_kategori' => 1,
                 'id_kemasan' => 2,
                 'id_penitip' => 6,
                 'id_ukuran' => 2,
                 'kuota_harian' => 10, //masih dummy, gatau ada di dokumen apa kaga
-                'nama_produk' => 'Mandarin',
+                'nama_produk' => 'Mandarin ½ Loyang',
                 'stok' => 0, //karna PO
                 'created_at' => now(),
                 'updated_at' => now(),
@@ -129,13 +137,14 @@ class ProdukSeeder extends Seeder
             [
                 'deskripsi_produk' => 'nanti diisi deh',
                 'harga_produk' => 350000,
+                'gambar_produk' => '56750061d41d399455453db13de972ae.jpg',
                 'id_jenis_ketersediaan' => 2,
                 'id_kategori' => 1,
                 'id_kemasan' => 1,
                 'id_penitip' => 6,
                 'id_ukuran' => 1,
                 'kuota_harian' => 10, //masih dummy, gatau ada di dokumen apa kaga
-                'nama_produk' => 'Spikoe',
+                'nama_produk' => 'Spikoe 1 Loyang',
                 'stok' => 0, //karna PO
                 'created_at' => now(),
                 'updated_at' => now(),
@@ -143,13 +152,14 @@ class ProdukSeeder extends Seeder
             [
                 'deskripsi_produk' => 'nanti diisi deh',
                 'harga_produk' => 200000,
+                'gambar_produk' => '56750061d41d399455453db13de972ae.jpg',
                 'id_jenis_ketersediaan' => 2,
                 'id_kategori' => 1,
                 'id_kemasan' => 2,
                 'id_penitip' => 6,
                 'id_ukuran' => 2,
                 'kuota_harian' => 10, //masih dummy, gatau ada di dokumen apa kaga
-                'nama_produk' => 'Spikoe',
+                'nama_produk' => 'Spikoe ½ Loyang',
                 'stok' => 0, //karna PO
                 'created_at' => now(),
                 'updated_at' => now(),
@@ -157,6 +167,7 @@ class ProdukSeeder extends Seeder
             [
                 'deskripsi_produk' => 'nanti diisi deh',
                 'harga_produk' => 180000,
+                'gambar_produk' => '56750061d41d399455453db13de972ae.jpg',
                 'id_jenis_ketersediaan' => 1,
                 'id_kategori' => 2,
                 'id_kemasan' => 3,
@@ -171,6 +182,7 @@ class ProdukSeeder extends Seeder
             [
                 'deskripsi_produk' => 'nanti diisi deh',
                 'harga_produk' => 120000,
+                'gambar_produk' => '56750061d41d399455453db13de972ae.jpg',
                 'id_jenis_ketersediaan' => 1,
                 'id_kategori' => 2,
                 'id_kemasan' => 3,
@@ -185,6 +197,7 @@ class ProdukSeeder extends Seeder
             [
                 'deskripsi_produk' => 'nanti diisi deh',
                 'harga_produk' => 150000,
+                'gambar_produk' => '56750061d41d399455453db13de972ae.jpg',
                 'id_jenis_ketersediaan' => 1,
                 'id_kategori' => 2,
                 'id_kemasan' => 3,
@@ -199,6 +212,7 @@ class ProdukSeeder extends Seeder
             [
                 'deskripsi_produk' => 'nanti diisi deh',
                 'harga_produk' => 75000,
+                'gambar_produk' => '56750061d41d399455453db13de972ae.jpg',
                 'id_jenis_ketersediaan' => 1,
                 'id_kategori' => 3,
                 'id_kemasan' => 4,
@@ -213,6 +227,7 @@ class ProdukSeeder extends Seeder
             [
                 'deskripsi_produk' => 'nanti diisi deh',
                 'harga_produk' => 100000,
+                'gambar_produk' => '56750061d41d399455453db13de972ae.jpg',
                 'id_jenis_ketersediaan' => 1,
                 'id_kategori' => 3,
                 'id_kemasan' => 4,
@@ -227,9 +242,10 @@ class ProdukSeeder extends Seeder
             [
                 'deskripsi_produk' => 'nanti diisi deh',
                 'harga_produk' => 75000,
+                'gambar_produk' => '56750061d41d399455453db13de972ae.jpg',
                 'id_jenis_ketersediaan' => 1,
                 'id_kategori' => 4,
-                'id_kemasan' => 6,
+                'id_kemasan' => 7,
                 'id_penitip' => 1,
                 'id_ukuran' => 5,
                 'kuota_harian' => 0, //masih dummy, gatau ada di dokumen apa kaga
@@ -241,9 +257,10 @@ class ProdukSeeder extends Seeder
             [
                 'deskripsi_produk' => 'nanti diisi deh',
                 'harga_produk' => 250000,
+                'gambar_produk' => '56750061d41d399455453db13de972ae.jpg',
                 'id_jenis_ketersediaan' => 1,
                 'id_kategori' => 4,
-                'id_kemasan' => 6,
+                'id_kemasan' => 7,
                 'id_penitip' => 2,
                 'id_ukuran' => 5,
                 'kuota_harian' => 0, //masih dummy, gatau ada di dokumen apa kaga
@@ -255,9 +272,10 @@ class ProdukSeeder extends Seeder
             [
                 'deskripsi_produk' => 'nanti diisi deh',
                 'harga_produk' => 300000,
+                'gambar_produk' => '56750061d41d399455453db13de972ae.jpg',
                 'id_jenis_ketersediaan' => 1,
                 'id_kategori' => 4,
-                'id_kemasan' => 6,
+                'id_kemasan' => 7,
                 'id_penitip' => 3,
                 'id_ukuran' => 5,
                 'kuota_harian' => 0, //masih dummy, gatau ada di dokumen apa kaga
@@ -269,9 +287,10 @@ class ProdukSeeder extends Seeder
             [
                 'deskripsi_produk' => 'nanti diisi deh',
                 'harga_produk' => 120000,
+                'gambar_produk' => '56750061d41d399455453db13de972ae.jpg',
                 'id_jenis_ketersediaan' => 1,
                 'id_kategori' => 4,
-                'id_kemasan' => 6,
+                'id_kemasan' => 7,
                 'id_penitip' => 4,
                 'id_ukuran' => 5,
                 'kuota_harian' => 0, //masih dummy, gatau ada di dokumen apa kaga

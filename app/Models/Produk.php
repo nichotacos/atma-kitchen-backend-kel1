@@ -26,6 +26,12 @@ class Produk extends Model
         'harga_produk',
         'stok',
         'kuota_harian',
+        'gambar_produk',
+        'id_jenis_ketersediaan',
+        'id_ukuran',
+        'id_kategori',
+        'id_kemasan',
+        'id_penitip'
     ];
 
     public function DetailResep(): hasMany
