@@ -18,7 +18,9 @@ class PengadaanBahanBaku extends Model
         'jumlah_pengadaan',
         'harga_per_unit',
         'harga_total',
-        'tanggal_pengadaan'
+        'tanggal_pengadaan',
+        'id_bahan_baku',
+        'id_unit'
     ];
 
     public function bahan_baku(): BelongsTo
