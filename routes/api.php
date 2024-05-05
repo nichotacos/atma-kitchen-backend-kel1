@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AlamatController;
 use App\Http\Controllers\Api\AuthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -19,10 +20,9 @@ use App\Http\Controllers\JenisKetersediaanController;
 use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\KemasanController;
 use App\Http\Controllers\PenitipController;
+use App\Http\Controllers\StatusController;
 use App\Http\Controllers\UkuranProdukController;
 use App\Http\Controllers\UnitController;
-use App\Http\Controllers\StatusController;
-use App\Http\Controllers\AlamatController;
 
 //Register Customer
 Route::post('/register', [AuthController::class, 'register']);
@@ -107,13 +107,14 @@ Route::group(['middleware' => 'auth:employee-api'], function () {
     Route::delete('/roles/delete/{id}', [RoleController::class, 'destroy']);
 
     // Hampers Admin
+    Route::get('/hampers/{id}', [HampersController::class, 'showHampers']);
     Route::post('/hampers', [HampersController::class, 'storeHampers']);
-    Route::post('/hampers/add-product', [HampersController::class, 'storeProducts']);
+    Route::post('/hampers/add-product/{idHampers}/{idProduct}', [HampersController::class, 'storeProducts']);
     Route::put('/hampers/update/{id}', [HampersController::class, 'update']);
     // Buat delete hampers dan produk yang menyangkut padanya
     Route::delete('/hampers/delete/{idHampers}', [HampersController::class, 'destroy']);
     // Buat delete 1 produk di hampers tertentu
-    Route::delete('hampers/deleteProduct/', [HampersController::class, 'destroyCertain']);
+    Route::delete('hampers/deleteProduct/{idHampers}/{idProduct}', [HampersController::class, 'destroyCertain']);
 
     // Produk Admin
     Route::post('/products', [ProdukController::class, 'store']);
@@ -146,6 +147,9 @@ Route::group(['middleware' => 'auth:employee-api'], function () {
 
     //Kemasan
     Route::get('/kemasans', [KemasanController::class, 'index']);
+
+    //Detail Hampers
+    Route::Get('/detail-hampers', [HampersController::class, 'indexDetailHampers']);
 });
 
 //Alamat

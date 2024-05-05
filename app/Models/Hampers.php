@@ -26,7 +26,8 @@ class   Hampers extends Model
     protected $fillable = [
         'harga_hampers',
         'nama_hampers',
-        'gambar_hampers'
+        'gambar_hampers',
+        'id_kemasan'
     ];
 
     public function produk(): BelongsToMany
