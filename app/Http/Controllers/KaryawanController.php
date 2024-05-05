@@ -191,4 +191,50 @@ class KaryawanController extends Controller
             ], 400);
         }
     }
+
+    public function search($keyword)
+    {
+        try {
+            $karyawans = Karyawan::where('nama_karyawan', 'like', '%' . $keyword . '%')->get();
+            return response()->json([
+                "status" => true,
+                "message" => 'Berhasil mencari karyawan',
+                "data" => $karyawans
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                "status" => false,
+                "message" => $e->getMessage(),
+                "data" => []
+            ], 400);
+        }
+    }
+
+    public function editGajiBonus(Request $request, $id)
+    {
+        try {
+            $karyawans = Karyawan::find($id);
+
+            if (!$karyawans) throw new \Exception("Karyawan Not Found");
+
+            $validator = Validator::make($request->all(), [
+                'gaji_harian' => 'required|numeric',
+                'bonus_rajin' => 'required|numeric'
+            ]);
+
+            $karyawans->update($request->all());
+
+            return response()->json([
+                "status" => true,
+                "message" => 'Berhasil mengupdate gaji dan bonus karyawan',
+                "data" => $karyawans
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                "status" => false,
+                "message" => $e->getMessage(),
+                "data" => []
+            ], 400);
+        }
+    }
 }

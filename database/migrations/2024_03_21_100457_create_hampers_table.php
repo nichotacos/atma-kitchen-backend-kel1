@@ -16,6 +16,8 @@ return new class extends Migration
             $table->foreignId('id_kemasan')->references('id_kemasan')->on('kemasans')->onUpdate('cascade')->onDelete('cascade');
             $table->double('harga_hampers');
             $table->string('nama_hampers');
+            $table->string('gambar_hampers');
+            $table->timestamps();
         });
     }
 

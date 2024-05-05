@@ -5,6 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Produk extends Model
 {
@@ -24,15 +26,31 @@ class Produk extends Model
         'harga_produk',
         'stok',
         'kuota_harian',
+        'gambar_produk',
+        'id_jenis_ketersediaan',
+        'id_ukuran',
+        'id_kategori',
+        'id_kemasan',
+        'id_penitip'
     ];
 
-    public function DetailResep(): BelongsToMany
+    public function DetailResep(): hasMany
     {
-        return $this->belongsToMany(DetailResep::class, 'id_detail_resep');
+        return $this->hasMany(DetailResep::class, 'id_detail_resep');
     }
 
     public function Hampers(): BelongsToMany
     {
         return $this->belongsToMany(Hampers::class, 'id_hampers');
+    }
+
+    public function Penitip(): BelongsTo
+    {
+        return $this->belongsTo(Penitip::class, 'id_penitip');
+    }
+
+    public function Penitip(): BelongsTo
+    {
+        return $this->belongsTo(Penitip::class, 'id_penitip');
     }
 }

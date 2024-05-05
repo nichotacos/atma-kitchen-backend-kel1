@@ -9,13 +9,38 @@ use Illuminate\Validation\Rule;
 class DetailResepController extends Controller
 {
     //Show
-    public function index(){
-        $detailReseps = DetailResep::all();
+    public function index(Request $request)
+    {
+        try {
+            $detailReseps = DetailResep::query()->with('produk', 'bahanBaku');
 
-        if(count($detailReseps) > 0){
-            return response([
-                'message' => 'Retrieve All Success',
-                'data' => $detailReseps
+            if ($request->has('search') && $request->search) {
+                $searchTerm = $request->search;
+                $detailReseps->whereHas('produk', function (Builder $query) use ($searchTerm) {
+                    $query->where('nama_produk', 'like', '%' . $searchTerm . '%');
+                });
+            }
+
+            if ($request->sort_by && in_array($request->sort_by, ['id_produk', 'nama_produk'])) {
+                $sort_by = $request->sort_by;
+            } else {
+                $sort_by = 'id_produk';
+            }
+
+            if ($request->sort_order && in_array($request->sort_order, ['asc', 'desc'])) {
+                $sort_order = $request->sort_order;
+            } else {
+                $sort_order = 'asc';
+            }
+
+            $data = $detailReseps->orderBy($sort_by, $sort_order)->get();
+
+            if ($data->isEmpty()) throw new \Exception('Data Detail Resep tidak ditemukan');
+
+            return response()->json([
+                'status' => true,
+                'message' => 'Berhasil menampilkan data detail resep',
+                'data' => $data
             ], 200);
         }
 
@@ -28,7 +53,22 @@ class DetailResepController extends Controller
     //Store
     public function store(Request $request){
         try {
-            $detailReseps = DetailResep::create($request->all());
+
+            $validator = Validator::make($request->all(), [
+                'id_produk' => 'required|numeric',
+                'id_bahan_baku' => 'required|numeric|between:1,21',
+                'jumlah' => 'required|numeric'
+            ]);
+
+            if ($validator->fails()) {
+                return response()->json(['error' => $validator->errors()], 400);
+            }
+
+            $detailReseps = DetailResep::create([
+                'id_produk' => $request->id_produk,
+                'id_bahan_baku' => $request->id_bahan_baku,
+                'jumlah' => $request->jumlah
+            ]);
 
             return response()->json([
                 "status" => true,
@@ -72,6 +112,16 @@ class DetailResepController extends Controller
 
             if (!$detailReseps) throw new \Exception("Detail Resep Not Found");
 
+            $validator = Validator::make($request->all(), [
+                'id_produk' => 'numeric',
+                'id_bahan_baku' => 'numeric|between:1,21',
+                'jumlah' => 'numeric'
+            ]);
+
+            if ($validator->fails()) {
+                return response()->json(['error' => $validator->errors()], 400);
+            }
+
             $detailReseps->update($request->all());
 
             return response()->json([
@@ -90,7 +140,8 @@ class DetailResepController extends Controller
     }
 
     //Delete
-    public function delete($id){
+    public function destroy($id)
+    {
         try {
             $detailReseps = DetailResep::find($id);
 

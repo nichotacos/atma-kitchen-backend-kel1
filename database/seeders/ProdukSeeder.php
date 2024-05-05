@@ -17,6 +17,7 @@ class ProdukSeeder extends Seeder
             [
                 'deskripsi_produk' => 'nanti diisi deh',
                 'harga_produk' => 850000,
+                'gambar_produk' => '56750061d41d399455453db13de972ae.jpg',
                 'id_jenis_ketersediaan' => 2,
                 'id_kategori' => 1,
                 'id_kemasan' => 1,
@@ -29,6 +30,7 @@ class ProdukSeeder extends Seeder
             [
                 'deskripsi_produk' => 'nanti diisi deh',
                 'harga_produk' => 450000,
+                'gambar_produk' => '56750061d41d399455453db13de972ae.jpg',
                 'id_jenis_ketersediaan' => 2,
                 'id_kategori' => 1,
                 'id_kemasan' => 2,
@@ -41,6 +43,7 @@ class ProdukSeeder extends Seeder
             [
                 'deskripsi_produk' => 'nanti diisi deh',
                 'harga_produk' => 550000,
+                'gambar_produk' => '56750061d41d399455453db13de972ae.jpg',
                 'id_jenis_ketersediaan' => 2,
                 'id_kategori' => 1,
                 'id_kemasan' => 1,
@@ -53,6 +56,7 @@ class ProdukSeeder extends Seeder
             [
                 'deskripsi_produk' => 'nanti diisi deh',
                 'harga_produk' => 350000,
+                'gambar_produk' => '56750061d41d399455453db13de972ae.jpg',
                 'id_jenis_ketersediaan' => 2,
                 'id_kategori' => 1,
                 'id_kemasan' => 2,
@@ -65,6 +69,7 @@ class ProdukSeeder extends Seeder
             [
                 'deskripsi_produk' => 'nanti diisi deh',
                 'harga_produk' => 250000,
+                'gambar_produk' => '56750061d41d399455453db13de972ae.jpg',
                 'id_jenis_ketersediaan' => 2,
                 'id_kategori' => 1,
                 'id_kemasan' => 1,
@@ -77,6 +82,7 @@ class ProdukSeeder extends Seeder
             [
                 'deskripsi_produk' => 'nanti diisi deh',
                 'harga_produk' => 150000,
+                'gambar_produk' => '56750061d41d399455453db13de972ae.jpg',
                 'id_jenis_ketersediaan' => 2,
                 'id_kategori' => 1,
                 'id_kemasan' => 2,
@@ -89,6 +95,7 @@ class ProdukSeeder extends Seeder
             [
                 'deskripsi_produk' => 'nanti diisi deh',
                 'harga_produk' => 450000,
+                'gambar_produk' => '56750061d41d399455453db13de972ae.jpg',
                 'id_jenis_ketersediaan' => 2,
                 'id_kategori' => 1,
                 'id_kemasan' => 1,
@@ -101,6 +108,7 @@ class ProdukSeeder extends Seeder
             [
                 'deskripsi_produk' => 'nanti diisi deh',
                 'harga_produk' => 250000,
+                'gambar_produk' => '56750061d41d399455453db13de972ae.jpg',
                 'id_jenis_ketersediaan' => 2,
                 'id_kategori' => 1,
                 'id_kemasan' => 2,
@@ -113,6 +121,7 @@ class ProdukSeeder extends Seeder
             [
                 'deskripsi_produk' => 'nanti diisi deh',
                 'harga_produk' => 350000,
+                'gambar_produk' => '56750061d41d399455453db13de972ae.jpg',
                 'id_jenis_ketersediaan' => 2,
                 'id_kategori' => 1,
                 'id_kemasan' => 1,
@@ -125,6 +134,7 @@ class ProdukSeeder extends Seeder
             [
                 'deskripsi_produk' => 'nanti diisi deh',
                 'harga_produk' => 200000,
+                'gambar_produk' => '56750061d41d399455453db13de972ae.jpg',
                 'id_jenis_ketersediaan' => 2,
                 'id_kategori' => 1,
                 'id_kemasan' => 2,
@@ -137,6 +147,7 @@ class ProdukSeeder extends Seeder
             [
                 'deskripsi_produk' => 'nanti diisi deh',
                 'harga_produk' => 180000,
+                'gambar_produk' => '56750061d41d399455453db13de972ae.jpg',
                 'id_jenis_ketersediaan' => 1,
                 'id_kategori' => 2,
                 'id_kemasan' => 3,
@@ -149,6 +160,7 @@ class ProdukSeeder extends Seeder
             [
                 'deskripsi_produk' => 'nanti diisi deh',
                 'harga_produk' => 120000,
+                'gambar_produk' => '56750061d41d399455453db13de972ae.jpg',
                 'id_jenis_ketersediaan' => 1,
                 'id_kategori' => 2,
                 'id_kemasan' => 3,
@@ -161,6 +173,7 @@ class ProdukSeeder extends Seeder
             [
                 'deskripsi_produk' => 'nanti diisi deh',
                 'harga_produk' => 150000,
+                'gambar_produk' => '56750061d41d399455453db13de972ae.jpg',
                 'id_jenis_ketersediaan' => 1,
                 'id_kategori' => 2,
                 'id_kemasan' => 3,
@@ -173,6 +186,7 @@ class ProdukSeeder extends Seeder
             [
                 'deskripsi_produk' => 'nanti diisi deh',
                 'harga_produk' => 75000,
+                'gambar_produk' => '56750061d41d399455453db13de972ae.jpg',
                 'id_jenis_ketersediaan' => 1,
                 'id_kategori' => 3,
                 'id_kemasan' => 4,
@@ -185,6 +199,7 @@ class ProdukSeeder extends Seeder
             [
                 'deskripsi_produk' => 'nanti diisi deh',
                 'harga_produk' => 100000,
+                'gambar_produk' => '56750061d41d399455453db13de972ae.jpg',
                 'id_jenis_ketersediaan' => 1,
                 'id_kategori' => 3,
                 'id_kemasan' => 4,
@@ -197,9 +212,10 @@ class ProdukSeeder extends Seeder
             [
                 'deskripsi_produk' => 'nanti diisi deh',
                 'harga_produk' => 75000,
+                'gambar_produk' => '56750061d41d399455453db13de972ae.jpg',
                 'id_jenis_ketersediaan' => 1,
                 'id_kategori' => 4,
-                'id_kemasan' => 6,
+                'id_kemasan' => 7,
                 'id_penitip' => 1,
                 'id_ukuran' => 5,
                 'kuota_harian' => 0, //masih dummy, gatau ada di dokumen apa kaga
@@ -209,9 +225,10 @@ class ProdukSeeder extends Seeder
             [
                 'deskripsi_produk' => 'nanti diisi deh',
                 'harga_produk' => 250000,
+                'gambar_produk' => '56750061d41d399455453db13de972ae.jpg',
                 'id_jenis_ketersediaan' => 1,
                 'id_kategori' => 4,
-                'id_kemasan' => 6,
+                'id_kemasan' => 7,
                 'id_penitip' => 2,
                 'id_ukuran' => 5,
                 'kuota_harian' => 0, //masih dummy, gatau ada di dokumen apa kaga
@@ -221,9 +238,10 @@ class ProdukSeeder extends Seeder
             [
                 'deskripsi_produk' => 'nanti diisi deh',
                 'harga_produk' => 300000,
+                'gambar_produk' => '56750061d41d399455453db13de972ae.jpg',
                 'id_jenis_ketersediaan' => 1,
                 'id_kategori' => 4,
-                'id_kemasan' => 6,
+                'id_kemasan' => 7,
                 'id_penitip' => 3,
                 'id_ukuran' => 5,
                 'kuota_harian' => 0, //masih dummy, gatau ada di dokumen apa kaga
@@ -233,9 +251,10 @@ class ProdukSeeder extends Seeder
             [
                 'deskripsi_produk' => 'nanti diisi deh',
                 'harga_produk' => 120000,
+                'gambar_produk' => '56750061d41d399455453db13de972ae.jpg',
                 'id_jenis_ketersediaan' => 1,
                 'id_kategori' => 4,
-                'id_kemasan' => 6,
+                'id_kemasan' => 7,
                 'id_penitip' => 4,
                 'id_ukuran' => 5,
                 'kuota_harian' => 0, //masih dummy, gatau ada di dokumen apa kaga

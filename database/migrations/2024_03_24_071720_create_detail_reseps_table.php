@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('detail_reseps', function (Blueprint $table) {
             $table->id('id_detail_resep');
+            $table->foreignId('id_produk')->references('id_produk')->on('produks')->onUpdate('cascade')->onDelete('cascade');
             $table->foreignId('id_bahan_baku')->references('id_bahan_baku')->on('bahan_bakus')->onUpdate('cascade')->onDelete('cascade');
             $table->double('jumlah');
         });

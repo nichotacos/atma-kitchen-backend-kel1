@@ -14,6 +14,7 @@ class DetailResep extends Model
     protected $primaryKey = 'id_detail_resep';
 
     protected $fillable = [
+        'id_produk',
         'id_bahan_baku',
         'jumlah'
     ];
