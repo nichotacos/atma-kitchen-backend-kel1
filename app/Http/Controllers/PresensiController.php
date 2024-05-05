@@ -34,7 +34,7 @@ class PresensiController extends Controller
             if ($request->sort_order && in_array($request->sort_order, ['asc', 'desc'])) {
                 $sort_order = $request->sort_order;
             } else {
-                $sort_order = 'asc';
+                $sort_order = 'desc';
             }
 
             $data = $presensis->orderBy($sort_by, $sort_order)->get();
@@ -61,7 +61,7 @@ class PresensiController extends Controller
         try {
             $validator = Validator::make($request->all(), [
                 'id_karyawan' => 'required|numeric',
-                'tanggal_presensi' => 'required|date|before_or_equal:today',
+                'tanggal_bolos' => 'required|date|before_or_equal:today',
             ]);
 
             if ($validator->fails()) {
@@ -69,8 +69,8 @@ class PresensiController extends Controller
             }
 
             $presensis = Presensi::create([
-                'id_role' => $request->id_role,
-                'jumlah' => $request->jumlah
+                'id_karyawan' => $request->id_karyawan,
+                'tanggal_bolos' => $request->tanggal_bolos
             ]);
 
             return response()->json([
@@ -97,7 +97,7 @@ class PresensiController extends Controller
 
             $validator = Validator::make($request->all(), [
                 'id_karyawan' => 'required|numeric',
-                'tanggal_presensi' => 'required|date|before_or_equal:today',
+                'tanggal_bolos' => 'required|date|before_or_equal:today',
             ]);
 
             if ($validator->fails()) {
@@ -121,7 +121,7 @@ class PresensiController extends Controller
     }
 
     //Delete
-    public function delete($id)
+    public function destroy($id)
     {
         try {
             $presensis = Presensi::find($id);

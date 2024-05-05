@@ -18,6 +18,8 @@ use App\Http\Controllers\BahanBakuController;
 use App\Http\Controllers\UnitController;
 use App\Http\Controllers\StatusController;
 use App\Http\Controllers\AlamatController;
+use App\Http\Controllers\DetailCartController;
+use App\Http\Controllers\ProdukHampersController;
 
 //Register Customer
 Route::post('/register', [AuthController::class, 'register']);
@@ -87,6 +89,7 @@ Route::group(['middleware' => 'auth:employee-api'], function () {
     Route::post('/presensis', [PresensiController::class, 'store']);
     Route::put('/presensis/update/{id}', [PresensiController::class, 'update']);
     Route::delete('/presensis/delete/{id}', [PresensiController::class, 'destroy']);
+
     Route::get('/presensis/search/{nama_karyawan}', [PresensiController::class, 'search']);
 
     //Promo Poin
@@ -130,3 +133,9 @@ Route::get('/products', [ProdukController::class, 'index']);
 
 //Hampers
 Route::get('/hampers', [HampersController::class, 'index']);
+
+//DetailCarts
+Route::get('/detail-carts', [DetailCartController::class, 'index']);
+
+//ProdukHampers
+Route::get('/produk-hampers',[ProdukHampersController::class, 'index']);
