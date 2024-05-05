@@ -48,6 +48,10 @@ return [
             'driver' => 'session',
             'provider' => 'employees',
         ],
+        'employee-api' => [
+            'driver' => 'token', // You might use a different driver based on your needs
+            'provider' => 'employees', // Replace 'employees' with your actual provider name
+        ],
     ],
 
     /*
