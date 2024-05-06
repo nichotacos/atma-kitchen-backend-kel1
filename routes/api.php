@@ -19,6 +19,7 @@ use App\Http\Controllers\BahanBakuController;
 use App\Http\Controllers\JenisKetersediaanController;
 use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\KemasanController;
+use App\Http\Controllers\PengadaanBahanBakuController;
 use App\Http\Controllers\PenitipController;
 use App\Http\Controllers\StatusController;
 use App\Http\Controllers\AlamatController;
@@ -154,6 +155,13 @@ Route::group(['middleware' => 'auth:employee-api'], function () {
 
     //Detail Hampers
     Route::Get('/detail-hampers', [HampersController::class, 'indexDetailHampers']);
+
+    // Pengadaan Bahan Baku
+    Route::get('/pengadaan-bahan-bakus', [PengadaanBahanBakuController::class, 'index']);
+    Route::post('/pengadaan-bahan-bakus', [PengadaanBahanBakuController::class, 'store']);
+    Route::put('/pengadaan-bahan-bakus/update/{id}', [PengadaanBahanBakuController::class, 'update']);
+    Route::delete('/pengadaan-bahan-bakus/delete/{id}', [PengadaanBahanBakuController::class, 'destroy']);
+    Route::get('/pengadaan-bahan-bakus/search/{id}', [PengadaanBahanBakuController::class, 'show']);
 });
 
 //Alamat
