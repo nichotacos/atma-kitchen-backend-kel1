@@ -22,7 +22,6 @@ use App\Http\Controllers\KemasanController;
 use App\Http\Controllers\PengadaanBahanBakuController;
 use App\Http\Controllers\PenitipController;
 use App\Http\Controllers\StatusController;
-use App\Http\Controllers\AlamatController;
 use App\Http\Controllers\DetailCartController;
 use App\Http\Controllers\ProdukHampersController;
 use App\Http\Controllers\UkuranProdukController;
@@ -141,7 +140,7 @@ Route::group(['middleware' => 'auth:employee-api'], function () {
     Route::put('/kategoris/update/{id}', [KategoriController::class, 'update']);
     Route::delete('/kategoris/delete/{id}', [KategoriController::class, 'destroy']);
 
-    //Ukuran 
+    //Ukuran
     Route::get('/ukurans', [UkuranProdukController::class, 'index']);
     Route::post('/ukurans', [UkuranProdukController::class, 'store']);
     Route::put('/ukurans/update/{id}', [UkuranProdukController::class, 'update']);
