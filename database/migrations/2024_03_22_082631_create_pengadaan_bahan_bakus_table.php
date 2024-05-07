@@ -18,7 +18,8 @@ return new class extends Migration
             $table->integer('jumlah_pengadaan');
             $table->double('harga_per_unit');
             $table->double('harga_total');
-            $table->date('tanggal_pengadaan');
+            $table->datetime('tanggal_pengadaan');
+            $table->timestamps();
         });
     }
 

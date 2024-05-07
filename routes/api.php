@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AlamatController;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\BahanBakuController;
 use Illuminate\Http\Request;
@@ -17,11 +18,14 @@ use App\Http\Controllers\ResepController;
 use App\Http\Controllers\JenisKetersediaanController;
 use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\KemasanController;
+use App\Http\Controllers\PengadaanBahanBakuController;
 use App\Http\Controllers\PenitipController;
-use App\Http\Controllers\UkuranProdukController;
-use App\Http\Controllers\UnitController;
 use App\Http\Controllers\StatusController;
 use App\Http\Controllers\AlamatController;
+use App\Http\Controllers\DetailCartController;
+use App\Http\Controllers\ProdukHampersController;
+use App\Http\Controllers\UkuranProdukController;
+use App\Http\Controllers\UnitController;
 
 //Register Customer
 Route::post('/register', [AuthController::class, 'register']);
@@ -94,27 +98,13 @@ Route::get('/penggajians/{id}', [PenggajianController::class, 'show']);
 Route::put('/penggajians/update/{id}', [PenggajianController::class, 'update']);
 Route::delete('/penggajians/delete/{id}', [PenggajianController::class, 'delete']);
 
-//Presensi
-Route::get('/presensis', [PresensiController::class, 'index']);
-Route::post('/presensis', [PresensiController::class, 'store']);
-Route::get('/presensis/{id}', [PresensiController::class, 'show']);
-Route::put('/presensis/update/{id}', [PresensiController::class, 'update']);
-Route::delete('/presensis/delete/{id}', [PresensiController::class, 'delete']);
+    //Presensi
+    Route::get('/presensis', [PresensiController::class, 'index']);
+    Route::post('/presensis', [PresensiController::class, 'store']);
+    Route::put('/presensis/update/{id}', [PresensiController::class, 'update']);
+    Route::delete('/presensis/delete/{id}', [PresensiController::class, 'destroy']);
 
-//Customer
-Route::get('/customers', [CustomerController::class, 'index']);
-Route::post('/customers', [CustomerController::class, 'store']);
-Route::get('/customers/{id}', [CustomerController::class, 'show']);
-Route::put('/customers/update/{id}', [CustomerController::class, 'update']);
-Route::delete('/customers/delete/{id}', [CustomerController::class, 'delete']);
-
-//Produk
-Route::get('/products', [ProdukController::class, 'index']);
-Route::post('/products', [ProdukController::class, 'store']);
-Route::get('/products/{id}', [ProdukController::class, 'show']);
-Route::put('/products/update/{id}', [ProdukController::class, 'update']);
-Route::delete('/products/delete/{id}', [ProdukController::class, 'delete']);
-Route::get('/products/search/{nama_produk}', [ProdukController::class, 'search']);
+    Route::get('/presensis/search/{nama_karyawan}', [PresensiController::class, 'search']);
 
 //Promo Poin
 Route::get('/promo-poin', [PromoPoinController::class, 'index']);
@@ -131,13 +121,14 @@ Route::get('/promo-poin/search/{batas_kelipatan}', [PromoPoinController::class, 
     Route::delete('/roles/delete/{id}', [RoleController::class, 'destroy']);
 
     // Hampers Admin
+    Route::get('/hampers/{id}', [HampersController::class, 'showHampers']);
     Route::post('/hampers', [HampersController::class, 'storeHampers']);
-    Route::post('/hampers/add-product', [HampersController::class, 'storeProducts']);
+    Route::post('/hampers/add-product/{idHampers}/{idProduct}', [HampersController::class, 'storeProducts']);
     Route::put('/hampers/update/{id}', [HampersController::class, 'update']);
     // Buat delete hampers dan produk yang menyangkut padanya
     Route::delete('/hampers/delete/{idHampers}', [HampersController::class, 'destroy']);
     // Buat delete 1 produk di hampers tertentu
-    Route::delete('hampers/deleteProduct/', [HampersController::class, 'destroyCertain']);
+    Route::delete('hampers/deleteProduct/{idHampers}/{idProduct}', [HampersController::class, 'destroyCertain']);
 
     // Produk Admin
     Route::post('/products', [ProdukController::class, 'store']);
@@ -170,6 +161,16 @@ Route::get('/promo-poin/search/{batas_kelipatan}', [PromoPoinController::class, 
 
     //Kemasan
     Route::get('/kemasans', [KemasanController::class, 'index']);
+
+    //Detail Hampers
+    Route::Get('/detail-hampers', [HampersController::class, 'indexDetailHampers']);
+
+    // Pengadaan Bahan Baku
+    Route::get('/pengadaan-bahan-bakus', [PengadaanBahanBakuController::class, 'index']);
+    Route::post('/pengadaan-bahan-bakus', [PengadaanBahanBakuController::class, 'store']);
+    Route::put('/pengadaan-bahan-bakus/update/{id}', [PengadaanBahanBakuController::class, 'update']);
+    Route::delete('/pengadaan-bahan-bakus/delete/{id}', [PengadaanBahanBakuController::class, 'destroy']);
+    Route::get('/pengadaan-bahan-bakus/search/{id}', [PengadaanBahanBakuController::class, 'show']);
 });
 
 //Alamat
@@ -183,3 +184,9 @@ Route::get('/products', [ProdukController::class, 'index']);
 
 //Hampers
 Route::get('/hampers', [HampersController::class, 'index']);
+
+//DetailCarts
+Route::get('/detail-carts', [DetailCartController::class, 'index']);
+
+//ProdukHampers
+Route::get('/produk-hampers',[ProdukHampersController::class, 'index']);

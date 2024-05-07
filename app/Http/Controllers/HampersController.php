@@ -42,6 +42,28 @@ class HampersController extends Controller
         }
     }
 
+    // Show hampers by id
+    public function showHampers($idHampers)
+    {
+        try {
+            $hampers = Hampers::with('produk')->find($idHampers);
+
+            if (!$hampers) throw new \Exception('Hampers tidak ditemukan');
+
+            return response()->json([
+                'status' => true,
+                'message' => 'Berhasil menampilkan data hampers',
+                'data' => $hampers
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                "status" => false,
+                "message" => $e->getMessage(),
+                "data" => []
+            ], 400);
+        }
+    }
+
     // Store Hampers
     public function storeHampers(Request $request)
     {
@@ -61,12 +83,14 @@ class HampersController extends Controller
             $image->move(public_path('img/hampers'), $fileName);
             $uploadedImageResponse = basename($fileName);
 
+            $data = $request->all();
             $data['gambar_hampers'] = $uploadedImageResponse;
 
             $hampers = Hampers::create([
                 'nama_hampers' => $request->nama_hampers,
                 'harga_hampers' => $request->harga_hampers,
-                'id_kemasan' => 5
+                'gambar_hampers' => $data['gambar_hampers'],
+                'id_kemasan' => 6
             ]);
 
             return response()->json([
@@ -84,29 +108,20 @@ class HampersController extends Controller
     }
 
     // Store Products
-    public function storeProducts(Request $request)
+    public function storeProducts($idHampers, $idProduct)
     {
         try {
-            $validator = Validator::make($request->all(), [
-                'id_hampers' => 'required|integer',
-                'id_produk' => 'required|integer',
-            ]);
-
-            if ($validator->fails()) {
-                return response()->json(['error' => $validator->errors()], 400);
-            }
-
-            $hampers = Hampers::find($request->id_hampers);
+            $hampers = Hampers::find($idHampers);
 
             if (!$hampers) throw new \Exception('Hampers tidak ditemukan');
 
-            $uniqueEntryCheck = ProdukHampers::where('id_hampers', $request->id_hampers)->where('id_produk', $request->id_produk)->get();
+            $uniqueEntryCheck = ProdukHampers::where('id_hampers', $idHampers)->where('id_produk', $idProduct)->get();
 
             if (!$uniqueEntryCheck->isEmpty()) throw new \Exception('Produk sudah ada pada hampers');
 
             $produk_hampers = ProdukHampers::create([
-                'id_hampers' => $request->id_hampers,
-                'id_produk' => $request->id_produk
+                'id_hampers' => $idHampers,
+                'id_produk' => $idProduct
             ]);
 
             return response()->json([
@@ -127,7 +142,7 @@ class HampersController extends Controller
     public function update(Request $request, $idHampers)
     {
         try {
-            $hampers = ProdukHampers::find($idHampers);
+            $hampers = Hampers::find($idHampers);
 
             if (!$hampers) throw new \Exception('Hampers tidak ditemukan');
 
@@ -168,10 +183,11 @@ class HampersController extends Controller
             if (!$hampers) throw new \Exception('Hampers tidak ditemukan');
 
             $hampers->produk()->detach();
+            $hampers->delete();
 
             return response()->json([
                 "status" => true,
-                "message" => 'Berhasil delete hampers',
+                "message" => 'Berhasil menghapus hampers',
                 "data" => $hampers
             ], 200);
         } catch (\Exception $e) {
@@ -184,15 +200,15 @@ class HampersController extends Controller
     }
 
     // Ini nanti buat pivot table
-    public function destroyCertain(Request $request)
+    public function destroyCertain($idHampers, $idProduct)
     {
         try {
-            $hampers = Hampers::find($request->id_hampers);
-            $produk_hampers = ProdukHampers::where('id_hampers', $request->id_hampers)->where('id_produk', $request->id_produk)->get();
+            $hampers = Hampers::find($idHampers);
+            $produk_hampers = ProdukHampers::where('id_hampers', $idHampers)->where('id_produk', $idProduct)->get();
 
             if (!$produk_hampers) throw new \Exception('Data hampers dan produk tidak ditemukan');
 
-            $hampers->produk()->detach($request->id_produk);
+            $hampers->produk()->detach($idProduct);
 
             return response()->json([
                 "status" => true,
