@@ -2,7 +2,6 @@
 
 use App\Http\Controllers\AlamatController;
 use App\Http\Controllers\Api\AuthController;
-use App\Http\Controllers\BahanBakuController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DetailResepController;
@@ -10,18 +9,19 @@ use App\Http\Controllers\KaryawanController;
 use App\Http\Controllers\PenggajianController;
 use App\Http\Controllers\PresensiController;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\HampersController;
 use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\PromoPoinController;
 use App\Http\Controllers\RoleController;
 use App\Models\ProdukHampers;
 use App\Http\Controllers\ResepController;
+use App\Http\Controllers\BahanBakuController;
 use App\Http\Controllers\JenisKetersediaanController;
 use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\KemasanController;
 use App\Http\Controllers\PengadaanBahanBakuController;
 use App\Http\Controllers\PenitipController;
 use App\Http\Controllers\StatusController;
-use App\Http\Controllers\AlamatController;
 use App\Http\Controllers\DetailCartController;
 use App\Http\Controllers\ProdukHampersController;
 use App\Http\Controllers\UkuranProdukController;
@@ -30,13 +30,11 @@ use App\Http\Controllers\UnitController;
 //Register Customer
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/register-karyawan', [AuthController::class, 'registerKaryawan']);
-Route::post('/login-customer', [AuthController::class, 'loginCustomer']);
-Route::post('/login-karyawan', [AuthController::class, 'loginKaryawan'])->name('login');
+Route::post('/login', [AuthController::class, 'login']);
 
+//test
 //Change Password Karyawan
 //Route::middleware('auth:employee')->post('/change-password-karyawan', [AuthController::class, 'changePasswordKaryawan']);
-Route::post('/change-password-karyawan', [AuthController::class, 'changePasswordKaryawan'])->middleware('auth:employee');
-Route::get('/showTransaksisByCustomer', [AuthController::class, 'showTransaksisByCustomer'])->middleware('auth:api');
 
 Route::group(['middleware' => 'auth:customer-api'], function () {
     //Auth
@@ -58,16 +56,10 @@ Route::group(['middleware' => 'auth:employee-api'], function () {
 
     //Bahan Baku
     Route::get('/bahan-bakus', [BahanBakuController::class, 'index']);
-    Route::post('/bahan-bakus', [BahanBakuController::class, 'store']);
-    Route::put('/bahan-bakus/update/{id}', [BahanBakuController::class, 'update']);
-    Route::delete('/bahan-bakus/delete/{id}', [BahanBakuController::class, 'destroy']);
-    Route::get('/bahan-bakus/search/{id}', [BahanBakuController::class, 'search']);
-    
+
     //Customer
     Route::get('/customers/search/{nama}', [CustomerController::class, 'search']);
     Route::get('/customers', [CustomerController::class, 'index']);
-Route::post('/change-password-karyawan', [AuthController::class, 'changePasswordKaryawan'])->middleware('auth:employee');
-Route::get('/showTransaksisByCustomer', [AuthController::class, 'showTransaksisByCustomer'])->middleware('auth:api');
 
     //Detail Resep
     Route::get('/detail-reseps', [DetailResepController::class, 'index']);
@@ -91,12 +83,12 @@ Route::get('/showTransaksisByCustomer', [AuthController::class, 'showTransaksisB
     Route::delete('/karyawans/delete/{id}', [KaryawanController::class, 'destroy']);
     Route::get('/karyawans/search/{nama_karyawan}', [KaryawanController::class, 'search']);
 
-//Gaji atau bonus
-Route::get('/penggajians', [PenggajianController::class, 'index']);
-Route::post('/penggajians', [PenggajianController::class, 'store']);
-Route::get('/penggajians/{id}', [PenggajianController::class, 'show']);
-Route::put('/penggajians/update/{id}', [PenggajianController::class, 'update']);
-Route::delete('/penggajians/delete/{id}', [PenggajianController::class, 'delete']);
+    //Penggajian
+    Route::get('/penggajians', [PenggajianController::class, 'index']);
+    Route::post('/penggajians', [PenggajianController::class, 'store']);
+    Route::put('/penggajians/update/{id}', [PenggajianController::class, 'update']);
+    Route::delete('/penggajians/delete/{id}', [PenggajianController::class, 'destroy']);
+    Route::get('/penggajians/search/{nama_karyawan}', [PenggajianController::class, 'search']);
 
     //Presensi
     Route::get('/presensis', [PresensiController::class, 'index']);
@@ -106,13 +98,11 @@ Route::delete('/penggajians/delete/{id}', [PenggajianController::class, 'delete'
 
     Route::get('/presensis/search/{nama_karyawan}', [PresensiController::class, 'search']);
 
-//Promo Poin
-Route::get('/promo-poin', [PromoPoinController::class, 'index']);
-Route::post('/promo-poin', [PromoPoinController::class, 'store']);
-Route::get('/promo-poin/{id}', [PromoPoinController::class, 'show']);
-Route::put('/promo-poin/update/{id}', [PromoPoinController::class, 'update']);
-Route::delete('/promo-poin/delete/{id}', [PromoPoinController::class, 'delete']);
-Route::get('/promo-poin/search/{batas_kelipatan}', [PromoPoinController::class, 'search']);
+    //Promo Poin
+    Route::get('/promo-poin', [PromoPoinController::class, 'index']);
+    Route::post('/promo-poin', [PromoPoinController::class, 'store']);
+    Route::put('/promo-poin/update/{id}', [PromoPoinController::class, 'update']);
+    Route::delete('/promo-poin/delete/{id}', [PromoPoinController::class, 'destroy']);
 
     //Role
     Route::get('/roles', [RoleController::class, 'index']);
@@ -150,7 +140,7 @@ Route::get('/promo-poin/search/{batas_kelipatan}', [PromoPoinController::class, 
     Route::put('/kategoris/update/{id}', [KategoriController::class, 'update']);
     Route::delete('/kategoris/delete/{id}', [KategoriController::class, 'destroy']);
 
-    //Ukuran 
+    //Ukuran
     Route::get('/ukurans', [UkuranProdukController::class, 'index']);
     Route::post('/ukurans', [UkuranProdukController::class, 'store']);
     Route::put('/ukurans/update/{id}', [UkuranProdukController::class, 'update']);
