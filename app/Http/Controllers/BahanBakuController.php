@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\BahanBaku;
-use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class BahanBakuController extends Controller
 {
+
     public function index(Request $request)
     {
         try {
@@ -44,31 +46,6 @@ class BahanBakuController extends Controller
                 'status' => true,
                 'message' => 'Berhasil menampilkan data bahan baku',
                 'data' => $data
-            ], 200);
-        } catch (\Exception $e) {
-            return response()->json([
-                "status" => false,
-                "message" => $e->getMessage(),
-                "data" => []
-            ], 400);
-        }
-    }
-
-    public function update(Request $request, $id)
-    {
-        try {
-            $bahanBaku = BahanBaku::find($id);
-
-            if (!$bahanBaku) {
-                throw new \Exception('Bahan baku tidak ditemukan');
-            }
-
-            $bahanBaku->update($request->all());
-
-            return response()->json([
-                'status' => true,
-                'message' => 'Berhasil mengupdate data bahan baku',
-                'data' => $bahanBaku
             ], 200);
         } catch (\Exception $e) {
             return response()->json([

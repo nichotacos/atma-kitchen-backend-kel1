@@ -21,7 +21,6 @@ use App\Http\Controllers\KemasanController;
 use App\Http\Controllers\PengadaanBahanBakuController;
 use App\Http\Controllers\PenitipController;
 use App\Http\Controllers\StatusController;
-use App\Http\Controllers\AlamatController;
 use App\Http\Controllers\DetailCartController;
 use App\Http\Controllers\PengeluaranController;
 use App\Http\Controllers\ProdukHampersController;
