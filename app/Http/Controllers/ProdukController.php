@@ -149,7 +149,8 @@ class ProdukController extends Controller
 
             if (!$products) throw new \Exception("Produk tidak ditemukan!");
 
-            Storage::disk('public')->delete('img/produk' . $products->gambar_produk);
+            $destinationPath = 'img/produk/';
+            unlink(public_path($destinationPath . $products->gambar_produk));
 
             $products->delete();
 
