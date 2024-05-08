@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\BahanBaku;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class BahanBakuController extends Controller
 {
-    
+
     public function index(Request $request)
     {
         try {
@@ -16,9 +18,9 @@ class BahanBakuController extends Controller
             if ($request->search) {
                 $bahanBakus->where(function ($query) use ($request) {
                     $query->where('nama_bahan_baku', 'like', '%' . $request->search . '%')
-                          ->orWhereHas('unit', function (Builder $query) use ($request) {
-                              $query->where('nama_unit', 'like', '%' . $request->search . '%');
-                          });
+                        ->orWhereHas('unit', function (Builder $query) use ($request) {
+                            $query->where('nama_unit', 'like', '%' . $request->search . '%');
+                        });
                 });
             }
 
@@ -53,7 +55,7 @@ class BahanBakuController extends Controller
             ], 400);
         }
     }
-    
+
 
     public function store(Request $request)
     {
@@ -180,19 +182,3 @@ class BahanBakuController extends Controller
         }
     }
 }
-// public function index()
-// {
-//     $bahan_bakus = BahanBaku::all();
-
-//     if (count($bahan_bakus) > 0) {
-//         return response([
-//             'message' => 'Berhasil menampilkan data',
-//             'data' => $bahan_bakus
-//         ], 200);
-//     }
-
-//     return response([
-//         'message' => 'Empty',
-//         'data' => null
-//     ], 400);
-// }

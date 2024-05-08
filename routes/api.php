@@ -26,6 +26,7 @@ use App\Http\Controllers\DetailCartController;
 use App\Http\Controllers\ProdukHampersController;
 use App\Http\Controllers\UkuranProdukController;
 use App\Http\Controllers\UnitController;
+use App\Http\Controllers\HampersController;
 
 //Register Customer
 Route::post('/register', [AuthController::class, 'register']);
@@ -56,10 +57,16 @@ Route::group(['middleware' => 'auth:employee-api'], function () {
 
     //Bahan Baku
     Route::get('/bahan-bakus', [BahanBakuController::class, 'index']);
+    Route::post('/bahan-bakus', [BahanBakuController::class, 'store']);
+    Route::put('/bahan-bakus/update/{id}', [BahanBakuController::class, 'update']);
+    Route::delete('/bahan-bakus/delete/{id}', [BahanBakuController::class, 'destroy']);
+    Route::get('/bahan-bakus/search/{id}', [BahanBakuController::class, 'search']);
 
     //Customer
     Route::get('/customers/search/{nama}', [CustomerController::class, 'search']);
     Route::get('/customers', [CustomerController::class, 'index']);
+    Route::post('/change-password-karyawan', [AuthController::class, 'changePasswordKaryawan'])->middleware('auth:employee');
+    Route::get('/showTransaksisByCustomer', [AuthController::class, 'showTransaksisByCustomer'])->middleware('auth:api');
 
     //Detail Resep
     Route::get('/detail-reseps', [DetailResepController::class, 'index']);
@@ -83,12 +90,12 @@ Route::group(['middleware' => 'auth:employee-api'], function () {
     Route::delete('/karyawans/delete/{id}', [KaryawanController::class, 'destroy']);
     Route::get('/karyawans/search/{nama_karyawan}', [KaryawanController::class, 'search']);
 
-    //Penggajian
+    //Gaji atau bonus
     Route::get('/penggajians', [PenggajianController::class, 'index']);
     Route::post('/penggajians', [PenggajianController::class, 'store']);
+    Route::get('/penggajians/{id}', [PenggajianController::class, 'show']);
     Route::put('/penggajians/update/{id}', [PenggajianController::class, 'update']);
-    Route::delete('/penggajians/delete/{id}', [PenggajianController::class, 'destroy']);
-    Route::get('/penggajians/search/{nama_karyawan}', [PenggajianController::class, 'search']);
+    Route::delete('/penggajians/delete/{id}', [PenggajianController::class, 'delete']);
 
     //Presensi
     Route::get('/presensis', [PresensiController::class, 'index']);
@@ -101,8 +108,10 @@ Route::group(['middleware' => 'auth:employee-api'], function () {
     //Promo Poin
     Route::get('/promo-poin', [PromoPoinController::class, 'index']);
     Route::post('/promo-poin', [PromoPoinController::class, 'store']);
+    Route::get('/promo-poin/{id}', [PromoPoinController::class, 'show']);
     Route::put('/promo-poin/update/{id}', [PromoPoinController::class, 'update']);
-    Route::delete('/promo-poin/delete/{id}', [PromoPoinController::class, 'destroy']);
+    Route::delete('/promo-poin/delete/{id}', [PromoPoinController::class, 'delete']);
+    Route::get('/promo-poin/search/{batas_kelipatan}', [PromoPoinController::class, 'search']);
 
     //Role
     Route::get('/roles', [RoleController::class, 'index']);
@@ -179,4 +188,4 @@ Route::get('/hampers', [HampersController::class, 'index']);
 Route::get('/detail-carts', [DetailCartController::class, 'index']);
 
 //ProdukHampers
-Route::get('/produk-hampers',[ProdukHampersController::class, 'index']);
+Route::get('/produk-hampers', [ProdukHampersController::class, 'index']);

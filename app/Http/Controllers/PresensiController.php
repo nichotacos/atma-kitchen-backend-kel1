@@ -55,7 +55,8 @@ class PresensiController extends Controller
     }
 
     //Search
-    public function show($id){
+    public function show($id)
+    {
         try {
             $validator = Validator::make($request->all(), [
                 'id_karyawan' => 'required|numeric',
@@ -86,7 +87,8 @@ class PresensiController extends Controller
     }
 
     //Update
-    public function update(Request $request, String $id){
+    public function update(Request $request, String $id)
+    {
         try {
             $presensis = Presensi::find($id);
 
