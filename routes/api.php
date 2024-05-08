@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\AlamatController;
 use App\Http\Controllers\Api\AuthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -24,6 +23,7 @@ use App\Http\Controllers\PenitipController;
 use App\Http\Controllers\StatusController;
 use App\Http\Controllers\AlamatController;
 use App\Http\Controllers\DetailCartController;
+use App\Http\Controllers\PengeluaranController;
 use App\Http\Controllers\ProdukHampersController;
 use App\Http\Controllers\UkuranProdukController;
 use App\Http\Controllers\UnitController;
@@ -57,6 +57,7 @@ Route::group(['middleware' => 'auth:employee-api'], function () {
 
     //Bahan Baku
     Route::get('/bahan-bakus', [BahanBakuController::class, 'index']);
+    Route::put('/bahan-bakus/update/{id}', [BahanBakuController::class, 'update']);
 
     //Customer
     Route::get('/customers/search/{nama}', [CustomerController::class, 'search']);
@@ -150,6 +151,9 @@ Route::group(['middleware' => 'auth:employee-api'], function () {
     //Penitip
     Route::get('/penitips', [PenitipController::class, 'index']);
 
+    // Pengeluaran
+    Route::get('/pengeluarans', [PengeluaranController::class, 'index']);
+
     //Kemasan
     Route::get('/kemasans', [KemasanController::class, 'index']);
 
@@ -180,4 +184,4 @@ Route::get('/hampers', [HampersController::class, 'index']);
 Route::get('/detail-carts', [DetailCartController::class, 'index']);
 
 //ProdukHampers
-Route::get('/produk-hampers',[ProdukHampersController::class, 'index']);
+Route::get('/produk-hampers', [ProdukHampersController::class, 'index']);

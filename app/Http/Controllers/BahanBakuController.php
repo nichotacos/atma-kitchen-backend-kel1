@@ -16,9 +16,9 @@ class BahanBakuController extends Controller
             if ($request->search) {
                 $bahanBakus->where(function ($query) use ($request) {
                     $query->where('nama_bahan_baku', 'like', '%' . $request->search . '%')
-                          ->orWhereHas('unit', function (Builder $query) use ($request) {
-                              $query->where('nama_unit', 'like', '%' . $request->search . '%');
-                          });
+                        ->orWhereHas('unit', function (Builder $query) use ($request) {
+                            $query->where('nama_unit', 'like', '%' . $request->search . '%');
+                        });
                 });
             }
 
@@ -44,6 +44,31 @@ class BahanBakuController extends Controller
                 'status' => true,
                 'message' => 'Berhasil menampilkan data bahan baku',
                 'data' => $data
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                "status" => false,
+                "message" => $e->getMessage(),
+                "data" => []
+            ], 400);
+        }
+    }
+
+    public function update(Request $request, $id)
+    {
+        try {
+            $bahanBaku = BahanBaku::find($id);
+
+            if (!$bahanBaku) {
+                throw new \Exception('Bahan baku tidak ditemukan');
+            }
+
+            $bahanBaku->update($request->all());
+
+            return response()->json([
+                'status' => true,
+                'message' => 'Berhasil mengupdate data bahan baku',
+                'data' => $bahanBaku
             ], 200);
         } catch (\Exception $e) {
             return response()->json([
