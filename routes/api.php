@@ -59,7 +59,6 @@ Route::group(['middleware' => 'auth:employee-api'], function () {
     Route::get('/bahan-bakus', [BahanBakuController::class, 'index']);
     Route::put('/bahan-bakus/update/{id}', [BahanBakuController::class, 'update']);
     Route::post('/bahan-bakus', [BahanBakuController::class, 'store']);
-    Route::put('/bahan-bakus/update/{id}', [BahanBakuController::class, 'update']);
     Route::delete('/bahan-bakus/delete/{id}', [BahanBakuController::class, 'destroy']);
     Route::get('/bahan-bakus/search/{id}', [BahanBakuController::class, 'search']);
 
@@ -161,6 +160,10 @@ Route::group(['middleware' => 'auth:employee-api'], function () {
 
     // Pengeluaran
     Route::get('/pengeluarans', [PengeluaranController::class, 'index']);
+    Route::put('/pengeluarans/update/{id}', [PengeluaranController::class, 'update']);
+    Route::post('/pengeluarans', [PengeluaranController::class, 'store']);
+    Route::delete('/pengeluarans/delete/{id}', [PengeluaranController::class, 'destroy']);
+    Route::get('/pengeluarans/search/{id}', [PengeluaranController::class, 'search']);
 
     //Kemasan
     Route::get('/kemasans', [KemasanController::class, 'index']);
