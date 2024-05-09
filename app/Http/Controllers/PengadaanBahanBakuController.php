@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\BahanBaku;
 use App\Models\PengadaanBahanBaku;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -69,6 +70,10 @@ class PengadaanBahanBakuController extends Controller
             return response()->json(['error' => $validator->errors()], 400);
         }
 
+        $bahanBaku = BahanBaku::find($request->id_bahan_baku);
+        $bahanBaku['stok_bahan_baku'] = $bahanBaku['stok_bahan_baku'] + $request['jumlah_pengadaan'];
+        $bahanBaku->save();
+
         $pengadaan = PengadaanBahanBaku::create($request->all());
 
         return response()->json([
@@ -103,6 +108,17 @@ class PengadaanBahanBakuController extends Controller
             return response()->json(['error' => $validator->errors()], 400);
         }
 
+        $bahanBakuTarget = BahanBaku::find($request->id_bahan_baku);
+
+        // Reset bahan baku sebelumnya
+        $bahanBakuTarget['stok_bahan_baku'] = $bahanBakuTarget['stok_bahan_baku'] - $pengadaan['jumlah_pengadaan'];
+
+        // Update bahan baku target
+        $bahanBakuTarget['stok_bahan_baku'] = $bahanBakuTarget['stok_bahan_baku'] + $request['jumlah_pengadaan'];
+
+        // Save bahan baku target
+        $bahanBakuTarget->save();
+
         $pengadaan->update($request->all());
 
         return response()->json([
@@ -124,6 +140,13 @@ class PengadaanBahanBakuController extends Controller
                 'data' => []
             ], 404);
         }
+
+        $bahanBakuTarget = BahanBaku::find($pengadaan['id_bahan_baku']);
+
+        // Reset bahan baku sebelumnya
+        $bahanBakuTarget['stok_bahan_baku'] = $bahanBakuTarget['stok_bahan_baku'] - $pengadaan['jumlah_pengadaan'];
+
+        $bahanBakuTarget->save();
 
         $pengadaan->delete();
 
