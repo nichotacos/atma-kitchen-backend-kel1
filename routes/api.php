@@ -27,7 +27,6 @@ use App\Http\Controllers\PengeluaranController;
 use App\Http\Controllers\ProdukHampersController;
 use App\Http\Controllers\UkuranProdukController;
 use App\Http\Controllers\UnitController;
-use App\Http\Controllers\HampersController;
 
 //Register Customer
 Route::post('/register', [AuthController::class, 'register']);
