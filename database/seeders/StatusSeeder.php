@@ -14,6 +14,10 @@ class StatusSeeder extends Seeder
     public function run(): void
     {
         DB::table('statuses')->insert([
+            //Untuk Transaksi
+            ['detail_status' => 'Menghitung jarak',
+            'created_at' => now(),
+            'updated_at' => now(),],
             ['detail_status' => 'Belum dibayar',
             'created_at' => now(),
             'updated_at' => now(),],
@@ -47,6 +51,8 @@ class StatusSeeder extends Seeder
             ['detail_status' => 'Selesai',
             'created_at' => now(),
             'updated_at' => now(),],
+
+            //Untuk Refund
             ['detail_status' => 'Sedang diproses',
             'created_at' => now(),
             'updated_at' => now(),],
