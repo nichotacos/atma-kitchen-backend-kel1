@@ -17,7 +17,7 @@ class ProdukSeeder extends Seeder
             [
                 'deskripsi_produk' => 'nanti diisi deh',
                 'harga_produk' => 850000,
-                'gambar_produk' => '56750061d41d399455453db13de972ae.jpg',
+                'gambar_produk' => 'lapis-legit.jpg',
                 'id_jenis_ketersediaan' => 2,
                 'id_kategori' => 1,
                 'id_kemasan' => 1,
@@ -26,13 +26,14 @@ class ProdukSeeder extends Seeder
                 'kuota_harian' => 10, //masih dummy, gatau ada di dokumen apa kaga
                 'nama_produk' => 'Lapis Legit 1 Loyang',
                 'stok' => 0, //karna PO,
+                'is_deleted' => 0,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
                 'deskripsi_produk' => 'nanti diisi deh',
                 'harga_produk' => 450000,
-                'gambar_produk' => '56750061d41d399455453db13de972ae.jpg',
+                'gambar_produk' => 'lapis-legit-2.jpg',
                 'id_jenis_ketersediaan' => 2,
                 'id_kategori' => 1,
                 'id_kemasan' => 2,
@@ -41,13 +42,14 @@ class ProdukSeeder extends Seeder
                 'kuota_harian' => 10, //masih dummy, gatau ada di dokumen apa kaga
                 'nama_produk' => 'Lapis Legit ½ Loyang',
                 'stok' => 0, //karna PO,
+                'is_deleted' => 0,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
                 'deskripsi_produk' => 'nanti diisi deh',
                 'harga_produk' => 550000,
-                'gambar_produk' => '56750061d41d399455453db13de972ae.jpg',
+                'gambar_produk' => 'lapis-surabaya.jpg',
                 'id_jenis_ketersediaan' => 2,
                 'id_kategori' => 1,
                 'id_kemasan' => 1,
@@ -56,13 +58,14 @@ class ProdukSeeder extends Seeder
                 'kuota_harian' => 10, //masih dummy, gatau ada di dokumen apa kaga
                 'nama_produk' => 'Lapis Surabaya 1 Loyang',
                 'stok' => 0, //karna PO,
+                'is_deleted' => 0,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
                 'deskripsi_produk' => 'nanti diisi deh',
                 'harga_produk' => 350000,
-                'gambar_produk' => '56750061d41d399455453db13de972ae.jpg',
+                'gambar_produk' => 'lapis-surabaya-2.jpg',
                 'id_jenis_ketersediaan' => 2,
                 'id_kategori' => 1,
                 'id_kemasan' => 2,
@@ -71,13 +74,14 @@ class ProdukSeeder extends Seeder
                 'kuota_harian' => 10, //masih dummy, gatau ada di dokumen apa kaga
                 'nama_produk' => 'Lapis Surabaya ½ Loyang',
                 'stok' => 0, //karna PO,
+                'is_deleted' => 0,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
                 'deskripsi_produk' => 'nanti diisi deh',
                 'harga_produk' => 250000,
-                'gambar_produk' => '56750061d41d399455453db13de972ae.jpg',
+                'gambar_produk' => 'brownies.jpg',
                 'id_jenis_ketersediaan' => 2,
                 'id_kategori' => 1,
                 'id_kemasan' => 1,
@@ -86,13 +90,14 @@ class ProdukSeeder extends Seeder
                 'kuota_harian' => 10, //masih dummy, gatau ada di dokumen apa kaga
                 'nama_produk' => 'Brownies 1 Loyang',
                 'stok' => 0, //karna PO,
+                'is_deleted' => 0,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
                 'deskripsi_produk' => 'nanti diisi deh',
                 'harga_produk' => 150000,
-                'gambar_produk' => '56750061d41d399455453db13de972ae.jpg',
+                'gambar_produk' => 'brownies-2.jpg',
                 'id_jenis_ketersediaan' => 2,
                 'id_kategori' => 1,
                 'id_kemasan' => 2,
@@ -101,13 +106,14 @@ class ProdukSeeder extends Seeder
                 'kuota_harian' => 10, //masih dummy, gatau ada di dokumen apa kaga
                 'nama_produk' => 'Brownies ½ Loyang',
                 'stok' => 0, //karna PO
+                'is_deleted' => 0,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
                 'deskripsi_produk' => 'nanti diisi deh',
                 'harga_produk' => 450000,
-                'gambar_produk' => '56750061d41d399455453db13de972ae.jpg',
+                'gambar_produk' => 'mandarin.jpg',
                 'id_jenis_ketersediaan' => 2,
                 'id_kategori' => 1,
                 'id_kemasan' => 1,
@@ -116,13 +122,14 @@ class ProdukSeeder extends Seeder
                 'kuota_harian' => 10, //masih dummy, gatau ada di dokumen apa kaga
                 'nama_produk' => 'Mandarin 1 Loyang',
                 'stok' => 0, //karna PO
+                'is_deleted' => 0,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
                 'deskripsi_produk' => 'nanti diisi deh',
                 'harga_produk' => 250000,
-                'gambar_produk' => '56750061d41d399455453db13de972ae.jpg',
+                'gambar_produk' => 'mandarin-2.jpg',
                 'id_jenis_ketersediaan' => 2,
                 'id_kategori' => 1,
                 'id_kemasan' => 2,
@@ -131,13 +138,14 @@ class ProdukSeeder extends Seeder
                 'kuota_harian' => 10, //masih dummy, gatau ada di dokumen apa kaga
                 'nama_produk' => 'Mandarin ½ Loyang',
                 'stok' => 0, //karna PO
+                'is_deleted' => 0,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
                 'deskripsi_produk' => 'nanti diisi deh',
                 'harga_produk' => 350000,
-                'gambar_produk' => '56750061d41d399455453db13de972ae.jpg',
+                'gambar_produk' => 'spikoe.jpeg',
                 'id_jenis_ketersediaan' => 2,
                 'id_kategori' => 1,
                 'id_kemasan' => 1,
@@ -146,13 +154,14 @@ class ProdukSeeder extends Seeder
                 'kuota_harian' => 10, //masih dummy, gatau ada di dokumen apa kaga
                 'nama_produk' => 'Spikoe 1 Loyang',
                 'stok' => 0, //karna PO
+                'is_deleted' => 0,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
                 'deskripsi_produk' => 'nanti diisi deh',
                 'harga_produk' => 200000,
-                'gambar_produk' => '56750061d41d399455453db13de972ae.jpg',
+                'gambar_produk' => 'spikoe-2.jpeg',
                 'id_jenis_ketersediaan' => 2,
                 'id_kategori' => 1,
                 'id_kemasan' => 2,
@@ -161,13 +170,14 @@ class ProdukSeeder extends Seeder
                 'kuota_harian' => 10, //masih dummy, gatau ada di dokumen apa kaga
                 'nama_produk' => 'Spikoe ½ Loyang',
                 'stok' => 0, //karna PO
+                'is_deleted' => 0,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
                 'deskripsi_produk' => 'nanti diisi deh',
                 'harga_produk' => 180000,
-                'gambar_produk' => '56750061d41d399455453db13de972ae.jpg',
+                'gambar_produk' => 'roti-sosis.jpg',
                 'id_jenis_ketersediaan' => 1,
                 'id_kategori' => 2,
                 'id_kemasan' => 3,
@@ -176,13 +186,14 @@ class ProdukSeeder extends Seeder
                 'kuota_harian' => 10, //masih dummy, gatau ada di dokumen apa kaga
                 'nama_produk' => 'Roti Sosis',
                 'stok' => 20,
+                'is_deleted' => 0,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
                 'deskripsi_produk' => 'nanti diisi deh',
                 'harga_produk' => 120000,
-                'gambar_produk' => '56750061d41d399455453db13de972ae.jpg',
+                'gambar_produk' => 'milk-bun.jpg',
                 'id_jenis_ketersediaan' => 1,
                 'id_kategori' => 2,
                 'id_kemasan' => 3,
@@ -191,13 +202,14 @@ class ProdukSeeder extends Seeder
                 'kuota_harian' => 10, //masih dummy, gatau ada di dokumen apa kaga
                 'nama_produk' => 'Milk Bun',
                 'stok' => 20,
+                'is_deleted' => 0,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
                 'deskripsi_produk' => 'nanti diisi deh',
                 'harga_produk' => 150000,
-                'gambar_produk' => '56750061d41d399455453db13de972ae.jpg',
+                'gambar_produk' => 'roti-keju.jpeg',
                 'id_jenis_ketersediaan' => 1,
                 'id_kategori' => 2,
                 'id_kemasan' => 3,
@@ -206,13 +218,14 @@ class ProdukSeeder extends Seeder
                 'kuota_harian' => 10, //masih dummy, gatau ada di dokumen apa kaga
                 'nama_produk' => 'Roti Keju',
                 'stok' => 20,
+                'is_deleted' => 0,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
                 'deskripsi_produk' => 'nanti diisi deh',
                 'harga_produk' => 75000,
-                'gambar_produk' => '56750061d41d399455453db13de972ae.jpg',
+                'gambar_produk' => 'choco-creamy-latte.jpg',
                 'id_jenis_ketersediaan' => 1,
                 'id_kategori' => 3,
                 'id_kemasan' => 4,
@@ -221,13 +234,14 @@ class ProdukSeeder extends Seeder
                 'kuota_harian' => 10, //masih dummy, gatau ada di dokumen apa kaga
                 'nama_produk' => 'Choco Creamy Latte',
                 'stok' => 20,
+                'is_deleted' => 0,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
                 'deskripsi_produk' => 'nanti diisi deh',
                 'harga_produk' => 100000,
-                'gambar_produk' => '56750061d41d399455453db13de972ae.jpg',
+                'gambar_produk' => 'matcha-creamy-latte.jpg',
                 'id_jenis_ketersediaan' => 1,
                 'id_kategori' => 3,
                 'id_kemasan' => 4,
@@ -236,13 +250,14 @@ class ProdukSeeder extends Seeder
                 'kuota_harian' => 10, //masih dummy, gatau ada di dokumen apa kaga
                 'nama_produk' => 'Matcha Creamy Latte',
                 'stok' => 20,
+                'is_deleted' => 0,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
                 'deskripsi_produk' => 'nanti diisi deh',
                 'harga_produk' => 75000,
-                'gambar_produk' => '56750061d41d399455453db13de972ae.jpg',
+                'gambar_produk' => 'kripik-kentang.jpg',
                 'id_jenis_ketersediaan' => 1,
                 'id_kategori' => 4,
                 'id_kemasan' => 7,
@@ -251,13 +266,14 @@ class ProdukSeeder extends Seeder
                 'kuota_harian' => 0, //masih dummy, gatau ada di dokumen apa kaga
                 'nama_produk' => 'Kripik Kentang 250 gr',
                 'stok' => 15,
+                'is_deleted' => 0,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
                 'deskripsi_produk' => 'nanti diisi deh',
                 'harga_produk' => 250000,
-                'gambar_produk' => '56750061d41d399455453db13de972ae.jpg',
+                'gambar_produk' => 'kopi-luwak.png',
                 'id_jenis_ketersediaan' => 1,
                 'id_kategori' => 4,
                 'id_kemasan' => 7,
@@ -266,13 +282,14 @@ class ProdukSeeder extends Seeder
                 'kuota_harian' => 0, //masih dummy, gatau ada di dokumen apa kaga
                 'nama_produk' => 'Kopi Luwak Bubuk 250 gr',
                 'stok' => 15,
+                'is_deleted' => 0,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
                 'deskripsi_produk' => 'nanti diisi deh',
                 'harga_produk' => 300000,
-                'gambar_produk' => '56750061d41d399455453db13de972ae.jpg',
+                'gambar_produk' => 'matcha-organic.jpeg',
                 'id_jenis_ketersediaan' => 1,
                 'id_kategori' => 4,
                 'id_kemasan' => 7,
@@ -281,13 +298,14 @@ class ProdukSeeder extends Seeder
                 'kuota_harian' => 0, //masih dummy, gatau ada di dokumen apa kaga
                 'nama_produk' => 'Matcha Organik Bubuk 100 gr',
                 'stok' => 15,
+                'is_deleted' => 0,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
                 'deskripsi_produk' => 'nanti diisi deh',
                 'harga_produk' => 120000,
-                'gambar_produk' => '56750061d41d399455453db13de972ae.jpg',
+                'gambar_produk' => 'choco-bar.jpg',
                 'id_jenis_ketersediaan' => 1,
                 'id_kategori' => 4,
                 'id_kemasan' => 7,
@@ -296,6 +314,7 @@ class ProdukSeeder extends Seeder
                 'kuota_harian' => 0, //masih dummy, gatau ada di dokumen apa kaga
                 'nama_produk' => 'Chocolate Bar 100 gr',
                 'stok' => 15,
+                'is_deleted' => 0,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
