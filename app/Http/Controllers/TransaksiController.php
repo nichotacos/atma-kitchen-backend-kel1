@@ -15,13 +15,14 @@ class TransaksiController extends Controller
                 'alamat',
                 'status',
                 'jenisPengambilan',
-                'cart.detailCart.hampers.kemasan'
+                'cart.detailCart.hampers.kemasan',
+                'customer'
             ])
             ->where('id_pengambilan', 1)
             ->where('jarak_pengiriman', 0)
             ->where('id_status', 1);
 
-            $data = $transaksis->orderBy('id_transaksi', 'desc')->get();
+            $data = $transaksis->orderBy('id_transaksi', 'asc')->get();
 
             if ($data->isEmpty()) {
                 throw new \Exception('Transaksi Tidak Ditemukan');
@@ -61,15 +62,19 @@ class TransaksiController extends Controller
 
             if ($jarak_pengiriman > 15) {
                 $total_setelah_ongkir = $total_harga_produk + 25000;
+                $transaksis->ongkos_kirim = 25000;
             } elseif ($jarak_pengiriman > 10) {
                 $total_setelah_ongkir = $total_harga_produk + 20000;
+                $transaksis->ongkos_kirim = 20000;
             } elseif ($jarak_pengiriman > 5) {
                 $total_setelah_ongkir = $total_harga_produk + 15000;
+                $transaksis->ongkos_kirim = 15000;
             } else {
                 $total_setelah_ongkir = $total_harga_produk + 10000;
+                $transaksis->ongkos_kirim = 10000;
             }
 
-            $transaksis->id_status = 1;
+            $transaksis->id_status = 2;
             $transaksis->total_setelah_ongkir = $total_setelah_ongkir;
             $transaksis->save();
 
@@ -96,11 +101,12 @@ class TransaksiController extends Controller
                 'alamat',
                 'status',
                 'jenisPengambilan',
-                'cart.detailCart.hampers.kemasan'
+                'cart.detailCart.hampers.kemasan',
+                'customer'
             ])
-            ->where('id_status', 2);
+            ->where('id_status', 3);
 
-            $data = $transaksis->orderBy('id_transaksi', 'desc')->get();
+            $data = $transaksis->orderBy('id_transaksi', 'asc')->get();
 
             if ($data->isEmpty()) {
                 throw new \Exception('Transaksi Tidak Ditemukan');
