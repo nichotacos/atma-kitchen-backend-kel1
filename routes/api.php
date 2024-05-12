@@ -21,12 +21,12 @@ use App\Http\Controllers\KemasanController;
 use App\Http\Controllers\PengadaanBahanBakuController;
 use App\Http\Controllers\PenitipController;
 use App\Http\Controllers\StatusController;
-use App\Http\Controllers\AlamatController;
 use App\Http\Controllers\DetailCartController;
 use App\Http\Controllers\PengeluaranController;
 use App\Http\Controllers\ProdukHampersController;
 use App\Http\Controllers\UkuranProdukController;
 use App\Http\Controllers\UnitController;
+use App\Http\Controllers\TransaksiController;
 
 //Register Customer
 Route::post('/register', [AuthController::class, 'register']);
@@ -177,6 +177,13 @@ Route::group(['middleware' => 'auth:employee-api'], function () {
     Route::put('/pengadaan-bahan-bakus/update/{id}', [PengadaanBahanBakuController::class, 'update']);
     Route::delete('/pengadaan-bahan-bakus/delete/{id}', [PengadaanBahanBakuController::class, 'destroy']);
     Route::get('/pengadaan-bahan-bakus/search/{id}', [PengadaanBahanBakuController::class, 'show']);
+
+    //Transaksi (Admin)
+    Route::get('/transaksis/show-transaksi-input-jarak', [TransaksiController::class, 'showTransaksiInputJarak']);
+    Route::put('/transaksis/update-jarak-pengiriman/{id}', [TransaksiController::class, 'updateJarakPengiriman']);
+
+    Route::get('/transaksis/show-transaksi-belum-valid', [TransaksiController::class, 'showTransaksiBelumValid']);
+    Route::put('/transaksis/update-jumlah-pembayaran/{id}', [TransaksiController::class, 'updateJumlahPembayaran']);
 });
 
 //Alamat
