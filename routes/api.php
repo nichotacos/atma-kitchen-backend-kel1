@@ -157,6 +157,10 @@ Route::group(['middleware' => 'auth:employee-api'], function () {
 
     //Penitip
     Route::get('/penitips', [PenitipController::class, 'index']);
+    Route::put('/penitips/update/{id}', [PenitipController::class, 'update']);
+    Route::post('/penitips', [PenitipController::class, 'store']);
+    Route::delete('/penitips/delete/{id}', [PenitipController::class, 'destroy']);
+    Route::get('/penitips/search/{id}', [PenitipController::class, 'search']);
 
     // Pengeluaran
     Route::get('/pengeluarans', [PengeluaranController::class, 'index']);
