@@ -29,7 +29,8 @@ class PengeluaranController extends Controller
     {
         try {
             $validator = Validator::make($request->all(), [
-                'deskripsi' => 'required|string',
+                'tanggal_pengeluaran' => 'required|date',
+                'nominal_pengeluaran' => 'required|numeric'
             ]);
 
             if ($validator->fails()) {
@@ -37,7 +38,7 @@ class PengeluaranController extends Controller
             }
 
             $pengeluarans = Pengeluaran::create([
-                'deskripsi' => $request->deskripsi,
+                'tanggal_pengeluaran' => $request->tanggal_pengeluaran,
             ]);
 
             return response()->json([
@@ -83,7 +84,8 @@ class PengeluaranController extends Controller
             if (!$pengeluarans) throw new \Exception("Pengeluaran tidak ditemukan!");
 
             $validator = Validator::make($request->all(), [
-                'deskripsi' => 'required|string',
+                'tanggal_pengeluaran' => 'required|date',
+                'nominal_pengeluaran' => 'required|numeric'
             ]);
 
             if ($validator->fails()) {
