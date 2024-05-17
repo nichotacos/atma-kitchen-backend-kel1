@@ -267,4 +267,65 @@ class CustomerController extends Controller
             ], 400);
         }
     }
+
+    //Coding 3
+    public function showTransaksiSudahDipickup(Request $request)
+    {
+        try {
+            $transaksis = Transaksi::with([
+                'cart.detailCart.produk',
+                'cart.detailCart.hampers.produk',
+                'alamat',
+                'status',
+                'jenisPengambilan',
+                'cart.detailCart.hampers.kemasan',
+                'customer'
+            ])
+            ->where('id_status', 11);
+
+            $data = $transaksis->orderBy('id_transaksi', 'desc')->get();
+
+            if ($data->isEmpty()) {
+                throw new \Exception('Transaksi Tidak Ditemukan');
+            }
+
+            return response()->json([
+                "status" => true,
+                "message" => "Transaksi Ditemukan",
+                "data" => $data
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                "status" => false,
+                "message" => $e->getMessage(),
+                "data" => []
+            ], 400);
+        }
+    }
+
+    public function updateTransaksiSelesai($id)
+    {
+        try {
+            $transaksis = Transaksi::find($id);
+
+            if (!$transaksis) {
+                throw new \Exception("Transaksi Not Found");
+            }
+
+            $transaksis->id_status = 12;
+            $transaksis->save();
+
+            return response()->json([
+                "status" => true,
+                "message" => "Status updated successfully",
+                "data" => $transaksis
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                "status" => false,
+                "message" => "Failed to update Status: " . $e->getMessage(),
+                "data" => []
+            ], 400);
+        }
+    }
 }
