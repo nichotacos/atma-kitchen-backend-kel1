@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
+
+use App\Models\Hampers;
 use App\Models\Transaksi;
 use Illuminate\Http\Request;
 
@@ -18,9 +20,9 @@ class TransaksiController extends Controller
                 'cart.detailCart.hampers.kemasan',
                 'customer'
             ])
-            ->where('id_pengambilan', 1)
-            ->where('jarak_pengiriman', 0)
-            ->where('id_status', 1);
+                ->where('id_pengambilan', 1)
+                ->where('jarak_pengiriman', 0)
+                ->where('id_status', 1);
 
             $data = $transaksis->orderBy('id_transaksi', 'asc')->get();
 
@@ -104,7 +106,7 @@ class TransaksiController extends Controller
                 'cart.detailCart.hampers.kemasan',
                 'customer'
             ])
-            ->where('id_status', 3);
+                ->where('id_status', 3);
 
             $data = $transaksis->orderBy('id_transaksi', 'asc')->get();
 
@@ -159,4 +161,87 @@ class TransaksiController extends Controller
         }
     }
 
+    public function getSisaKuota(Request $request)
+    {
+        try {
+            $inputtedDate = $request->input('tanggal_ambil');
+            $targettedProduct = $request->input('id_produk');
+
+            $transaksis = Transaksi::where('tanggal_ambil', $inputtedDate)
+                ->whereHas('cart.detailCart', function ($query) use ($targettedProduct) {
+                    $query->where('id_produk', $targettedProduct);
+                })
+                ->with('cart.detailCart')
+                ->get();
+
+            $totalQuantity = $transaksis->sum(function ($transaksi) use ($targettedProduct) {
+                return $transaksi->cart->detailCart
+                    ->where('id_produk', $targettedProduct)
+                    ->sum('jumlah_produk');
+            });
+
+            $totalKuota = 10 - $totalQuantity;
+
+            return response()->json([
+                "status" => true,
+                "message" => "Sisa kuota berhasil didapatkan",
+                "data" => $totalKuota
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                "status" => false,
+                "message" => "Failed to get sisa kuota: " . $e->getMessage(),
+                "data" => []
+            ], 400);
+        }
+    }
+
+    public function getSisaKuotaHampers(Request $request)
+    {
+        try {
+            $inputtedDate = $request->input('tanggal_ambil');
+            $hamperId = $request->input('id_hampers');
+
+            $hamper = Hampers::with('produk')->findOrFail($hamperId);
+            $products = $hamper->produk;
+
+            $quotas = [];
+
+
+            foreach ($products as $product) {
+                $productId = $product->id_produk;
+
+                $transaksis = Transaksi::where('tanggal_ambil', $inputtedDate)
+                    ->whereHas('cart.detailCart', function ($query) use ($productId) {
+                        $query->where('id_produk', $productId);
+                    })
+                    ->with('cart.detailCart')
+                    ->get();
+
+                $totalQuantity = $transaksis->sum(function ($transaksi) use ($productId) {
+                    return $transaksi->cart->detailCart
+                        ->where('id_produk', $productId)
+                        ->sum('jumlah_produk');
+                });
+
+                $totalKuota = 10 - $totalQuantity;
+
+                $quotas[] = $totalKuota;
+            }
+
+            $minQuota = min($quotas);
+
+            return response()->json([
+                "status" => true,
+                "message" => "Sisa kuota berhasil didapatkan",
+                "data" => $minQuota
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                "status" => false,
+                "message" => "Failed to get sisa kuota: " . $e->getMessage(),
+                "data" => []
+            ], 400);
+        }
+    }
 }
