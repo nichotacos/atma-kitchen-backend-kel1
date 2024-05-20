@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignId('id_hampers')->nullable()->references('id_hampers')->on('hampers')->onUpdate('cascade')->onDelete('cascade');
             $table->foreignId('id_produk')->nullable()->references('id_produk')->on('produks')->onUpdate('cascade')->onDelete('cascade');
             $table->foreignId('id_cart')->references('id_cart')->on('carts')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignId('id_jenis_ketersediaan')->references('id_jenis_ketersediaan')->on('jenis_ketersediaans')->onDelete('cascade')->onUpdate('cascade');
             $table->integer('jumlah_produk');
             $table->double('harga_produk_terkini');
             $table->double('harga_total_terkini');

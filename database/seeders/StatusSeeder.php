@@ -42,7 +42,7 @@ class StatusSeeder extends Seeder
             ['detail_status' => 'Siap di pick-up',
             'created_at' => now(),
             'updated_at' => now(),],
-            ['detail_status' => 'Diterima oleh kurir',
+            ['detail_status' => 'Diantar oleh kurir',
             'created_at' => now(),
             'updated_at' => now(),],
             ['detail_status' => 'Sudah di pick-up',

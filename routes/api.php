@@ -62,6 +62,10 @@ Route::group(['middleware' => 'auth:customer-api'], function () {
 
     //DetailCart
     Route::post('/detail-carts', [DetailCartController::class, 'store']);
+  
+    //Coding 3 ongky
+    Route::get('/show-transaksi-sudah-dipickup', [CustomerController::class, 'showTransaksiSudahDipickup']);
+    Route::post('/update-transaksi-selesai/{id}', [CustomerController::class, 'updateTransaksiSelesai']);
 });
 
 Route::group(['middleware' => 'auth:employee-api'], function () {
@@ -187,6 +191,18 @@ Route::group(['middleware' => 'auth:employee-api'], function () {
 
     Route::get('/transaksis/show-transaksi-belum-valid', [TransaksiController::class, 'showTransaksiBelumValid']);
     Route::put('/transaksis/update-jumlah-pembayaran/{id}', [TransaksiController::class, 'updateJumlahPembayaran']);
+
+    //ALL DONE
+
+    //Coding 3
+    Route::get('/transaksis/show-transaksi-diproses', [TransaksiController::class, 'showTransaksiDiproses']);
+    Route::post('/transaksis/update-transaksi-siap-dipickup/{id}', [TransaksiController::class, 'updateTransaksiSiapDiPickup']);
+    Route::post('/transaksis/update-transaksi-sudah-dipickup/{id}', [TransaksiController::class, 'updateTransaksiSudahDipickup']);
+
+    Route::get('/transaksis/show-transaksi-batal', [TransaksiController::class, 'showTransaksiBatal']);
+
+    //Done
+
 });
 
 //Alamat
