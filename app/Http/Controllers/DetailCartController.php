@@ -37,6 +37,8 @@ class DetailCartController extends Controller
         try {
             $detailCart = $request->all();
 
+            $detailCart = DetailCart::create($detailCart);
+
             return response()->json([
                 'status' => true,
                 'message' => 'Berhasil menambahkan detail cart',
