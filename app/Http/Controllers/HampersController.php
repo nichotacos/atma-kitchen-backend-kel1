@@ -15,6 +15,14 @@ class HampersController extends Controller
         try {
             $hampers = Hampers::query()->with(['kemasan', 'produk']);
 
+            if ($request->search) {
+                $hampers->where('nama_hampers', 'like', '%' . $request->search . '%');
+            }
+
+            if ($request->id_hampers) {
+                $hampers->where('id_hampers', $request->id_hampers);
+            }
+
             if ($request->sort_by && in_array($request->sort_by, ['id_hampers', 'nama_hampers, harga_hampers'])) {
                 $sort_by = $request->sort_by;
             } else {

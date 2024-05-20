@@ -14,18 +14,30 @@ class KategoriSeeder extends Seeder
     public function run(): void
     {
         DB::table('kategoris')->insert([
-            ['nama_kategori' => 'Cake',
-            'created_at' => now(),
-            'updated_at' => now(),],
-            ['nama_kategori' => 'Roti',
-            'created_at' => now(),
-            'updated_at' => now(),],
-            ['nama_kategori' => 'Minuman',
-            'created_at' => now(),
-            'updated_at' => now(),],
-            ['nama_kategori' => 'Titipan',
-            'created_at' => now(),
-            'updated_at' => now(),],
+            [
+                'nama_kategori' => 'Cake',
+                'gambar_kategori' => 'cake-category.jpg',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'nama_kategori' => 'Roti',
+                'gambar_kategori' => 'bread-category.jpg',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'nama_kategori' => 'Minuman',
+                'gambar_kategori' => 'drinks-category.jpg',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'nama_kategori' => 'Titipan',
+                'gambar_kategori' => 'other-category.jpg',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
         ]);
     }
 }

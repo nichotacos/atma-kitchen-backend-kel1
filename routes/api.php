@@ -27,6 +27,8 @@ use App\Http\Controllers\ProdukHampersController;
 use App\Http\Controllers\UkuranProdukController;
 use App\Http\Controllers\UnitController;
 use App\Http\Controllers\TransaksiController;
+use App\Http\Controllers\AlamatController;
+use App\Http\Controllers\CartController;
 
 //Register Customer
 Route::post('/register', [AuthController::class, 'register']);
@@ -50,6 +52,17 @@ Route::group(['middleware' => 'auth:customer-api'], function () {
     Route::put('/customers/update/{id}', [CustomerController::class, 'update']);
     Route::delete('/customers/delete/{id}', [CustomerController::class, 'destroy']);
 
+    //Transaksi User
+    Route::post('transaksi/hitung-poin', [TransaksiController::class, 'calculatePoint']);
+    Route::post('/transaksi', [TransaksiController::class, 'store']);
+
+    //Cart
+    Route::post('/carts', [CartController::class, 'store']);
+    Route::get('/carts/get-latest', [CartController::class, 'getLatestCart']);
+
+    //DetailCart
+    Route::post('/detail-carts', [DetailCartController::class, 'store']);
+  
     //Coding 3 ongky
     Route::get('/show-transaksi-sudah-dipickup', [CustomerController::class, 'showTransaksiSudahDipickup']);
     Route::post('/update-transaksi-selesai/{id}', [CustomerController::class, 'updateTransaksiSelesai']);
@@ -172,6 +185,7 @@ Route::group(['middleware' => 'auth:employee-api'], function () {
     Route::get('/pengadaan-bahan-bakus/search/{id}', [PengadaanBahanBakuController::class, 'show']);
 
     //Transaksi (Admin)
+    Route::get('/transaksis', [TransaksiController::class, 'index']);
     Route::get('/transaksis/show-transaksi-input-jarak', [TransaksiController::class, 'showTransaksiInputJarak']);
     Route::put('/transaksis/update-jarak-pengiriman/{id}', [TransaksiController::class, 'updateJarakPengiriman']);
 
@@ -193,12 +207,15 @@ Route::group(['middleware' => 'auth:employee-api'], function () {
 
 //Alamat
 Route::get('/alamats', [AlamatController::class, 'index']);
+Route::post('/alamats/{id}', [AlamatController::class, 'showAlamatByCustomer']);
 
 //Statuses
 Route::get('/statuses', [StatusController::class, 'index']);
 
 //Produk
 Route::get('/products', [ProdukController::class, 'index']);
+Route::post('/products/sisa-kuota', [TransaksiController::class, 'getSisaKuota']);
+Route::post('/hampers/sisa-kuota-hampers', [TransaksiController::class, 'getSisaKuotaHampers']);
 
 //Hampers
 Route::get('/hampers', [HampersController::class, 'index']);
@@ -208,3 +225,6 @@ Route::get('/detail-carts', [DetailCartController::class, 'index']);
 
 //ProdukHampers
 Route::get('/produk-hampers', [ProdukHampersController::class, 'index']);
+
+// Kategori
+Route::get('/kategoris', [KategoriController::class, 'index']);

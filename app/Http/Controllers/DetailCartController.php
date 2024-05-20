@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Models\DetailCart;
 use Illuminate\Http\Request;
 
@@ -21,6 +22,28 @@ class DetailCartController extends Controller
                 'message' => 'Berhasil menampilkan data detail cart',
                 'data' => $data
             ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                "status" => false,
+                "message" => $e->getMessage(),
+                "data" => []
+            ], 400);
+        }
+    }
+
+    // Store
+    public function store(Request $request)
+    {
+        try {
+            $detailCart = $request->all();
+
+            $detailCart = DetailCart::create($detailCart);
+
+            return response()->json([
+                'status' => true,
+                'message' => 'Berhasil menambahkan detail cart',
+                'data' => $detailCart
+            ], 201);
         } catch (\Exception $e) {
             return response()->json([
                 "status" => false,
