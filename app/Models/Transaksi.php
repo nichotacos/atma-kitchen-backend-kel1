@@ -28,6 +28,7 @@ class Transaksi extends Model
         'perolehan_poin',
         'nominal_tip',
         'bukti_pembayaran',
+        'nomor_nota'
     ];
 
     public function cart(): HasOne

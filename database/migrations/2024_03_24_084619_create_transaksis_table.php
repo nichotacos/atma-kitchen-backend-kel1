@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('transaksis', function (Blueprint $table) {
             $table->id('id_transaksi');
+            $table->string('nomor_nota');
             $table->foreignId('id_customer')->references('id_customer')->on('customers')->onUpdate('cascade')->onDelete('cascade');
             $table->foreignId('id_pengambilan')->references('id_pengambilan')->on('jenis_pengambilans')->onUpdate('cascade')->onDelete('cascade');
             $table->foreignId('id_cart')->references('id_cart')->on('carts')->onUpdate('cascade')->onDelete('cascade');

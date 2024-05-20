@@ -27,6 +27,7 @@ use App\Http\Controllers\ProdukHampersController;
 use App\Http\Controllers\UkuranProdukController;
 use App\Http\Controllers\UnitController;
 use App\Http\Controllers\TransaksiController;
+use App\Http\Controllers\AlamatController;
 
 //Register Customer
 Route::post('/register', [AuthController::class, 'register']);
@@ -49,6 +50,9 @@ Route::group(['middleware' => 'auth:customer-api'], function () {
     Route::post('/customers', [CustomerController::class, 'store']);
     Route::put('/customers/update/{id}', [CustomerController::class, 'update']);
     Route::delete('/customers/delete/{id}', [CustomerController::class, 'destroy']);
+
+    //Transaksi User
+    Route::post('transaksi/hitung-poin', [TransaksiController::class, 'calculatePoint']);
 });
 
 Route::group(['middleware' => 'auth:employee-api'], function () {
@@ -183,6 +187,8 @@ Route::get('/statuses', [StatusController::class, 'index']);
 
 //Produk
 Route::get('/products', [ProdukController::class, 'index']);
+Route::post('/products/sisa-kuota', [TransaksiController::class, 'getSisaKuota']);
+Route::post('/hampers/sisa-kuota-hampers', [TransaksiController::class, 'getSisaKuotaHampers']);
 
 //Hampers
 Route::get('/hampers', [HampersController::class, 'index']);
@@ -192,3 +198,6 @@ Route::get('/detail-carts', [DetailCartController::class, 'index']);
 
 //ProdukHampers
 Route::get('/produk-hampers', [ProdukHampersController::class, 'index']);
+
+// Kategori
+Route::get('/kategoris', [KategoriController::class, 'index']);
