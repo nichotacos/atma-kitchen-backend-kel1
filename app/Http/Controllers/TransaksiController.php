@@ -174,7 +174,7 @@ class TransaksiController extends Controller
                 'cart.detailCart.hampers.kemasan',
                 'customer'
             ])
-            ->where('id_status', 6, 8, 9, 10, 11);
+            ->whereIn('id_status', [8, 9, 10, 11]);
 
             $data = $transaksis->orderBy('id_transaksi', 'asc')->get();
 
@@ -239,7 +239,11 @@ class TransaksiController extends Controller
                 throw new \Exception("Transaksi Not Found");
             }
 
-            $transaksis->id_status = 11;
+            if($transaksis->id_pengambilan == 2){
+                $transaksis->id_status = 11;
+            } else {
+                $transaksis->id_status = 10;
+            }
             $transaksis->save();
 
             return response()->json([
