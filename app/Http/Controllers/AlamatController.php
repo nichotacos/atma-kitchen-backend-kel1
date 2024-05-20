@@ -44,4 +44,25 @@ class AlamatController extends Controller
             ], 400);
         }
     }
+
+    public function showAlamatByCustomer($id)
+    {
+        try {
+            $alamats = Alamat::query()->where('id_customer', $id)->get();
+
+            if ($alamats->isEmpty()) throw new \Exception('Alamat tidak ditemukan');
+
+            return response()->json([
+                'status' => true,
+                'message' => 'Berhasil menampilkan data alamat',
+                'data' => $alamats
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                "status" => false,
+                "message" => $e->getMessage(),
+                "data" => []
+            ], 400);
+        }
+    }
 }
