@@ -30,7 +30,7 @@ return new class extends Migration
             $table->double('total_harga_final');
             $table->integer('perolehan_poin');
             $table->double('nominal_tip');
-            $table->string('bukti_pembayaran');
+            $table->string('bukti_pembayaran')->nullable();
             $table->timestamps();
         });
     }
