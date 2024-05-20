@@ -9,6 +9,106 @@ use Illuminate\Support\Carbon;
 
 class TransaksiController extends Controller
 {
+    public function index(Request $request)
+    {
+        try {
+            $transaksis = Transaksi::with([
+                'cart.detailCart.produk',
+                'cart.detailCart.hampers.produk',
+                'alamat',
+                'status',
+                'jenisPengambilan',
+                'cart.detailCart.hampers.kemasan',
+                'customer'
+            ]);
+
+            if ($request->search) {
+                $transaksis->where(function ($query) use ($request) {
+                    $query->where('nomor_nota', 'like', '%' . $request->search . '%')
+                        ->orWhereHas('customer', function ($query) use ($request) {
+                            $query->where('nama_customer', 'like', '%' . $request->search . '%');
+                        });
+                });
+            }
+
+            if ($request->sort_by && in_array($request->sort_by, ['id_transaksi', 'nomor_nota', 'total_harga_produk', 'total_harga_final', 'tanggal_pemesanan', 'tanggal_pelunasan', 'tanggal_ambil'])) {
+                $sort_by = $request->sort_by;
+            } else {
+                $sort_by = 'id_transaksi';
+            }
+
+            if ($request->sort_order && in_array($request->sort_order, ['asc', 'desc'])) {
+                $sort_order = $request->sort_order;
+            } else {
+                $sort_order = 'asc';
+            }
+
+            $data = $transaksis->orderBy($sort_by, $sort_order)->get();
+
+            if ($data->isEmpty()) {
+                throw new \Exception('Transaksi Tidak Ditemukan');
+            }
+
+            return response()->json([
+                "status" => true,
+                'message' => 'Berhasil menampilkan data transaksi',
+                'data' => $data
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                "status" => false,
+                'message' => $e->getMessage(),
+                'data' => []
+            ], 400);
+        }
+    }
+
+    public function storeTransaksi(Request $request)
+    {
+        try {
+            $validatedData = $request->validate([
+                // 'nomor_nota' => 'required|string',
+                'id_customer' => 'required|numeric',
+                'id_pengambilan' => 'required|numeric',
+                'id_cart' => 'required|numeric',
+                'id_status' => 'required|numeric',
+                'id_alamat' => 'nullable|numeric',
+                'tanggal_pemesanan' => 'required|date',
+                'tanggal_pelunasan' => 'nullable|date',
+                'tanggal_ambil' => 'nullable|date',
+                'total_harga_produk' => 'required|numeric',
+                'jarak_pengiriman' => 'required|numeric',
+                'ongkos_kirim' => 'required|numeric',
+                'total_setelah_ongkir' => 'required|numeric',
+                'poin_digunakan' => 'required|numeric',
+                'total_harga_final' => 'required|numeric',
+                'perolehan_poin' => 'required|numeric',
+                'nominal_tip' => 'required|numeric',
+                'bukti_pembayaran' => 'nullable|string',
+            ]);
+
+            $tempTransaction = new Transaksi($validatedData);
+            $tempTransaction->save();
+
+            $tempTransaction->nomor_nota = $tempTransaction->generateNomorNota();
+            $tempTransaction->save();
+
+            $transaksis = Transaksi::create($tempTransaction);
+
+            return response()->json([
+                "status" => true,
+                "message" => "Transaksi berhasil ditambahkan",
+                "data" => $transaksis
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                "status" => false,
+                'message' => $e->getMessage(),
+                'data' => []
+            ], 400);
+        }
+    }
+
     public function showTransaksiInputJarak(Request $request)
     {
         try {
