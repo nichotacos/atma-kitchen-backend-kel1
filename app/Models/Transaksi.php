@@ -50,7 +50,7 @@ class Transaksi extends Model
 
     public function jenisPengambilan(): BelongsTo
     {
-        return $this->belongsTo(JenisPengambilan::class, 'id_jenis_pengambilan');
+        return $this->belongsTo(JenisPengambilan::class, 'id_pengambilan');
     }
 
     public function status(): BelongsTo

@@ -196,13 +196,11 @@ Route::group(['middleware' => 'auth:employee-api'], function () {
 
     //Coding 3
     Route::get('/transaksis/show-transaksi-diproses', [TransaksiController::class, 'showTransaksiDiproses']);
-    Route::post('/transaksis/update-transaksi-siap-dipickup/{id}', [TransaksiController::class, 'updateTransaksiSiapDiPickup']);
+    Route::post('/transaksis/update-transaksi-siap-dipickup/{id}', [TransaksiController::class, 'updateTransaksiSiapDiPickup']);-
     Route::post('/transaksis/update-transaksi-sudah-dipickup/{id}', [TransaksiController::class, 'updateTransaksiSudahDipickup']);
 
     Route::get('/transaksis/show-transaksi-batal', [TransaksiController::class, 'showTransaksiBatal']);
-
     //Done
-
 });
 
 //Alamat
