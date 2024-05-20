@@ -37,18 +37,18 @@ class DetailCartController extends Controller
         try {
             $detailCart = $request->all();
 
-            $detailCart = DetailCart::create($detailCart);
+            $createdDetailCart = DetailCart::create($detailCart);
 
             return response()->json([
                 'status' => true,
                 'message' => 'Berhasil menambahkan detail cart',
-                'data' => $detailCart
+                'data' => $createdDetailCart
             ], 201);
         } catch (\Exception $e) {
             return response()->json([
                 "status" => false,
                 "message" => $e->getMessage(),
-                "data" => []
+                "data" => $detailCart
             ], 400);
         }
     }

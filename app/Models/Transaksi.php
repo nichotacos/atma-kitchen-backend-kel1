@@ -28,14 +28,19 @@ class Transaksi extends Model
         'perolehan_poin',
         'nominal_tip',
         'bukti_pembayaran',
-        'nomor_nota'
+        'nomor_nota',
+        'id_customer',
+        'id_pengambilan',
+        'id_cart',
+        'id_status',
+        'id_alamat',
     ];
 
     public function generateNomorNota()
     {
         $year = date('y');
         $month = date('m');
-        return "{$year} - {$month} - {$this->id_transaksi}";
+        return "{$year}-{$month}-{$this->id_transaksi}";
     }
 
     public function cart(): HasOne
