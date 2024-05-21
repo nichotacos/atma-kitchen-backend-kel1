@@ -174,7 +174,13 @@ Route::group(['middleware' => 'auth:employee-api'], function () {
 
     Route::get('/transaksis/show-transaksi-belum-valid', [TransaksiController::class, 'showTransaksiBelumValid']);
     Route::put('/transaksis/update-jumlah-pembayaran/{id}', [TransaksiController::class, 'updateJumlahPembayaran']);
+    //Transaksi (MO)
+    Route::put('/transaksis/terima-pesanan/{id}', [TransaksiController::class, 'terimaPesanan']);
+    Route::put('/transaksis/tolak-pesanan/{id}', [TransaksiController::class, 'tolakPesanan']);
 });
+
+//Upload Bukti Pembayaran
+Route::post('/upload-payment-proof', [TransaksiController::class, 'store']);
 
 //Alamat
 Route::get('/alamats', [AlamatController::class, 'index']);
