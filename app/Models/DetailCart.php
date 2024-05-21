@@ -19,6 +19,7 @@ class DetailCart extends Model
         'jumlah_produk',
         'harga_produk_terkini',
         'harga_total_terkini',
+        'id_cart'
     ];
 
     public function produk(): BelongsTo

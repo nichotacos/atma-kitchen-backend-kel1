@@ -54,7 +54,7 @@ Route::group(['middleware' => 'auth:customer-api'], function () {
 
     //Transaksi User
     Route::post('transaksi/hitung-poin', [TransaksiController::class, 'calculatePoint']);
-    Route::post('/transaksi', [TransaksiController::class, 'store']);
+    Route::post('/transaksi', [TransaksiController::class, 'storeTransaksi']);
 
     //Cart
     Route::post('/carts', [CartController::class, 'store']);
@@ -62,7 +62,7 @@ Route::group(['middleware' => 'auth:customer-api'], function () {
 
     //DetailCart
     Route::post('/detail-carts', [DetailCartController::class, 'store']);
-  
+
     //Coding 3 ongky
     Route::get('/show-transaksi-sudah-dipickup', [CustomerController::class, 'showTransaksiSudahDipickup']);
     Route::post('/update-transaksi-selesai/{id}', [CustomerController::class, 'updateTransaksiSelesai']);
@@ -196,7 +196,7 @@ Route::group(['middleware' => 'auth:employee-api'], function () {
 
     //Coding 3
     Route::get('/transaksis/show-transaksi-diproses', [TransaksiController::class, 'showTransaksiDiproses']);
-    Route::post('/transaksis/update-transaksi-siap-dipickup/{id}', [TransaksiController::class, 'updateTransaksiSiapDiPickup']);-
+    Route::post('/transaksis/update-transaksi-siap-dipickup/{id}', [TransaksiController::class, 'updateTransaksiSiapDiPickup']);
     Route::post('/transaksis/update-transaksi-sudah-dipickup/{id}', [TransaksiController::class, 'updateTransaksiSudahDipickup']);
 
     Route::get('/transaksis/show-transaksi-batal', [TransaksiController::class, 'showTransaksiBatal']);

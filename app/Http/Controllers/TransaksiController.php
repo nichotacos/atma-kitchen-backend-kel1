@@ -88,24 +88,23 @@ class TransaksiController extends Controller
                 'bukti_pembayaran' => 'nullable|string',
             ]);
 
-            $tempTransaction = new Transaksi($validatedData);
-            $tempTransaction->save();
+            $transaction = new Transaksi($validatedData);
+            $transaction->nomor_nota = '';
+            $transaction->save();
 
-            $tempTransaction->nomor_nota = $tempTransaction->generateNomorNota();
-            $tempTransaction->save();
-
-            $transaksis = Transaksi::create($tempTransaction);
+            $transaction->nomor_nota = $transaction->generateNomorNota();
+            $transaction->save();
 
             return response()->json([
                 "status" => true,
                 "message" => "Transaksi berhasil ditambahkan",
-                "data" => $transaksis
+                "data" => $transaction
             ], 200);
         } catch (\Exception $e) {
             return response()->json([
                 "status" => false,
                 'message' => $e->getMessage(),
-                'data' => []
+                'data' => $transaction
             ], 400);
         }
     }
@@ -311,7 +310,7 @@ class TransaksiController extends Controller
                 'cart.detailCart.hampers.kemasan',
                 'customer'
             ])
-            ->whereIn('id_status', [8, 9, 10, 11]);
+                ->whereIn('id_status', [8, 9, 10, 11]);
 
             $data = $transaksis->orderBy('id_transaksi', 'asc')->get();
 
@@ -395,7 +394,7 @@ class TransaksiController extends Controller
                 throw new \Exception("Transaksi tidak dalam status diproses");
             }
 
-            if($transaksis->id_pengambilan == 2){
+            if ($transaksis->id_pengambilan == 2) {
                 $transaksis->id_status = 9;
             } else {
                 $transaksis->id_status = 10;
@@ -425,7 +424,7 @@ class TransaksiController extends Controller
                 throw new \Exception("Transaksi Not Found");
             }
 
-            if($transaksis->id_pengambilan == 2){
+            if ($transaksis->id_pengambilan == 2) {
                 $transaksis->id_status = 11;
             } else {
                 $transaksis->id_status = 10;
@@ -484,7 +483,7 @@ class TransaksiController extends Controller
                 "status" => true,
                 "message" => "Point berhasil dihitung",
                 "data" => $point
-              ], 200);
+            ], 200);
         } catch (\Exception $e) {
             return response()->json([
                 "status" => false,
@@ -507,7 +506,7 @@ class TransaksiController extends Controller
                 'cart.detailCart.hampers.kemasan',
                 'customer'
             ])->whereNull('tanggal_pelunasan')
-            ->whereRaw('DATE(tanggal_ambil) <= DATE_ADD(CURDATE(), INTERVAL 1 DAY)');
+                ->whereRaw('DATE(tanggal_ambil) <= DATE_ADD(CURDATE(), INTERVAL 1 DAY)');
 
             $data = $transaksis->orderBy('id_transaksi', 'asc')->get();
 
@@ -515,42 +514,42 @@ class TransaksiController extends Controller
                 throw new \Exception('Transaksi Tidak Ditemukan');
             }
 
-                    foreach ($data as $transaksi) {
-                        if ($transaksi->id_status != 4) {
-                            $transaksi->id_status = 4;
+            foreach ($data as $transaksi) {
+                if ($transaksi->id_status != 4) {
+                    $transaksi->id_status = 4;
 
-                            foreach ($transaksi->cart->detailCart as $detailCart) {
-                                if ($detailCart->produk && $detailCart->id_jenis_ketersediaan == 1) {
-                                    $produk = Produk::find($detailCart->id_produk);
-                                    if ($produk) {
-                                        $produk->stok += $detailCart->jumlah_produk;
-                                        if ($produk->stok == 0 && $produk->id_jenis_ketersediaan == 2) {
-                                            $produk->id_jenis_ketersediaan = 1;
-                                        }
-                                        $produk->save();
-                                    } else {
-                                        throw new \Exception('Produk not found for id_produk: ' . $detailCart->id_produk);
-                                    }
+                    foreach ($transaksi->cart->detailCart as $detailCart) {
+                        if ($detailCart->produk && $detailCart->id_jenis_ketersediaan == 1) {
+                            $produk = Produk::find($detailCart->id_produk);
+                            if ($produk) {
+                                $produk->stok += $detailCart->jumlah_produk;
+                                if ($produk->stok == 0 && $produk->id_jenis_ketersediaan == 2) {
+                                    $produk->id_jenis_ketersediaan = 1;
                                 }
+                                $produk->save();
+                            } else {
+                                throw new \Exception('Produk not found for id_produk: ' . $detailCart->id_produk);
+                            }
+                        }
 
-                                if ($detailCart->hampers && $detailCart->id_jenis_ketersediaan == 1) {
-                                    foreach ($detailCart->hampers->produk as $hamperProduk) {
-                                        $produk = Produk::find($hamperProduk->id_produk);
-                                        if ($produk) {
-                                            if ($produk->stok == 0 && $produk->id_jenis_ketersediaan == 2) {
-                                                $produk->id_jenis_ketersediaan = 1;
-                                            }
-                                            $produk->stok += $detailCart->jumlah_produk;
-                                            $produk->save();
-                                        } else {
-                                            throw new \Exception('Produk not found for id_produk: ' . $hamperProduk->id_produk);
-                                        }
+                        if ($detailCart->hampers && $detailCart->id_jenis_ketersediaan == 1) {
+                            foreach ($detailCart->hampers->produk as $hamperProduk) {
+                                $produk = Produk::find($hamperProduk->id_produk);
+                                if ($produk) {
+                                    if ($produk->stok == 0 && $produk->id_jenis_ketersediaan == 2) {
+                                        $produk->id_jenis_ketersediaan = 1;
                                     }
+                                    $produk->stok += $detailCart->jumlah_produk;
+                                    $produk->save();
+                                } else {
+                                    throw new \Exception('Produk not found for id_produk: ' . $hamperProduk->id_produk);
                                 }
                             }
-                            $transaksi->save();
                         }
                     }
+                    $transaksi->save();
+                }
+            }
 
             return response()->json([
                 "status" => true,
