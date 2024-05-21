@@ -31,7 +31,8 @@ class Produk extends Model
         'id_ukuran',
         'id_kategori',
         'id_kemasan',
-        'id_penitip'
+        'id_penitip',
+        'is_deleted'
     ];
 
     public function DetailResep(): hasMany

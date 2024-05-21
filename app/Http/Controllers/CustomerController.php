@@ -267,4 +267,107 @@ class CustomerController extends Controller
             ], 400);
         }
     }
+
+    //Coding 3
+    public function showTransaksiSudahDipickup(Request $request)
+    {
+        try {
+            $customers = Auth::guard('customer-api')->user();
+            $id_customer = $customers->id_customer;
+
+            $transaksis = Transaksi::with([
+                'cart.detailCart.produk',
+                'cart.detailCart.hampers.produk',
+                'alamat',
+                'status',
+                'jenisPengambilan',
+                'cart.detailCart.hampers.kemasan',
+                'customer'
+            ])
+            ->whereIn('id_status', [10,11])
+            ->where('id_customer', $id_customer);
+
+            if ($request->search) {
+                $transaksis->whereHas('cart.detailCart', function ($query) use ($request) {
+                    $query->where(function ($q) use ($request) {
+                        $q->whereHas('produk', function ($subquery) use ($request) {
+                                $subquery->where('nama_produk', 'like', '%' . $request->search . '%');
+                            })
+                            ->orWhereHas('hampers', function ($subquery) use ($request) {
+                                $subquery->whereHas('produk', function ($subsubquery) use ($request) {
+                                    $subsubquery->where('nama_produk', 'like', '%' . $request->search . '%');
+                                });
+                            });
+                    });
+                });
+            }
+
+            foreach ($transaksis as $transaksi) {
+                $detailCart = $transaksi->cart->detailCart;
+
+                if ($detailCart->produk) {
+
+                    $data[] = [
+                        'id_transaksi' => $transaksi->id_transaksi,
+                        'id_produk' => $detailCart->produk->id_produk,
+                        'nama_produk' => $detailCart->produk->nama_produk,
+
+                    ];
+                } elseif ($detailCart->hampers) {
+
+                    $data[] = [
+                        'id_transaksi' => $transaksi->id_transaksi,
+                        'id_hampers' => $detailCart->hampers->id_hampers,
+                        'nama_hampers' => $detailCart->hampers->nama_hampers,
+                    ];
+                } else {
+
+                }
+            }
+
+            $data = $transaksis->orderBy('id_transaksi', 'desc')->get();
+
+            if ($data->isEmpty()) {
+                throw new \Exception('Transaksi Tidak Ditemukan');
+            }
+
+            return response()->json([
+                "status" => true,
+                "message" => "Transaksi Ditemukan",
+                "data" => $data
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                "status" => false,
+                "message" => $e->getMessage(),
+                "data" => []
+            ], 400);
+        }
+    }
+
+    public function updateTransaksiSelesai($id)
+    {
+        try {
+            $transaksis = Transaksi::find($id);
+
+            if (!$transaksis) {
+                throw new \Exception("Transaksi Not Found");
+            }
+
+            $transaksis->id_status = 12;
+            $transaksis->save();
+
+            return response()->json([
+                "status" => true,
+                "message" => "Status updated successfully",
+                "data" => $transaksis
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                "status" => false,
+                "message" => "Failed to update Status: " . $e->getMessage(),
+                "data" => []
+            ], 400);
+        }
+    }
 }

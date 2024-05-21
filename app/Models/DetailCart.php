@@ -19,6 +19,7 @@ class DetailCart extends Model
         'jumlah_produk',
         'harga_produk_terkini',
         'harga_total_terkini',
+        'id_cart'
     ];
 
     public function produk(): BelongsTo
@@ -29,5 +30,10 @@ class DetailCart extends Model
     public function hampers(): BelongsTo
     {
         return $this->belongsTo(Hampers::class, 'id_hampers');
+    }
+
+    public function JenisKetersediaan(): BelongsTo
+    {
+        return $this->belongsTo(JenisKetersediaan::class, 'id_jenis_ketersediaan');
     }
 }

@@ -24,6 +24,7 @@ return new class extends Migration
             $table->integer('stok');
             $table->integer('kuota_harian');
             $table->string('gambar_produk');
+            $table->tinyInteger('is_deleted');
             $table->timestamps();
         });
     }

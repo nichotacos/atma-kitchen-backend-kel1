@@ -20,8 +20,18 @@ class ProdukController extends Controller
                 $products->where('nama_produk', 'like', '%' . $request->search . '%');
             }
 
+            if ($request->id_produk) {
+                $products->where('id_produk', $request->id_produk);
+            }
+
+            if ($request->kategori) {
+                $products->whereHas('Kategori', function (Builder $query) use ($request) {
+                    $query->where('nama_kategori', 'like', '%' . $request->kategori . '%');
+                });
+            }
+
             if ($request->jenis_ketersediaan) {
-                $products->whereHas('jenis_ketersediaan', function (Builder $query) use ($request) {
+                $products->whereHas('JenisKetersediaan', function (Builder $query) use ($request) {
                     $query->where('detail_ketersediaan', 'like', '%' . $request->jenis_ketersediaan . '%');
                 });
             }

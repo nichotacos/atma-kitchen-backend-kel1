@@ -17,6 +17,7 @@ class TransaksiSeeder extends Seeder
             [
                 //id =  1
                 'bukti_pembayaran' => 'nota',
+                'nomor_nota' => '24-01-1',
                 'id_alamat' => 2,
                 'id_cart' => 1,
                 'id_customer' => 1,
@@ -39,6 +40,7 @@ class TransaksiSeeder extends Seeder
             [
                 //id =  2
                 'bukti_pembayaran' => 'nota2',
+                'nomor_nota' => '24-02-2',
                 'id_alamat' => 2,
                 'id_cart' => 2,
                 'id_customer' => 2,
@@ -61,6 +63,7 @@ class TransaksiSeeder extends Seeder
             [
                 //id =  3
                 'bukti_pembayaran' => 'nota3',
+                'nomor_nota' => '24-03-3',
                 'id_alamat' => null,
                 'id_cart' => 3,
                 'id_customer' => 3,
@@ -83,6 +86,7 @@ class TransaksiSeeder extends Seeder
             [
                 //id =  3
                 'bukti_pembayaran' => 'nota4',
+                'nomor_nota' => '24-03-4',
                 'id_alamat' => null,
                 'id_cart' => 4,
                 'id_customer' => 4,
@@ -105,6 +109,7 @@ class TransaksiSeeder extends Seeder
             [
                 //id =  3
                 'bukti_pembayaran' => 'nota4',
+                'nomor_nota' => '24-04-5',
                 'id_alamat' => null,
                 'id_cart' => 5,
                 'id_customer' => 4,
