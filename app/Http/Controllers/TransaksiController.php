@@ -100,10 +100,6 @@ class TransaksiController extends Controller
             $transaction->nomor_nota = $transaction->generateNomorNota();
             $transaction->save();
 
-            $currentUser = Customer::find($request->id_customer);
-            $currentUser->poin += $request->perolehan_poin - $request->poin_digunakan;
-            $currentUser->save();
-
             return response()->json([
                 "status" => true,
                 "message" => "Transaksi berhasil ditambahkan",
@@ -680,6 +676,65 @@ class TransaksiController extends Controller
             return response()->json([
                 "status" => false,
                 "message" => "Gagal mendapatkan produk: " . $e->getMessage(),
+                "data" => []
+            ], 400);
+        }
+    }
+
+    public function terimaPesanan($id)
+    {
+        try {
+            $transaksis = Transaksi::find($id);
+
+            if (!$transaksis) {
+                throw new \Exception("Transaksi Not Found");
+            }
+
+            $transaksis->id_status = 6;
+            $transaksis->save();
+
+            $currentUser = Customer::find($transaksis->id_customer);
+            $currentUser->poin += $transaksis->perolehan_poin - $transaksis->poin_digunakan;
+            $currentUser->save();
+
+            $transaksis->total_harga_final = $transaksis->total_harga_final - ($transaksis->poin_digunakan * 100);
+            $transaksis->save();
+
+            return response()->json([
+                "status" => true,
+                "message" => "Nominal tip updated successfully",
+                "data" => $transaksis
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                "status" => false,
+                "message" => "Failed to update nominal tip: " . $e->getMessage(),
+                "data" => []
+            ], 400);
+        }
+    }
+
+    public function tolakPesanan($id)
+    {
+        try {
+            $transaksis = Transaksi::find($id);
+
+            if (!$transaksis) {
+                throw new \Exception("Transaksi Not Found");
+            }
+
+            $transaksis->id_status = 7;
+            $transaksis->save();
+
+            return response()->json([
+                "status" => true,
+                "message" => "Nominal tip updated successfully",
+                "data" => $transaksis
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                "status" => false,
+                "message" => "Failed to update nominal tip: " . $e->getMessage(),
                 "data" => []
             ], 400);
         }
