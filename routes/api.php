@@ -202,8 +202,8 @@ Route::group(['middleware' => 'auth:employee-api'], function () {
     Route::get('/transaksis/show-transaksi-batal', [TransaksiController::class, 'showTransaksiBatal']);
     //Done
     //Transaksi (MO)
-    Route::put('/transaksis/terima-pesanan/{id}', [TransaksiController::class, 'terimaPesanan']);
-    Route::put('/transaksis/tolak-pesanan/{id}', [TransaksiController::class, 'tolakPesanan']);
+    Route::post('/transaksis/terima-pesanan/{id}', [TransaksiController::class, 'terimaPesanan']);
+    Route::post('/transaksis/tolak-pesanan/{id}', [TransaksiController::class, 'tolakPesanan']);
 });
 
 //Upload Bukti Pembayaran
