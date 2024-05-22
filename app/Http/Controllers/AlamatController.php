@@ -50,12 +50,39 @@ class AlamatController extends Controller
         try {
             $alamats = Alamat::query()->where('id_customer', $id)->get();
 
-            if ($alamats->isEmpty()) throw new \Exception('Alamat tidak ditemukan');
+            if ($alamats->isEmpty()) {
+                return response()->json([
+                    'status' => true,
+                    'message' => 'Customer tidak memiliki alamat',
+                    'data' => []
+                ], 200);
+            }
 
             return response()->json([
                 'status' => true,
                 'message' => 'Berhasil menampilkan data alamat',
                 'data' => $alamats
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                "status" => false,
+                "message" => $e->getMessage(),
+                "data" => []
+            ], 400);
+        }
+    }
+
+    public function getAlamat($id)
+    {
+        try {
+            $alamat = Alamat::find($id);
+            if ($alamat == null) {
+                throw new \Exception('Alamat tidak ditemukan');
+            }
+            return response()->json([
+                'status' => true,
+                'message' => 'Berhasil menampilkan data alamat',
+                'data' => $alamat
             ], 200);
         } catch (\Exception $e) {
             return response()->json([

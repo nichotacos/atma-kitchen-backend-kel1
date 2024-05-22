@@ -55,6 +55,7 @@ Route::group(['middleware' => 'auth:customer-api'], function () {
     //Transaksi User
     Route::post('transaksi/hitung-poin', [TransaksiController::class, 'calculatePoint']);
     Route::post('/transaksi', [TransaksiController::class, 'storeTransaksi']);
+    Route::post('/transaksi/get-products', [TransaksiController::class, 'getProductsFromTransaksi']);
 
     //Cart
     Route::post('/carts', [CartController::class, 'store']);
@@ -206,6 +207,7 @@ Route::group(['middleware' => 'auth:employee-api'], function () {
 //Alamat
 Route::get('/alamats', [AlamatController::class, 'index']);
 Route::post('/alamats/{id}', [AlamatController::class, 'showAlamatByCustomer']);
+Route::post('/alamats/get-alamat/{id}', [AlamatController::class, 'getAlamat']);
 
 //Statuses
 Route::get('/statuses', [StatusController::class, 'index']);

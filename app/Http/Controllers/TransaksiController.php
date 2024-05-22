@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Customer;
 use App\Models\Hampers;
 use App\Models\Transaksi;
 use App\Models\Produk;
@@ -30,6 +31,10 @@ class TransaksiController extends Controller
                             $query->where('nama_customer', 'like', '%' . $request->search . '%');
                         });
                 });
+            }
+
+            if ($request->id_transaksi) {
+                $transaksis->where('id_transaksi', $request->id_transaksi);
             }
 
             if ($request->sort_by && in_array($request->sort_by, ['id_transaksi', 'nomor_nota', 'total_harga_produk', 'total_harga_final', 'tanggal_pemesanan', 'tanggal_pelunasan', 'tanggal_ambil'])) {
@@ -68,7 +73,6 @@ class TransaksiController extends Controller
     {
         try {
             $validatedData = $request->validate([
-                // 'nomor_nota' => 'required|string',
                 'id_customer' => 'required|numeric',
                 'id_pengambilan' => 'required|numeric',
                 'id_cart' => 'required|numeric',
@@ -81,6 +85,7 @@ class TransaksiController extends Controller
                 'jarak_pengiriman' => 'required|numeric',
                 'ongkos_kirim' => 'required|numeric',
                 'total_setelah_ongkir' => 'required|numeric',
+                'poin_sebelumnya' => 'required|numeric',
                 'poin_digunakan' => 'required|numeric',
                 'total_harga_final' => 'required|numeric',
                 'perolehan_poin' => 'required|numeric',
@@ -95,6 +100,10 @@ class TransaksiController extends Controller
             $transaction->nomor_nota = $transaction->generateNomorNota();
             $transaction->save();
 
+            $currentUser = Customer::find($request->id_customer);
+            $currentUser->poin += $request->perolehan_poin - $request->poin_digunakan;
+            $currentUser->save();
+
             return response()->json([
                 "status" => true,
                 "message" => "Transaksi berhasil ditambahkan",
@@ -104,7 +113,7 @@ class TransaksiController extends Controller
             return response()->json([
                 "status" => false,
                 'message' => $e->getMessage(),
-                'data' => $transaction
+                'data' => []
             ], 400);
         }
     }
@@ -270,11 +279,15 @@ class TransaksiController extends Controller
             $targettedProduct = $request->input('id_produk');
 
             $transaksis = Transaksi::where('tanggal_ambil', $inputtedDate)
-                ->whereHas('cart.detailCart', function ($query) use ($targettedProduct) {
-                    $query->where('id_produk', $targettedProduct);
+                ->whereHas('cart', function ($query) use ($targettedProduct) {
+                    $query->whereHas('detailCart', function ($subQuery) use ($targettedProduct) {
+                        $subQuery->where('id_produk', $targettedProduct);
+                    });
                 })
                 ->with('cart.detailCart')
                 ->get();
+
+            // echo $transaksis;
 
             $totalQuantity = $transaksis->sum(function ($transaksi) use ($targettedProduct) {
                 return $transaksi->cart->detailCart
@@ -587,6 +600,50 @@ class TransaksiController extends Controller
             return response()->json([
                 "status" => false,
                 "message" => "Failed to update nominal tip: " . $e->getMessage(),
+                "data" => []
+            ], 400);
+        }
+    }
+
+    public function getProductsFromTransaksi(Request $request)
+    {
+        try {
+            $transaksiId = $request->input('id_transaksi');
+            $transaksi = Transaksi::find($transaksiId);
+
+            if (!$transaksi) {
+                throw new \Exception("Transaksi Not Found");
+            }
+
+            $products = $transaksi->cart->detailCart->map(function ($detailCart) {
+                if ($detailCart->produk) {
+                    return [
+                        'id_produk' => $detailCart->id_produk,
+                        'nama_produk' => $detailCart->produk->nama_produk,
+                        'jumlah_produk' => $detailCart->jumlah_produk,
+                        'harga_produk_terkini' => $detailCart->harga_produk_terkini,
+                        'harga_total_terkini' => $detailCart->harga_total_terkini,
+                    ];
+                } else if ($detailCart->hampers) {
+                    return [
+                        'id_produk' => $detailCart->id_hampers,
+                        'nama_produk' => $detailCart->hampers->nama_hampers,
+                        'jumlah_produk' => $detailCart->jumlah_produk,
+                        'harga_produk_terkini' => $detailCart->harga_produk_terkini,
+                        'harga_total_terkini' => $detailCart->harga_total_terkini,
+                    ];
+                }
+            });
+
+            return response()->json([
+                "status" => true,
+                "message" => "Produk berhasil didapatkan",
+                "data" => $products
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                "status" => false,
+                "message" => "Gagal mendapatkan produk: " . $e->getMessage(),
                 "data" => []
             ], 400);
         }

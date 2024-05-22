@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\DetailCart;
+use App\Models\Hampers;
+use App\Models\Produk;
 use Illuminate\Http\Request;
 
 class DetailCartController extends Controller
@@ -36,6 +38,30 @@ class DetailCartController extends Controller
     {
         try {
             $detailCart = $request->all();
+
+            $productId = $request->id_produk;
+            $hampersId = $request->id_hampers;
+
+            if ($productId != null) {
+                $targetProduct = Produk::find($productId);
+                if ($targetProduct->stok > 0) {
+                    $targetProduct->stok = $targetProduct->stok - $request->jumlah_produk;
+                    $targetProduct->save();
+                }
+            }
+
+            if ($hampersId != null) {
+                $targetHampers = Hampers::find($hampersId);
+
+                $hampersProduct = $targetHampers->produk;
+                foreach ($hampersProduct as $product) {
+                    $targetProduct = Produk::find($product->id_produk);
+                    if ($targetProduct->stok > 0) {
+                        $targetProduct->stok = $targetProduct->stok - $request->jumlah_produk;
+                        $targetProduct->save();
+                    }
+                }
+            }
 
             $createdDetailCart = DetailCart::create($detailCart);
 

@@ -23,6 +23,7 @@ class Transaksi extends Model
         'jarak_pengiriman',
         'ongkos_kirim',
         'total_setelah_ongkir',
+        'poin_sebelumnya',
         'poin_digunakan',
         'total_harga_final',
         'perolehan_poin',

@@ -26,6 +26,7 @@ return new class extends Migration
             $table->double('jarak_pengiriman');
             $table->double('ongkos_kirim');
             $table->double('total_setelah_ongkir');
+            $table->integer('poin_sebelumnya');
             $table->integer('poin_digunakan');
             $table->double('total_harga_final');
             $table->integer('perolehan_poin');
