@@ -171,24 +171,25 @@ class TransaksiController extends Controller
             ]);
 
             $jarak_pengiriman = $request->jarak_pengiriman;
-            $total_harga_produk = $transaksis->total_harga_produk;
+            $total_harga_final = $transaksis->total_harga_final;
 
             if ($jarak_pengiriman > 15) {
-                $total_setelah_ongkir = $total_harga_produk + 25000;
+                $total_setelah_ongkir = $total_harga_final + 25000;
                 $transaksis->ongkos_kirim = 25000;
             } elseif ($jarak_pengiriman > 10) {
-                $total_setelah_ongkir = $total_harga_produk + 20000;
+                $total_setelah_ongkir = $total_harga_final + 20000;
                 $transaksis->ongkos_kirim = 20000;
             } elseif ($jarak_pengiriman > 5) {
-                $total_setelah_ongkir = $total_harga_produk + 15000;
+                $total_setelah_ongkir = $total_harga_final + 15000;
                 $transaksis->ongkos_kirim = 15000;
             } else {
-                $total_setelah_ongkir = $total_harga_produk + 10000;
+                $total_setelah_ongkir = $total_harga_final + 10000;
                 $transaksis->ongkos_kirim = 10000;
             }
 
             $transaksis->id_status = 2;
             $transaksis->total_setelah_ongkir = $total_setelah_ongkir;
+            $transaksis->total_harga_final = $total_setelah_ongkir;
             $transaksis->save();
 
             return response()->json([
@@ -255,7 +256,7 @@ class TransaksiController extends Controller
             $inputValue = $validatedData['value'];
             $newNominalTip = $inputValue - $transaksis->total_harga_final;
             $transaksis->nominal_tip = $newNominalTip;
-            $transaksis->id_status = 4;
+            $transaksis->id_status = 5;
             $transaksis->save();
 
             return response()->json([
