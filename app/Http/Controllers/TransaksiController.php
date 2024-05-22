@@ -297,6 +297,41 @@ class TransaksiController extends Controller
             ], 400);
         }
     }
+
+    public function showTransaksiPembayaranValid(Request $request)
+    {
+        try {
+            $transaksis = Transaksi::with([
+                'cart.detailCart.produk',
+                'cart.detailCart.hampers.produk',
+                'alamat',
+                'status',
+                'jenisPengambilan',
+                'cart.detailCart.hampers.kemasan',
+                'customer'
+            ])
+                ->whereIn('id_status', [5]);
+
+            $data = $transaksis->orderBy('id_transaksi', 'asc')->get();
+
+            if ($data->isEmpty()) {
+                throw new \Exception('Transaksi Tidak Ditemukan');
+            }
+
+            return response()->json([
+                "status" => true,
+                "message" => "Transaksi Ditemukan",
+                "data" => $data
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                "status" => false,
+                "message" => $e->getMessage(),
+                "data" => []
+            ], 400);
+        }
+    }
+
     //Coding 3
     public function showTransaksiDiproses(Request $request)
     {
