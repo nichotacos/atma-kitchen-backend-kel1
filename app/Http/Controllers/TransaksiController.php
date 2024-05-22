@@ -255,7 +255,7 @@ class TransaksiController extends Controller
             $inputValue = $validatedData['value'];
             $newNominalTip = $inputValue - $transaksis->total_harga_final;
             $transaksis->nominal_tip = $newNominalTip;
-            $transaksis->id_status = 4;
+            $transaksis->id_status = 5;
             $transaksis->save();
 
             return response()->json([
