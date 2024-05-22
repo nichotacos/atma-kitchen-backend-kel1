@@ -100,9 +100,9 @@ class TransaksiController extends Controller
             $transaction->nomor_nota = $transaction->generateNomorNota();
             $transaction->save();
 
-            $currentUser = Customer::find($request->id_customer);
-            $currentUser->poin += $request->perolehan_poin - $request->poin_digunakan;
-            $currentUser->save();
+            // $currentUser = Customer::find($request->id_customer);
+            // $currentUser->poin += $request->perolehan_poin - $request->poin_digunakan;
+            // $currentUser->save();
 
             return response()->json([
                 "status" => true,
