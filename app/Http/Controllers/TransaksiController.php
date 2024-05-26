@@ -739,4 +739,49 @@ class TransaksiController extends Controller
             ], 400);
         }
     }
+
+    public function showPesananHariIni()
+    {
+        try {
+            $today = date('Y-m-d 00:00:00', strtotime(now()));
+
+            $tomorrow = date('Y-m-d H:i:s', strtotime('+1 day', strtotime($today)));
+
+            echo $tomorrow;
+
+            $transaksis = Transaksi::with([
+                'cart.detailCart.produk.DetailResep',
+                'cart.detailCart.hampers.produk.DetailResep',
+                'alamat',
+                'status',
+                'jenisPengambilan',
+                'customer'
+            ])
+                ->where('tanggal_ambil', $tomorrow)
+                ->orderBy('id_transaksi', 'asc')
+                ->get();
+
+            foreach ($transaksis as $transaksi) {
+                $transaksi->cart->detailCartFiltered = $transaksi->cart->detailCart->filter(function ($detailCart) {
+                    return $detailCart->id_jenis_ketersediaan != 1;
+                })->values();
+            }
+
+            if ($transaksis->isEmpty()) {
+                throw new \Exception('Transaksi Tidak Ditemukan');
+            }
+
+            return response()->json([
+                "status" => true,
+                "message" => "Transaksi Ditemukan",
+                "data" => $transaksis
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                "status" => false,
+                "message" => $e->getMessage(),
+                "data" => []
+            ], 400);
+        }
+    }
 }
