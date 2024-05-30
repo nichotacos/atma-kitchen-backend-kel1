@@ -202,7 +202,6 @@ Route::group(['middleware' => 'auth:employee-api'], function () {
     Route::post('/transaksis/update-transaksi-sudah-dipickup/{id}', [TransaksiController::class, 'updateTransaksiSudahDipickup']);
 
     Route::get('/transaksis/show-transaksi-batal', [TransaksiController::class, 'showTransaksiBatal']);
-    //Done
 
     //Laporans
     //Laporan Penjualan Bulanan
@@ -210,7 +209,15 @@ Route::group(['middleware' => 'auth:employee-api'], function () {
 
     //Laporan Penggunaan Bahan Baku
     Route::post('/laporan-penggunaan-bahan-baku', [LaporanController::class, 'generateLaporanPenggunaanBahanBaku']);
+
+    //Transaksi (MO)
+    Route::get('/transaksis/show-transaksi-pembayaran-valid', [TransaksiController::class, 'showTransaksiPembayaranValid']);
+    Route::post('/transaksis/terima-pesanan/{id}', [TransaksiController::class, 'terimaPesanan']);
+    Route::post('/transaksis/tolak-pesanan/{id}', [TransaksiController::class, 'tolakPesanan']);
 });
+
+//Upload Bukti Pembayaran
+Route::post('/upload-payment-proof', [TransaksiController::class, 'store']);
 
 //Alamat
 Route::get('/alamats', [AlamatController::class, 'index']);
