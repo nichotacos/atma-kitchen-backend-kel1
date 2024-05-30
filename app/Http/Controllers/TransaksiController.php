@@ -799,10 +799,8 @@ class TransaksiController extends Controller
 
             $tomorrow = date('Y-m-d H:i:s', strtotime('+1 day', strtotime($today)));
 
-            echo $tomorrow;
-
             $transaksis = Transaksi::with([
-                'cart.detailCart.produk.DetailResep',
+                'cart.detailCart.produk.DetailResep.bahanBaku.unit',
                 'cart.detailCart.hampers.produk.DetailResep',
                 'alamat',
                 'status',
@@ -813,20 +811,179 @@ class TransaksiController extends Controller
                 ->orderBy('id_transaksi', 'asc')
                 ->get();
 
+            if ($transaksis->isEmpty()) {
+                return response()->json([
+                    "status" => true,
+                    "message" => "Tidak ada pesanan hari ini",
+                    "data" => []
+                ], 200);
+            }
+
+            // Buat filter produk yang preorder
             foreach ($transaksis as $transaksi) {
                 $transaksi->cart->detailCartFiltered = $transaksi->cart->detailCart->filter(function ($detailCart) {
                     return $detailCart->id_jenis_ketersediaan != 1;
                 })->values();
             }
 
-            if ($transaksis->isEmpty()) {
-                throw new \Exception('Transaksi Tidak Ditemukan');
+            // Hitung rekap jumlah produk
+            $totalLapisLegitQty = 0;
+            $totalLapisSurabayaQty = 0;
+            $totalBrowniesQty = 0;
+            $totalMandarinQty = 0;
+            $totalSpikoeQty = 0;
+
+            // TODO: MASIH PRODUK, BLOM HAMPERS
+            foreach ($transaksis as $transaksi) {
+                $lapisLegitQty = 0;
+                $lapisSurabayaQty = 0;
+                $browniesQty = 0;
+                $mandarinQty = 0;
+                $spikoeQty = 0;
+
+                foreach ($transaksi->cart->detailCartFiltered as $detailCart) {
+                    if ($detailCart->produk) {
+                        if ($detailCart->produk->id_produk === 1 || $detailCart->produk->id_produk === 2) {
+                            if ($detailCart->produk->id_produk === 1) {
+                                $lapisLegitQty += $detailCart->jumlah_produk * 1;
+                            } else {
+                                $lapisLegitQty += ($detailCart->jumlah_produk) / 2;
+                            }
+                        } else if ($detailCart->produk->id_produk === 3 || $detailCart->produk->id_produk === 4) {
+                            if ($detailCart->produk->id_produk === 3) {
+                                $lapisSurabayaQty += $detailCart->jumlah_produk * 1;
+                            } else {
+                                $lapisSurabayaQty += $detailCart->jumlah_produk * 1 / 2;
+                            }
+                        } else if ($detailCart->produk->id_produk === 5 || $detailCart->produk->id_produk === 6) {
+                            if ($detailCart->produk->id_produk === 5) {
+                                $browniesQty += $detailCart->jumlah_produk * 1;
+                            } else {
+                                $browniesQty += $detailCart->jumlah_produk * 1 / 2;
+                            }
+                        } else if ($detailCart->produk->id_produk === 7 || $detailCart->produk->id_produk === 8) {
+                            if ($detailCart->produk->id_produk === 7) {
+                                $mandarinQty += $detailCart->jumlah_produk * 1;
+                            } else {
+                                $mandarinQty += $detailCart->jumlah_produk * 1 / 2;
+                            }
+                        } else if ($detailCart->produk->id_produk === 9 || $detailCart->produk->id_produk === 10) {
+                            if ($detailCart->produk->id_produk === 9) {
+                                $spikoeQty += $detailCart->jumlah_produk * 1;
+                            } else {
+                                $spikoeQty += $detailCart->jumlah_produk * 1 / 2;
+                            }
+                        }
+                    }
+                }
+                $transaksi->cart->recap = [
+                    'lapis_legit' => $lapisLegitQty,
+                    'lapis_surabaya' => $lapisSurabayaQty,
+                    'brownies' => $browniesQty,
+                    'mandarin' => $mandarinQty,
+                    'spikoe' => $spikoeQty,
+                ];
+
+                if ($lapisLegitQty == 0.5) $lapisLegitQty = 1;
+                if ($lapisSurabayaQty == 0.5) $lapisSurabayaQty = 1;
+                if ($browniesQty == 0.5) $browniesQty = 1;
+                if ($mandarinQty == 0.5) $mandarinQty = 1;
+                if ($spikoeQty == 0.5) $spikoeQty = 1;
+
+                $totalLapisLegitQty += $lapisLegitQty;
+                $totalLapisSurabayaQty += $lapisSurabayaQty;
+                $totalBrowniesQty += $browniesQty;
+                $totalMandarinQty += $mandarinQty;
+                $totalSpikoeQty += $spikoeQty;
             }
+
+            $totalRecap = [
+                [
+                    'name' => 'Lapis Legit',
+                    'quantity' => $totalLapisLegitQty
+                ],
+                [
+                    'name' => 'Lapis Surabaya',
+                    'quantity' => $totalLapisSurabayaQty
+                ],
+                [
+                    'name' => 'Brownies',
+                    'quantity' => $totalBrowniesQty
+                ],
+                [
+                    'name' => 'Mandarin',
+                    'quantity' => $totalMandarinQty
+                ],
+                [
+                    'name' => 'Spikoe',
+                    'quantity' => $totalSpikoeQty
+                ]
+            ];
+
+            // Hitung bahan yang digunakan
+            $productMapping = [
+                'Lapis Legit' => 1,
+                'Lapis Surabaya' => 3,
+                'Brownies' => 5,
+                'Mandarin' => 7,
+                'Spikoe' => 9
+            ];
+
+            $recipes = [];
+
+            foreach ($totalRecap as $recap) {
+                if ($recap['quantity'] > 0) {
+                    $productId = $productMapping[$recap['name']];
+                    $product = Produk::with('DetailResep.bahanBaku.unit')->find($productId);
+
+                    $recipeDetails = [];
+                    foreach ($product->DetailResep as $resep) {
+                        $recipeDetails[] = (object)[
+                            'bahan' => $resep->bahanBaku->nama_bahan_baku,
+                            'unit' => $resep->bahanBaku->unit->nama_unit,
+                            'quantity' => $resep->jumlah * $recap['quantity'],
+                        ];
+                    }
+                    $recipes[] = (object)[
+                        'name' => $recap['name'],
+                        'details' => $recipeDetails
+                    ];
+                }
+            }
+
+            // Hitung total bahan yang digunakan serta urut secara alfabetik dan ascending
+            $totalRecipe = [];
+            $bahanMapping = [];
+
+            foreach ($recipes as $recipe) {
+                foreach ($recipe->details as $detail) {
+                    $bahan = $detail->bahan;
+                    $unit = $detail->unit;
+                    $quantity = $detail->quantity;
+
+                    if (array_key_exists($bahan, $bahanMapping)) {
+                        $index = $bahanMapping[$bahan];
+                        $totalRecipe[$index]->quantity += $quantity;
+                    } else {
+                        $totalRecipe[] = (object)[
+                            'bahan' => $bahan,
+                            'unit' => $unit,
+                            'quantity' => $quantity
+                        ];
+                        $bahanMapping[$bahan] = count($totalRecipe) - 1;
+                    }
+                }
+            }
+
+            // sort by bahan ascending
+            usort($totalRecipe, function ($a, $b) {
+                return strcmp($a->bahan, $b->bahan);
+            });
 
             return response()->json([
                 "status" => true,
                 "message" => "Transaksi Ditemukan",
-                "data" => $transaksis
+                "data" => [$transaksis, $totalRecap, $recipes, $totalRecipe]
             ], 200);
         } catch (\Exception $e) {
             return response()->json([
