@@ -29,6 +29,7 @@ use App\Http\Controllers\UnitController;
 use App\Http\Controllers\TransaksiController;
 use App\Http\Controllers\AlamatController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\LaporanController;
 
 //Register Customer
 Route::post('/register', [AuthController::class, 'register']);
@@ -201,7 +202,14 @@ Route::group(['middleware' => 'auth:employee-api'], function () {
     Route::post('/transaksis/update-transaksi-sudah-dipickup/{id}', [TransaksiController::class, 'updateTransaksiSudahDipickup']);
 
     Route::get('/transaksis/show-transaksi-batal', [TransaksiController::class, 'showTransaksiBatal']);
-    //Done
+
+    //Laporans
+    //Laporan Penjualan Bulanan
+    Route::post('/laporan-penjualan-bulanan', [LaporanController::class, 'generateLaporanPenjualanBulanan']);
+
+    //Laporan Penggunaan Bahan Baku
+    Route::post('/laporan-penggunaan-bahan-baku', [LaporanController::class, 'generateLaporanPenggunaanBahanBaku']);
+
     //Transaksi (MO)
     Route::get('/transaksis/show-transaksi-pembayaran-valid', [TransaksiController::class, 'showTransaksiPembayaranValid']);
     Route::post('/transaksis/terima-pesanan/{id}', [TransaksiController::class, 'terimaPesanan']);
