@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\BahanBaku;
 use App\Models\Customer;
 use App\Models\Hampers;
+use App\Models\PengadaanBahanBaku;
 use App\Models\Transaksi;
 use App\Models\Produk;
 use Illuminate\Http\Request;
@@ -37,6 +39,14 @@ class TransaksiController extends Controller
 
             if ($request->id_transaksi) {
                 $transaksis->where('id_transaksi', $request->id_transaksi);
+            }
+
+            if ($request->id_status) {
+                $transaksis->where('id_status', $request->id_status);
+            }
+
+            if ($request->tanggal_ambil) {
+                $transaksis->where('tanggal_ambil', $request->tanggal_ambil);
             }
 
             if ($request->sort_by && in_array($request->sort_by, ['id_transaksi', 'nomor_nota', 'total_harga_produk', 'total_harga_final', 'tanggal_pemesanan', 'tanggal_pelunasan', 'tanggal_ambil'])) {
@@ -821,9 +831,25 @@ class TransaksiController extends Controller
 
             // Buat filter produk yang preorder
             foreach ($transaksis as $transaksi) {
-                $transaksi->cart->detailCartFiltered = $transaksi->cart->detailCart->filter(function ($detailCart) {
-                    return $detailCart->id_jenis_ketersediaan != 1;
-                })->values();
+                $transaksi->cart->detailCartFiltered = collect();
+
+                foreach ($transaksi->cart->detailCart as $detailCart) {
+                    if ($detailCart->produk && $detailCart->produk->id_jenis_ketersediaan != 1) {
+                        $transaksi->cart->detailCartFiltered->push($detailCart);
+                    } elseif ($detailCart->hampers) {
+                        $hamperProducts = $detailCart->hampers->produk;
+                        $newDetailCart = new \App\Models\DetailCart();
+                        $newDetailCart->id_detail_cart = $detailCart->id_detail_cart;
+                        foreach ($hamperProducts as $hamperProduct) {
+                            if ($hamperProduct->id_jenis_ketersediaan != 1) {
+                                $newDetailCart->jumlah_produk = $detailCart->jumlah_produk;
+                                $newDetailCart->produk = $hamperProduct;
+
+                                $transaksi->cart->detailCartFiltered->push($newDetailCart);
+                            }
+                        }
+                    }
+                }
             }
 
             // Hitung rekap jumlah produk
@@ -833,7 +859,6 @@ class TransaksiController extends Controller
             $totalMandarinQty = 0;
             $totalSpikoeQty = 0;
 
-            // TODO: MASIH PRODUK, BLOM HAMPERS
             foreach ($transaksis as $transaksi) {
                 $lapisLegitQty = 0;
                 $lapisSurabayaQty = 0;
@@ -872,6 +897,42 @@ class TransaksiController extends Controller
                                 $spikoeQty += $detailCart->jumlah_produk * 1;
                             } else {
                                 $spikoeQty += $detailCart->jumlah_produk * 1 / 2;
+                            }
+                        }
+                    } else {
+                        if ($detailCart->hampers->produk) {
+                            foreach ($detailCart->hampers->produk as $produk) {
+                                if ($produk->id_produk === 1 || $produk->id_produk === 2) {
+                                    if ($produk->id_produk === 1) {
+                                        $lapisLegitQty += $detailCart->jumlah_produk * 1;
+                                    } else {
+                                        $lapisLegitQty += ($detailCart->jumlah_produk) / 2;
+                                    }
+                                } else if ($produk->id_produk === 3 || $produk->id_produk === 4) {
+                                    if ($produk->id_produk === 3) {
+                                        $lapisSurabayaQty += $detailCart->jumlah_produk * 1;
+                                    } else {
+                                        $lapisSurabayaQty += $detailCart->jumlah_produk * 1 / 2;
+                                    }
+                                } else if ($produk->id_produk === 5 || $produk->id_produk === 6) {
+                                    if ($produk->id_produk === 5) {
+                                        $browniesQty += $detailCart->jumlah_produk * 1;
+                                    } else {
+                                        $browniesQty += $detailCart->jumlah_produk * 1 / 2;
+                                    }
+                                } else if ($produk->id_produk === 7 || $produk->id_produk === 8) {
+                                    if ($produk->id_produk === 7) {
+                                        $mandarinQty += $detailCart->jumlah_produk * 1;
+                                    } else {
+                                        $mandarinQty += $detailCart->jumlah_produk * 1 / 2;
+                                    }
+                                } else if ($produk->id_produk === 9 || $produk->id_produk === 10) {
+                                    if ($produk->id_produk === 9) {
+                                        $spikoeQty += $detailCart->jumlah_produk * 1;
+                                    } else {
+                                        $spikoeQty += $detailCart->jumlah_produk * 1 / 2;
+                                    }
+                                }
                             }
                         }
                     }
@@ -968,7 +1029,8 @@ class TransaksiController extends Controller
                         $totalRecipe[] = (object)[
                             'bahan' => $bahan,
                             'unit' => $unit,
-                            'quantity' => $quantity
+                            'quantity' => $quantity,
+                            'current_stock' => BahanBaku::where('nama_bahan_baku', $bahan)->first()->stok_bahan_baku
                         ];
                         $bahanMapping[$bahan] = count($totalRecipe) - 1;
                     }
@@ -980,15 +1042,268 @@ class TransaksiController extends Controller
                 return strcmp($a->bahan, $b->bahan);
             });
 
+            foreach ($transaksis as $transaksi) {
+                $insufficientIngredients = []; // Moved inside the loop
+                $transactionRecipes = [];
+
+                $looper = 1;
+
+                // Sum the required quantities for each ingredient
+                foreach ($transaksi->cart->recap as $recap) {
+                    if ($recap !== 0) {
+                        $target = Produk::with('DetailResep.bahanBaku.unit')->find($looper);
+
+                        foreach ($target->DetailResep as $resep) {
+                            $bahan = $resep->bahanBaku->nama_bahan_baku;
+                            $unit = $resep->bahanBaku->unit->nama_unit;
+                            $quantity = $resep->jumlah * $recap;
+
+                            if (array_key_exists($bahan, $transactionRecipes)) {
+                                $transactionRecipes[$bahan]->quantity += $quantity;
+                            } else {
+                                $transactionRecipes[$bahan] = (object)[
+                                    'bahan' => $bahan,
+                                    'unit' => $unit,
+                                    'quantity' => $quantity,
+                                    'current_stock' => BahanBaku::where('nama_bahan_baku', $bahan)->first()->stok_bahan_baku
+                                ];
+                            }
+                        }
+
+                        $looper += 2;
+                    }
+                }
+
+                foreach ($transactionRecipes as $transactionRecipe) {
+                    $bahan = $transactionRecipe->bahan;
+                    $quantity = $transactionRecipe->quantity;
+                    $currentStock = $transactionRecipe->current_stock;
+
+                    if ($currentStock < $quantity) {
+                        $insufficientIngredients[] = (object)[
+                            'bahan' => $bahan,
+                            'quantity' => $quantity - $currentStock,
+                            'unit' => $transactionRecipe->unit
+                        ];
+                    }
+                }
+
+                $transaksi->cart->insufficientIngredients = $insufficientIngredients;
+            }
+
             return response()->json([
                 "status" => true,
                 "message" => "Transaksi Ditemukan",
-                "data" => [$transaksis, $totalRecap, $recipes, $totalRecipe]
+                "data" => [$transaksis, $totalRecap, $recipes, $totalRecipe, $transactionRecipes]
             ], 200);
         } catch (\Exception $e) {
             return response()->json([
                 "status" => false,
                 "message" => $e->getMessage(),
+                "data" => []
+            ], 400);
+        }
+    }
+
+    public function prosesPesanan($id_transaksi)
+    {
+        try {
+            $transaction = Transaksi::with([
+                'cart.detailCart.produk.DetailResep.bahanBaku.unit',
+                'cart.detailCart.hampers.produk.DetailResep',
+                'alamat',
+                'status',
+                'jenisPengambilan',
+                'customer'
+            ])
+                ->where('id_transaksi', $id_transaksi)
+                ->first();
+
+            if (!$transaction) {
+                throw new \Exception("Transaksi Not Found");
+            }
+
+            foreach ($transaction as $transaksi) {
+                $transaction->cart->detailCartFiltered = collect();
+
+                foreach ($transaction->cart->detailCart as $detailCart) {
+                    if ($detailCart->produk && $detailCart->produk->id_jenis_ketersediaan != 1) {
+                        $transaction->cart->detailCartFiltered->push($detailCart);
+                    } elseif ($detailCart->hampers) {
+                        $hamperProducts = $detailCart->hampers->produk;
+                        $newDetailCart = new \App\Models\DetailCart();
+                        $newDetailCart->id_detail_cart = $detailCart->id_detail_cart;
+                        foreach ($hamperProducts as $hamperProduct) {
+                            if ($hamperProduct->id_jenis_ketersediaan != 1) {
+                                $newDetailCart->jumlah_produk = $detailCart->jumlah_produk;
+                                $newDetailCart->produk = $hamperProduct;
+
+                                $transaction->cart->detailCartFiltered->push($newDetailCart);
+                            }
+                        }
+                    }
+                }
+            }
+
+            $lapisLegitQty = 0;
+            $lapisSurabayaQty = 0;
+            $browniesQty = 0;
+            $mandarinQty = 0;
+            $spikoeQty = 0;
+
+            foreach ($transaction->cart->detailCartFiltered as $detailCart) {
+                if ($detailCart->produk) {
+                    if ($detailCart->produk->id_produk === 1 || $detailCart->produk->id_produk === 2) {
+                        if ($detailCart->produk->id_produk === 1) {
+                            $lapisLegitQty += $detailCart->jumlah_produk * 1;
+                        } else {
+                            $lapisLegitQty += ($detailCart->jumlah_produk) / 2;
+                        }
+                    } else if ($detailCart->produk->id_produk === 3 || $detailCart->produk->id_produk === 4) {
+                        if ($detailCart->produk->id_produk === 3) {
+                            $lapisSurabayaQty += $detailCart->jumlah_produk * 1;
+                        } else {
+                            $lapisSurabayaQty += $detailCart->jumlah_produk * 1 / 2;
+                        }
+                    } else if ($detailCart->produk->id_produk === 5 || $detailCart->produk->id_produk === 6) {
+                        if ($detailCart->produk->id_produk === 5) {
+                            $browniesQty += $detailCart->jumlah_produk * 1;
+                        } else {
+                            $browniesQty += $detailCart->jumlah_produk * 1 / 2;
+                        }
+                    } else if ($detailCart->produk->id_produk === 7 || $detailCart->produk->id_produk === 8) {
+                        if ($detailCart->produk->id_produk === 7) {
+                            $mandarinQty += $detailCart->jumlah_produk * 1;
+                        } else {
+                            $mandarinQty += $detailCart->jumlah_produk * 1 / 2;
+                        }
+                    } else if ($detailCart->produk->id_produk === 9 || $detailCart->produk->id_produk === 10) {
+                        if ($detailCart->produk->id_produk === 9) {
+                            $spikoeQty += $detailCart->jumlah_produk * 1;
+                        } else {
+                            $spikoeQty += $detailCart->jumlah_produk * 1 / 2;
+                        }
+                    }
+                } else {
+                    if ($detailCart->hampers->produk) {
+                        foreach ($detailCart->hampers->produk as $produk) {
+                            if ($produk->id_produk === 1 || $produk->id_produk === 2) {
+                                if ($produk->id_produk === 1) {
+                                    $lapisLegitQty += $detailCart->jumlah_produk * 1;
+                                } else {
+                                    $lapisLegitQty += ($detailCart->jumlah_produk) / 2;
+                                }
+                            } else if ($produk->id_produk === 3 || $produk->id_produk === 4) {
+                                if ($produk->id_produk === 3) {
+                                    $lapisSurabayaQty += $detailCart->jumlah_produk * 1;
+                                } else {
+                                    $lapisSurabayaQty += $detailCart->jumlah_produk * 1 / 2;
+                                }
+                            } else if ($produk->id_produk === 5 || $produk->id_produk === 6) {
+                                if ($produk->id_produk === 5) {
+                                    $browniesQty += $detailCart->jumlah_produk * 1;
+                                } else {
+                                    $browniesQty += $detailCart->jumlah_produk * 1 / 2;
+                                }
+                            } else if ($produk->id_produk === 7 || $produk->id_produk === 8) {
+                                if ($produk->id_produk === 7) {
+                                    $mandarinQty += $detailCart->jumlah_produk * 1;
+                                } else {
+                                    $mandarinQty += $detailCart->jumlah_produk * 1 / 2;
+                                }
+                            } else if ($produk->id_produk === 9 || $produk->id_produk === 10) {
+                                if ($produk->id_produk === 9) {
+                                    $spikoeQty += $detailCart->jumlah_produk * 1;
+                                } else {
+                                    $spikoeQty += $detailCart->jumlah_produk * 1 / 2;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            if ($lapisLegitQty == 0.5) $lapisLegitQty = 1;
+            if ($lapisSurabayaQty == 0.5) $lapisSurabayaQty = 1;
+            if ($browniesQty == 0.5) $browniesQty = 1;
+            if ($mandarinQty == 0.5) $mandarinQty = 1;
+            if ($spikoeQty == 0.5) $spikoeQty = 1;
+
+            $transaction->cart->recap = [
+                'lapis_legit' => $lapisLegitQty,
+                'lapis_surabaya' => $lapisSurabayaQty,
+                'brownies' => $browniesQty,
+                'mandarin' => $mandarinQty,
+                'spikoe' => $spikoeQty,
+            ];
+
+            foreach ($transaction as $transaksi) {
+                $insufficientIngredients = []; // Moved inside the loop
+                $transactionRecipes = [];
+
+                $looper = 1;
+
+                // Sum the required quantities for each ingredient
+                foreach ($transaction->cart->recap as $recap) {
+                    if ($recap !== 0) {
+                        $target = Produk::with('DetailResep.bahanBaku.unit')->find($looper);
+
+                        foreach ($target->DetailResep as $resep) {
+                            $bahan = $resep->bahanBaku->nama_bahan_baku;
+                            $unit = $resep->bahanBaku->unit->nama_unit;
+                            $quantity = $resep->jumlah * $recap;
+
+                            if (array_key_exists($bahan, $transactionRecipes)) {
+                                $transactionRecipes[$bahan]->quantity += $quantity;
+                            } else {
+                                $transactionRecipes[$bahan] = (object)[
+                                    'bahan' => $bahan,
+                                    'unit' => $unit,
+                                    'quantity' => $quantity,
+                                ];
+                            }
+                        }
+
+                        $looper += 2;
+                    }
+                }
+            }
+
+            foreach ($transactionRecipes as $transactionRecipe) {
+                $bahan = $transactionRecipe->bahan;
+                $quantity = $transactionRecipe->quantity;
+                $today = date('Y-m-d 00:00:00', strtotime(now()));
+
+                $target_bahan = BahanBaku::where('nama_bahan_baku', $bahan)->first();
+                $target_bahan->stok_bahan_baku -= $quantity;
+
+                echo "$target_bahan->nama_bahan_baku ";
+                echo "$target_bahan->stok_bahan_baku ";
+
+                $pengadaan_bahan_baku = PengadaanBahanBaku::create([
+                    'id_unit' => $target_bahan->id_unit,
+                    'id_bahan_baku' => $target_bahan->id_bahan_baku,
+                    'id_transaksi' => $transaction->id_transaksi,
+                    'jumlah' => $quantity,
+                    'tanggal_pengadaan' => $today,
+                ]);
+
+                $target_bahan->save();
+            }
+
+            $transaction->id_status = 8;
+            $transaction->save();
+
+
+            return response()->json([
+                "status" => true,
+                "message" => "Transaksi berhasil diproses",
+                "data" => [$transaction, $transactionRecipes]
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                "status" => false,
+                "message" => "Failed to process transaction: " . $e->getMessage(),
                 "data" => []
             ], 400);
         }
