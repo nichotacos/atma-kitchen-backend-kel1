@@ -739,4 +739,52 @@ class TransaksiController extends Controller
             ], 400);
         }
     }
+
+    public function transferSaldo(Request $request)
+    {
+        try {
+            $total_price = $request->input('total_price');
+            $birth_date = $request->input('birth_date');
+
+            $point = 0;
+
+            while ($total_price >= 10000) {
+                if ($total_price >= 1000000) {
+                    $point += 200;
+                    $total_price -= 1000000;
+                } else if ($total_price >= 500000) {
+                    $point += 75;
+                    $total_price -= 500000;
+                } else if ($total_price >= 100000) {
+                    $point += 15;
+                    $total_price -= 100000;
+                } else if ($total_price >= 10000) {
+                    $point += 1;
+                    $total_price -= 10000;
+                }
+            }
+
+            // Ngecek ultah user ga pake tahun
+            if ($birth_date) {
+                $birthDateWithoutYear = Carbon::parse($birth_date)->format('m-d');
+                $todayWithoutYear = now()->format('m-d');
+
+                if ($birthDateWithoutYear === $todayWithoutYear) {
+                    $point += $point;
+                }
+            }
+
+            return response()->json([
+                "status" => true,
+                "message" => "Point berhasil dihitung",
+                "data" => $point
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                "status" => false,
+                "message" => "Gagal menghitung point: " . $e->getMessage(),
+                "data" => []
+            ], 400);
+        }
+    }
 }
