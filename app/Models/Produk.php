@@ -37,7 +37,7 @@ class Produk extends Model
 
     public function DetailResep(): hasMany
     {
-        return $this->hasMany(DetailResep::class, 'id_detail_resep');
+        return $this->hasMany(DetailResep::class, 'id_produk');
     }
 
     public function Hampers(): BelongsToMany
