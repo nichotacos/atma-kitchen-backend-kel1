@@ -6,6 +6,7 @@ use App\Models\BahanBaku;
 use App\Models\Customer;
 use App\Models\Hampers;
 use App\Models\PengadaanBahanBaku;
+use App\Models\PenggunaanBahanBaku;
 use App\Models\Transaksi;
 use App\Models\Produk;
 use Illuminate\Http\Request;
@@ -818,6 +819,7 @@ class TransaksiController extends Controller
                 'customer'
             ])
                 ->where('tanggal_ambil', $tomorrow)
+                ->where('id_status', 8)
                 ->orderBy('id_transaksi', 'asc')
                 ->get();
 
@@ -1105,6 +1107,7 @@ class TransaksiController extends Controller
         }
     }
 
+    //TODO: Kelola pesanan yang berlebihan
     public function prosesPesanan($id_transaksi)
     {
         try {
@@ -1277,23 +1280,26 @@ class TransaksiController extends Controller
                 $target_bahan = BahanBaku::where('nama_bahan_baku', $bahan)->first();
                 $target_bahan->stok_bahan_baku -= $quantity;
 
-                echo "$target_bahan->nama_bahan_baku ";
-                echo "$target_bahan->stok_bahan_baku ";
+                // echo "$target_bahan \n";
 
-                $pengadaan_bahan_baku = PengadaanBahanBaku::create([
+                $pengadaan_bahan_baku = PenggunaanBahanBaku::create([
                     'id_unit' => $target_bahan->id_unit,
                     'id_bahan_baku' => $target_bahan->id_bahan_baku,
                     'id_transaksi' => $transaction->id_transaksi,
-                    'jumlah' => $quantity,
-                    'tanggal_pengadaan' => $today,
+                    'jumlah_penggunaan' => $quantity,
+                    'tanggal_penggunaan' => $today,
                 ]);
 
                 $target_bahan->save();
             }
 
-            $transaction->id_status = 8;
+            // $transaction->id_status = 8;
+            if ($transaction->id_pengambilan == 2) {
+                $transaction->id_status = 10;
+            } else {
+                $transaction->id_status = 9;
+            }
             $transaction->save();
-
 
             return response()->json([
                 "status" => true,
