@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\BahanBaku;
+use App\Models\Kemasan;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -14,6 +15,7 @@ class BahanBakuController extends Controller
     {
         try {
             $bahanBakus = BahanBaku::query()->with('unit');
+            $kemasans = Kemasan::all();
 
             if ($request->search) {
                 $bahanBakus->where(function ($query) use ($request) {
@@ -38,6 +40,25 @@ class BahanBakuController extends Controller
 
             $data = $bahanBakus->orderBy($sort_by, $sort_order)->get();
 
+
+            // if ($request->search_kemasan) {
+            //     $kemasans->where('nama_kemasan', 'like', '%' . $request->search_kemasan . '%')   ;
+            // }
+
+            // if ($request->sort_kemasan_by && in_array($request->sort_kemasan_by, ['id_kemasan', 'nama_kemasan'])) {
+            //     $sort_kemasan_by = $request->sort_kemasan_by;
+            // } else {
+            //     $sort_kemasan_by = 'id_kemasan';
+            // }
+
+            // if ($request->sort_kemasan_order && in_array($request->sort_kemasan_order, ['asc', 'desc'])) {
+            //     $sort_kemasan_order = $request->sort_kemasan_order;
+            // } else {
+            //     $sort_kemasan_order = 'asc';
+            // }
+
+            // $data_kemasan = $kemasans->orderBy($sort_kemasan_by, $sort_kemasan_order)->get();
+
             if ($data->isEmpty()) {
                 throw new \Exception('Bahan baku tidak ditemukan');
             }
@@ -45,7 +66,7 @@ class BahanBakuController extends Controller
             return response()->json([
                 'status' => true,
                 'message' => 'Berhasil menampilkan data bahan baku',
-                'data' => $data
+                'data' => [$data, $kemasans]
             ], 200);
         } catch (\Exception $e) {
             return response()->json([
