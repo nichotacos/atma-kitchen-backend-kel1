@@ -416,6 +416,9 @@ class TransaksiController extends Controller
             }
             $transaksis->save();
 
+            $firebaseService = new \App\Services\FirebaseService();
+            $firebaseService->sendNotification('Test Title', 'Test Body', 'eGD1gHL3SeqKcnGfsavhU7:APA91bGlWVeGYXAysabsV6O9tTBf-8Vw24HTV-rlbWNoOIkl1i4GLq4N3MDfIjtlb97awUOkJ-KqL-2GvCaSknzzZjnmI2dhc4MDfv5lxI31iHVCIKlarjTEQBrCylfXn54wiSu3DA7q');
+
             return response()->json([
                 "status" => true,
                 "message" => "Status updated successfully",
