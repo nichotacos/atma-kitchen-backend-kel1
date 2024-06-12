@@ -6,8 +6,10 @@ use App\Models\Customer;
 use App\Models\Hampers;
 use App\Models\Transaksi;
 use App\Models\Produk;
+use App\Models\BahanBaku;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use App\Notifications\PushNotifikasi;
 use DateTime;
 
 class TransaksiController extends Controller
@@ -447,8 +449,12 @@ class TransaksiController extends Controller
             }
             $transaksis->save();
 
-            $firebaseService = new \App\Services\FirebaseService();
-            $firebaseService->sendNotification('Test Title', 'Test Body', 'eGD1gHL3SeqKcnGfsavhU7:APA91bGlWVeGYXAysabsV6O9tTBf-8Vw24HTV-rlbWNoOIkl1i4GLq4N3MDfIjtlb97awUOkJ-KqL-2GvCaSknzzZjnmI2dhc4MDfv5lxI31iHVCIKlarjTEQBrCylfXn54wiSu3DA7q');
+            $user = Customer::find($transaksis->id_customer);
+            if (!$user) {
+                throw new \Exception("Customer Not Found");
+            }
+
+            $user->notify(new PushNotifikasi);
 
             return response()->json([
                 "status" => true,
