@@ -141,7 +141,7 @@ class AuthController extends Controller
                 'password' => $request->password,
             ])) {
                 return response([
-                    'message' => 'Data yang diinputkan tidak valid customer'
+                    'message' => 'Data yang diinputkan tidak valid'
                 ], 401);
             }
 
@@ -161,7 +161,7 @@ class AuthController extends Controller
                 'password' => $request->password,
             ])) {
                 return response([
-                    'message' => 'Data yang diinputkan tidak valid karyawan'
+                    'message' => 'Data yang diinputkan tidak valid'
                 ], 401);
             }
 

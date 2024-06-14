@@ -40,25 +40,6 @@ class BahanBakuController extends Controller
 
             $data = $bahanBakus->orderBy($sort_by, $sort_order)->get();
 
-
-            // if ($request->search_kemasan) {
-            //     $kemasans->where('nama_kemasan', 'like', '%' . $request->search_kemasan . '%')   ;
-            // }
-
-            // if ($request->sort_kemasan_by && in_array($request->sort_kemasan_by, ['id_kemasan', 'nama_kemasan'])) {
-            //     $sort_kemasan_by = $request->sort_kemasan_by;
-            // } else {
-            //     $sort_kemasan_by = 'id_kemasan';
-            // }
-
-            // if ($request->sort_kemasan_order && in_array($request->sort_kemasan_order, ['asc', 'desc'])) {
-            //     $sort_kemasan_order = $request->sort_kemasan_order;
-            // } else {
-            //     $sort_kemasan_order = 'asc';
-            // }
-
-            // $data_kemasan = $kemasans->orderBy($sort_kemasan_by, $sort_kemasan_order)->get();
-
             if ($data->isEmpty()) {
                 throw new \Exception('Bahan baku tidak ditemukan');
             }
