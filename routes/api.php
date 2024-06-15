@@ -193,7 +193,6 @@ Route::group(['middleware' => 'auth:employee-api'], function () {
 
     Route::get('/transaksis/show-transaksi-belum-valid', [TransaksiController::class, 'showTransaksiBelumValid']);
     Route::put('/transaksis/update-jumlah-pembayaran/{id}', [TransaksiController::class, 'updateJumlahPembayaran']);
-
     //ALL DONE
 
     //Coding 3
@@ -202,6 +201,13 @@ Route::group(['middleware' => 'auth:employee-api'], function () {
     Route::post('/transaksis/update-transaksi-sudah-dipickup/{id}', [TransaksiController::class, 'updateTransaksiSudahDipickup']);
 
     Route::get('/transaksis/show-transaksi-batal', [TransaksiController::class, 'showTransaksiBatal']);
+
+
+    //Transfer Customer (Admin)
+    Route::get('/customers/show-confirm-transfer', [CustomerController::class, 'showConfirmTransfer']);
+    Route::put('/customers/terima-transfer/{id}', [CustomerController::class, 'terimaTransfer']);
+    Route::put('/customers/tolak-transfer/{id}', [CustomerController::class, 'tolakTransfer']);
+    //Done
 
     //Laporans
     //Laporan Penjualan Bulanan

@@ -475,4 +475,49 @@ class CustomerController extends Controller
             ], 400);
         }
     }
+
+    public function showConfirmTransfer(Request $request)
+    {
+        try {
+            $customers = Customer::with([
+                'customer.nama',
+                'id',
+                'customer.saldo',
+                'customer'
+            ])
+                ->whereIn('id_customer', [1]);
+
+            $data = $customers->orderBy('id_customer', 'asc')->get();
+
+            if ($data->isEmpty()) {
+                throw new \Exception('Customer Tidak Ditemukan');
+            }
+
+            return response()->json([
+                "status" => true,
+                "message" => "Customer Ditemukan",
+                "data" => $data
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                "status" => false,
+                "message" => $e->getMessage(),
+                "data" => []
+            ], 400);
+        }
+    }
+    public function terimaTransfer($id, Request $request) {
+        $customer = Customer::find($id);
+        if ($customer) {
+            $customer->saldo -= $request->input('amount');
+            $customer->save();
+            return response()->json(['message' => 'Transfer accepted'], 200);
+        }
+        return response()->json(['message' => 'Customer not found'], 404);
+    }
+    
+    public function tolakTransfer($id, Request $request) {
+        // Logic for rejecting transfer
+        return response()->json(['message' => 'Transfer rejected'], 200);
+    }
 }
