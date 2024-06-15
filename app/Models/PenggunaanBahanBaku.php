@@ -16,7 +16,10 @@ class PenggunaanBahanBaku extends Model
 
     protected $fillable = [
         'jumlah_penggunaan',
-        'tanggal_penggunaan'
+        'tanggal_penggunaan',
+        'id_bahan_baku',
+        'id_unit',
+        'id_transaksi'
     ];
 
     public function transaksi(): BelongsTo

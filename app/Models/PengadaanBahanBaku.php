@@ -16,10 +16,11 @@ class PengadaanBahanBaku extends Model
 
     protected $fillable = [
         'jumlah_pengadaan',
+        'harga_per_unit',
+        'harga_total',
         'tanggal_pengadaan',
         'id_bahan_baku',
-        'id_unit',
-        'id_transaksi'
+        'id_unit'
     ];
 
     public function bahan_baku(): BelongsTo
