@@ -6,6 +6,7 @@ use App\Models\Transaksi;
 use App\Models\PenggunaanBahanBaku;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use App\Models\BahanBaku;
 use DateTime;
 
 class LaporanController extends Controller
@@ -245,6 +246,62 @@ class LaporanController extends Controller
                 "status" => true,
                 'message' => 'Monthly Sales Report Per Product Generated Successfully',
                 'data' => [$monthlySales, $productSales, $year, $monthName]
+              ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                "status" => false,
+                'message' => $e->getMessage(),
+                'data' => []
+            ], 400);
+        }
+    }
+
+    public function generateLaporanStokBahanBaku(Request $request)
+    {
+        try {
+            $bahanBaku = BahanBaku::query()->with('unit')
+                ->get();
+
+            if ($bahanBaku->isEmpty()) {
+                throw new \Exception('Data Penggunaan Bahan Baku tidak ditemukan');
+            }
+
+            $reportData = [];
+            foreach ($bahanBaku as $bahanBakus) {
+                $bahanBakuId = $bahanBakus->id_bahan_baku;
+                if (!isset($reportData[$bahanBakuId])) {
+                    $reportData[$bahanBakuId] = [
+                        'nama_bahan' => $bahanBakus->nama_bahan_baku,
+                        'satuan' => $bahanBakus->unit->nama_unit,
+                        'stok' => $bahanBakus->stok_bahan_baku,
+                    ];
+                }
+            }
+
+            $formattedReportData = array_values(array_map(function($data) {
+                return [
+                    'Nama Bahan' => $data['nama_bahan'],
+                    'Satuan' => $data['satuan'],
+                    'Stok' => $data['stok'],
+                ];
+            }, $reportData));
+
+            $reportDetails = [
+                "title" => "LAPORAN Penggunaan Bahan Baku",
+                "tanggal_cetak" => "Tanggal cetak: " . now()->format('d F Y'),
+                "nama_usaha" => "Atma Kitchen",
+                "alamat_usaha" => "Jl. Centralpark No. 10 Yogyakarta",
+            ];
+
+            $report = [
+                "header" => $reportDetails,
+                "data" => $formattedReportData,
+            ];
+
+            return response()->json([
+                "status" => true,
+                "message" => "Stok Bahan Baku Ditemukan",
+                "report" => $report
             ], 200);
         } catch (\Exception $e) {
             return response()->json([

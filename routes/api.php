@@ -212,6 +212,9 @@ Route::group(['middleware' => 'auth:employee-api'], function () {
 
     // Laporan Penjualan Bulanan per Produk
     Route::post('/laporan-penjualan-bulanan-per-produk', [LaporanController::class, 'generateLaporanPenjualanBulananPerProduk']);
+  
+    //Laporan Stok Bahan Baku
+    Route::get('/laporan-stok-bahan-baku', [LaporanController::class, 'generateLaporanStokBahanBaku']);
 
     //Transaksi (MO)
     Route::get('/transaksis/show-transaksi-pembayaran-valid', [TransaksiController::class, 'showTransaksiPembayaranValid']);
