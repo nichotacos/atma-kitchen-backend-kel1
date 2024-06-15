@@ -11,7 +11,6 @@ use App\Models\PenggunaanBahanBaku;
 use App\Models\PenggunaanKemasan;
 use App\Models\Transaksi;
 use App\Models\Produk;
-use App\Models\BahanBaku;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use App\Notifications\PushNotifikasi;
@@ -205,7 +204,11 @@ class TransaksiController extends Controller
             $transaksis->total_harga_final = $total_setelah_ongkir;
             $transaksis->save();
 
+            $user = Customer::find($transaksis->id_customer);
             $user->notify(new PushNotifikasi);
+            if (!$user) {
+                throw new \Exception("Customer Not Found");
+            }
 
             return response()->json([
                 "status" => true,
@@ -274,7 +277,11 @@ class TransaksiController extends Controller
             $transaksis->id_status = 5;
             $transaksis->save();
 
+            $user = Customer::find($transaksis->id_customer);
             $user->notify(new PushNotifikasi);
+            if (!$user) {
+                throw new \Exception("Customer Not Found");
+            }
 
             return response()->json([
                 "status" => true,
@@ -467,9 +474,8 @@ class TransaksiController extends Controller
             }
             $transaksis->save();
 
-            $user->notify(new PushNotifikasi);
-
             $user = Customer::find($transaksis->id_customer);
+            $user->notify(new PushNotifikasi);
             if (!$user) {
                 throw new \Exception("Customer Not Found");
             }
@@ -504,7 +510,11 @@ class TransaksiController extends Controller
             }
             $transaksis->save();
 
+            $user = Customer::find($transaksis->id_customer);
             $user->notify(new PushNotifikasi);
+            if (!$user) {
+                throw new \Exception("Customer Not Found");
+            }
 
             return response()->json([
                 "status" => true,
@@ -633,7 +643,11 @@ class TransaksiController extends Controller
                               $customer->save();
                               $transaksi->id_status = 4;
                               $transaksi->save();
+                              $user = Customer::find($transaksis->id_customer);
                               $user->notify(new PushNotifikasi);
+                              if (!$user) {
+                                  throw new \Exception("Customer Not Found");
+                              }
                           } else {
                               $data = $data->reject(function ($item) use ($transaksi) {
                                   return $item->id_transaksi === $transaksi->id_transaksi;
@@ -668,7 +682,11 @@ class TransaksiController extends Controller
                           $customer->save();
                           $transaksi->id_status = 4;
                           $transaksi->save();
-                          $user->notify(new PushNotifikasi);
+                          $user = Customer::find($transaksis->id_customer);
+                            $user->notify(new PushNotifikasi);
+                            if (!$user) {
+                                throw new \Exception("Customer Not Found");
+                            }
                       }
                   }
               } else {
@@ -858,7 +876,7 @@ class TransaksiController extends Controller
                 "status" => true,
                 "message" => "Point berhasil dihitung",
                 "data" => $point
-              , 200);
+              , 200]);
         } catch (\Exception $e) {
             return response()->json([
                 "status" => false,
@@ -866,6 +884,7 @@ class TransaksiController extends Controller
                 "data" => []
             ], 400);
         }
+    }
 
     public function showPesananHariIni()
     {
