@@ -578,7 +578,6 @@ class TransaksiController extends Controller
         }
     }
 
-    //Batal transaksi
     public function showTransaksiBatal(Request $request)
   {
       try {
@@ -877,6 +876,7 @@ class TransaksiController extends Controller
                 "message" => "Point berhasil dihitung",
                 "data" => $point
               , 200]);
+
         } catch (\Exception $e) {
             return response()->json([
                 "status" => false,

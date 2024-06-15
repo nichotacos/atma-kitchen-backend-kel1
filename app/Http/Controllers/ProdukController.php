@@ -162,7 +162,8 @@ class ProdukController extends Controller
 
             Storage::disk('public')->delete('img/produk' . $products->gambar_produk);
 
-            $products->delete();
+            $products->is_deleted = 1;
+            $products->save();
 
             return response()->json([
                 "status" => true,
