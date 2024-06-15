@@ -94,6 +94,7 @@ class ProdukController extends Controller
             $uploadedImageResponse = basename($fileName);
 
             $data['gambar_produk'] = $uploadedImageResponse;
+            $data['is_deleted'] = 0;
 
             $products = Produk::create($data);
 
