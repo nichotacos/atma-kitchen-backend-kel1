@@ -46,7 +46,8 @@ class AuthController extends Controller
             'tanggal_registrasi' => now(),
             'tanggal_lahir' => $request->tanggal_lahir,
             'poin' => 0,
-            'saldo' => 0
+            'saldo' => 0,
+            'fcm_token' => 'eGD1gHL3SeqKcnGfsavhU7:APA91bGlWVeGYXAysabsV6O9tTBf-8Vw24HTV-rlbWNoOIkl1i4GLq4N3MDfIjtlb97awUOkJ-KqL-2GvCaSknzzZjnmI2dhc4MDfv5lxI31iHVCIKlarjTEQBrCylfXn54wiSu3DA7q'
         ]);
 
         return response([
