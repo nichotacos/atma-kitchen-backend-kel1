@@ -191,6 +191,8 @@ class TransaksiController extends Controller
             $transaksis->total_harga_final = $total_setelah_ongkir;
             $transaksis->save();
 
+            $user->notify(new PushNotifikasi);
+
             return response()->json([
                 "status" => true,
                 "message" => "Jarak Pengiriman berhasil diperbarui",
@@ -257,6 +259,8 @@ class TransaksiController extends Controller
             $transaksis->nominal_tip = $newNominalTip;
             $transaksis->id_status = 5;
             $transaksis->save();
+
+            $user->notify(new PushNotifikasi);
 
             return response()->json([
                 "status" => true,
@@ -449,12 +453,12 @@ class TransaksiController extends Controller
             }
             $transaksis->save();
 
+            $user->notify(new PushNotifikasi);
+
             $user = Customer::find($transaksis->id_customer);
             if (!$user) {
                 throw new \Exception("Customer Not Found");
             }
-
-            $user->notify(new PushNotifikasi);
 
             return response()->json([
                 "status" => true,
@@ -485,6 +489,8 @@ class TransaksiController extends Controller
                 $transaksis->id_status = 10;
             }
             $transaksis->save();
+
+            $user->notify(new PushNotifikasi);
 
             return response()->json([
                 "status" => true,
@@ -613,6 +619,7 @@ class TransaksiController extends Controller
                             $customer->save();
                             $transaksi->id_status = 4;
                             $transaksi->save();
+                            $user->notify(new PushNotifikasi);
                         } else {
                             $data = $data->reject(function ($item) use ($transaksi) {
                                 return $item->id_transaksi === $transaksi->id_transaksi;
@@ -647,6 +654,7 @@ class TransaksiController extends Controller
                         $customer->save();
                         $transaksi->id_status = 4;
                         $transaksi->save();
+                        $user->notify(new PushNotifikasi);
                     }
                 }
             } else {

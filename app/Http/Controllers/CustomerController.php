@@ -460,6 +460,7 @@ class CustomerController extends Controller
 
             $transaksis->id_status = 12;
             $transaksis->save();
+            $user->notify(new PushNotifikasi);
 
             return response()->json([
                 "status" => true,
