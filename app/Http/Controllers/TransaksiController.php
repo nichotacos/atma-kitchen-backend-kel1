@@ -8,8 +8,10 @@ use App\Models\Hampers;
 use App\Models\PengadaanBahanBaku;
 use App\Models\Transaksi;
 use App\Models\Produk;
+use App\Models\BahanBaku;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use App\Notifications\PushNotifikasi;
 use DateTime;
 use Illuminate\Support\Facades\Log;
 
@@ -200,6 +202,8 @@ class TransaksiController extends Controller
             $transaksis->total_harga_final = $total_setelah_ongkir;
             $transaksis->save();
 
+            $user->notify(new PushNotifikasi);
+
             return response()->json([
                 "status" => true,
                 "message" => "Jarak Pengiriman berhasil diperbarui",
@@ -266,6 +270,8 @@ class TransaksiController extends Controller
             $transaksis->nominal_tip = $newNominalTip;
             $transaksis->id_status = 5;
             $transaksis->save();
+
+            $user->notify(new PushNotifikasi);
 
             return response()->json([
                 "status" => true,
@@ -458,6 +464,13 @@ class TransaksiController extends Controller
             }
             $transaksis->save();
 
+            $user->notify(new PushNotifikasi);
+
+            $user = Customer::find($transaksis->id_customer);
+            if (!$user) {
+                throw new \Exception("Customer Not Found");
+            }
+
             return response()->json([
                 "status" => true,
                 "message" => "Status updated successfully",
@@ -487,6 +500,8 @@ class TransaksiController extends Controller
                 $transaksis->id_status = 10;
             }
             $transaksis->save();
+
+            $user->notify(new PushNotifikasi);
 
             return response()->json([
                 "status" => true,
@@ -552,125 +567,125 @@ class TransaksiController extends Controller
 
     //Batal transaksi
     public function showTransaksiBatal(Request $request)
-    {
-        try {
-            $transaksis = Transaksi::with([
-                'cart.detailCart.produk',
-                'cart.detailCart.hampers.produk',
-                'alamat',
-                'status',
-                'jenisPengambilan',
-                'cart.detailCart.hampers.kemasan',
-                'customer'
-            ])->whereNull('tanggal_pelunasan')
-                ->whereRaw('DATE(tanggal_ambil) <= DATE_ADD(CURDATE(), INTERVAL 1 DAY)');
+  {
+      try {
+          $transaksis = Transaksi::with([
+              'cart.detailCart.produk',
+              'cart.detailCart.hampers.produk',
+              'alamat',
+              'status',
+              'jenisPengambilan',
+              'cart.detailCart.hampers.kemasan',
+              'customer'
+          ])->whereNull('tanggal_pelunasan')
+              ->whereRaw('DATE(tanggal_ambil) <= DATE_ADD(CURDATE(), INTERVAL 1 DAY)');
 
-            $data = $transaksis->orderBy('id_transaksi', 'asc')->get();
+          $data = $transaksis->orderBy('id_transaksi', 'asc')->get();
 
-            if ($data->isEmpty()) {
-                throw new \Exception('Transaksi Tidak Ditemukan');
-            }
+          if ($data->isEmpty()) {
+              throw new \Exception('Transaksi Tidak Ditemukan');
+          }
 
-            foreach ($data as $transaksi) {
-                //1 == Ready Stock
-                //2 == Pre Order
-                $status_transaksi = 1;
+          foreach ($data as $transaksi) {
+              //1 == Ready Stock
+              //2 == Pre Order
+              $status_transaksi = 1;
 
-                if ($transaksi->cart && $transaksi->cart->detailCart) {
-                    foreach ($transaksi->cart->detailCart as $detailCart) {
-                        if ($detailCart->id_jenis_ketersediaan == 2) {
-                            $status_transaksi = 2;
-                            break;
-                        }
-                    }
+              if ($transaksi->cart && $transaksi->cart->detailCart) {
+                  foreach ($transaksi->cart->detailCart as $detailCart) {
+                      if ($detailCart->id_jenis_ketersediaan == 2) {
+                          $status_transaksi = 2;
+                          break;
+                      }
+                  }
 
-                    if ($transaksi->id_status != 4) {
-                        if ($status_transaksi == 1) {
-                            $tanggal_ambil = new DateTime($transaksi->tanggal_ambil);
-                            $tanggal_sekarang = new DateTime(Carbon::now()->toDateString());
-                            if ($tanggal_ambil < $tanggal_sekarang) {
-                                foreach ($transaksi->cart->detailCart as $detailCart) {
-                                    if ($detailCart->id_produk != null) {
-                                        $produk = $detailCart->produk;
-                                        $produk->stok += $detailCart->jumlah_produk;
-                                        $produk->id_jenis_ketersediaan = 1;
-                                        $produk->save();
-                                    } else {
-                                        foreach ($detailCart->hampers->produk as $hamperProduk) {
-                                            $produk = Produk::find($hamperProduk->id_produk);
-                                            if ($produk) {
-                                                if ($produk->stok == 0 && $produk->id_jenis_ketersediaan == 2) {
-                                                    $produk->id_jenis_ketersediaan = 1;
-                                                }
-                                                $produk->stok += $detailCart->jumlah_produk;
-                                                $produk->save();
-                                            } else {
-                                                throw new \Exception('Produk not found for id_produk: ' . $hamperProduk->id_produk);
-                                            }
-                                        }
-                                    }
-                                }
-                                $customer = Customer::find($transaksi->id_customer);
-                                $customer->poin = $customer->poin + $transaksi->poin_digunakan;
-                                $customer->save();
-                                $transaksi->id_status = 4;
-                                $transaksi->save();
-                            } else {
-                                $data = $data->reject(function ($item) use ($transaksi) {
-                                    return $item->id_transaksi === $transaksi->id_transaksi;
-                                });
-                            }
-                        } else if ($status_transaksi == 2) {
-                            foreach ($transaksi->cart->detailCart as $detailCart) {
-                                if ($detailCart->id_jenis_ketersediaan == 1) {
-                                    if ($detailCart->id_produk != null) {
-                                        $produk = $detailCart->produk;
-                                        $produk->stok += $detailCart->jumlah_produk;
-                                        $produk->id_jenis_ketersediaan = 1;
-                                        $produk->save();
-                                    } else {
-                                        foreach ($detailCart->hampers->produk as $hamperProduk) {
-                                            $produk = Produk::find($hamperProduk->id_produk);
-                                            if ($produk) {
-                                                if ($produk->stok == 0 && $produk->id_jenis_ketersediaan == 2) {
-                                                    $produk->id_jenis_ketersediaan = 1;
-                                                }
-                                                $produk->stok += $detailCart->jumlah_produk;
-                                                $produk->save();
-                                            } else {
-                                                throw new \Exception('Produk not found for id_produk: ' . $hamperProduk->id_produk);
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                            $customer = Customer::find($transaksi->id_customer);
-                            $customer->poin = $customer->poin + $transaksi->poin_digunakan;
-                            $customer->save();
-                            $transaksi->id_status = 4;
-                            $transaksi->save();
-                        }
-                    }
-                    // ...
+                  if ($transaksi->id_status != 4) {
+                      if ($status_transaksi == 1) {
+                          $tanggal_ambil = new DateTime($transaksi->tanggal_ambil);
+                          $tanggal_sekarang = new DateTime(Carbon::now()->toDateString());
+                          if ($tanggal_ambil < $tanggal_sekarang) {
+                              foreach ($transaksi->cart->detailCart as $detailCart) {
+                                  if ($detailCart->id_produk != null) {
+                                      $produk = $detailCart->produk;
+                                      $produk->stok += $detailCart->jumlah_produk;
+                                      $produk->id_jenis_ketersediaan = 1;
+                                      $produk->save();
+                                  } else {
+                                      foreach ($detailCart->hampers->produk as $hamperProduk) {
+                                          $produk = Produk::find($hamperProduk->id_produk);
+                                          if ($produk) {
+                                              if ($produk->stok == 0 && $produk->id_jenis_ketersediaan == 2) {
+                                                  $produk->id_jenis_ketersediaan = 1;
+                                              }
+                                              $produk->stok += $detailCart->jumlah_produk;
+                                              $produk->save();
+                                          } else {
+                                              throw new \Exception('Produk not found for id_produk: ' . $hamperProduk->id_produk);
+                                          }
+                                      }
+                                  }
+                              }
+                              $customer = Customer::find($transaksi->id_customer);
+                              $customer->poin = $customer->poin + $transaksi->poin_digunakan;
+                              $customer->save();
+                              $transaksi->id_status = 4;
+                              $transaksi->save();
+                              $user->notify(new PushNotifikasi);
+                          } else {
+                              $data = $data->reject(function ($item) use ($transaksi) {
+                                  return $item->id_transaksi === $transaksi->id_transaksi;
+                              });
+                          }
+                      } else if ($status_transaksi == 2) {
+                          foreach ($transaksi->cart->detailCart as $detailCart) {
+                              if ($detailCart->id_jenis_ketersediaan == 1) {
+                                      if ($detailCart->id_produk != null) {
+                                          $produk = $detailCart->produk;
+                                          $produk->stok += $detailCart->jumlah_produk;
+                                          $produk->id_jenis_ketersediaan = 1;
+                                          $produk->save();
+                                      } else {
+                                          foreach ($detailCart->hampers->produk as $hamperProduk) {
+                                              $produk = Produk::find($hamperProduk->id_produk);
+                                              if ($produk) {
+                                                  if ($produk->stok == 0 && $produk->id_jenis_ketersediaan == 2) {
+                                                      $produk->id_jenis_ketersediaan = 1;
+                                                  }
+                                                  $produk->stok += $detailCart->jumlah_produk;
+                                                  $produk->save();
+                                              } else {
+                                                  throw new \Exception('Produk not found for id_produk: ' . $hamperProduk->id_produk);
+                                              }
+                                          }
+                                      }
+                              }
+                          }
+                          $customer = Customer::find($transaksi->id_customer);
+                          $customer->poin = $customer->poin + $transaksi->poin_digunakan;
+                          $customer->save();
+                          $transaksi->id_status = 4;
+                          $transaksi->save();
+                          $user->notify(new PushNotifikasi);
+                      }
+                  }
+              } else {
+                  \Log::error('Cart or detailCart is null for transaksi ID: ' . $transaksi->id_transaksi);
+              }
+          }
 
-                    Log::error('Cart or detailCart is null for transaksi ID: ' . $transaksi->id_transaksi);
-                    // \Log::error('Cart or detailCart is null for transaksi ID: ' . $transaksi->id_transaksi);
-                }
-            }
-
-            return response()->json([
-                "status" => true,
-                "message" => "Transaksi Ditemukan",
-                "data" => $data
-            ], 200);
-        } catch (\Exception $e) {
-            return response()->json([
-                "status" => false,
-                "message" => $e->getMessage(),
-                "data" => []
-            ], 400);
-        }
-    }
+          return response()->json([
+              "status" => true,
+              "message" => "Transaksi Ditemukan",
+              "data" => $data
+          ], 200);
+      } catch (\Exception $e) {
+          return response()->json([
+              "status" => false,
+              "message" => $e->getMessage(),
+              "data" => []
+          ], 400);
+      }
+  }
 
 
     public function updateTransaksiBatal($id)

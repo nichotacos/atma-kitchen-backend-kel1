@@ -210,6 +210,9 @@ Route::group(['middleware' => 'auth:employee-api'], function () {
     //Laporan Penggunaan Bahan Baku
     Route::post('/laporan-penggunaan-bahan-baku', [LaporanController::class, 'generateLaporanPenggunaanBahanBaku']);
 
+    //Laporan Stok Bahan Baku
+    Route::get('/laporan-stok-bahan-baku', [LaporanController::class, 'generateLaporanStokBahanBaku']);
+
     //Transaksi (MO)
     Route::get('/transaksis/show-transaksi-pembayaran-valid', [TransaksiController::class, 'showTransaksiPembayaranValid']);
     Route::post('/transaksis/terima-pesanan/{id}', [TransaksiController::class, 'terimaPesanan']);
