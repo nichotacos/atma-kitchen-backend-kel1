@@ -31,4 +31,8 @@ return [
         ],
     ],
 
+    'firebase' => [
+        'credentials_file' => base_path('config/atma-kitchen-kel1-d3117-firebase-adminsdk-clatd-9901b1d6dd.json'),
+    ],
+
 ];

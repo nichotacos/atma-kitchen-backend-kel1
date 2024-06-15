@@ -50,4 +50,9 @@ class Customer extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasMany(Refund::class, 'id_refund');
     }
+
+    public function routeNotificationForFcm()
+    {
+        return $this->fcm_token;
+    }
 }

@@ -29,6 +29,7 @@ use App\Http\Controllers\UnitController;
 use App\Http\Controllers\TransaksiController;
 use App\Http\Controllers\AlamatController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\LaporanController;
 
 //Register Customer
 Route::post('/register', [AuthController::class, 'register']);
@@ -201,15 +202,32 @@ Route::group(['middleware' => 'auth:employee-api'], function () {
 
     Route::get('/transaksis/show-transaksi-batal', [TransaksiController::class, 'showTransaksiBatal']);
 
+
     //Transfer Customer (Admin)
     Route::get('/customers/show-confirm-transfer', [CustomerController::class, 'showConfirmTransfer']);
     Route::put('/customers/terima-transfer/{id}', [CustomerController::class, 'terimaTransfer']);
     Route::put('/customers/tolak-transfer/{id}', [CustomerController::class, 'tolakTransfer']);
     //Done
+
+    //Laporans
+    //Laporan Penjualan Bulanan
+    Route::post('/laporan-penjualan-bulanan', [LaporanController::class, 'generateLaporanPenjualanBulanan']);
+
+    //Laporan Penggunaan Bahan Baku
+    Route::post('/laporan-penggunaan-bahan-baku', [LaporanController::class, 'generateLaporanPenggunaanBahanBaku']);
+
+    // Laporan Penjualan Bulanan per Produk
+    Route::post('/laporan-penjualan-bulanan-per-produk', [LaporanController::class, 'generateLaporanPenjualanBulananPerProduk']);
+  
+    //Laporan Stok Bahan Baku
+    Route::get('/laporan-stok-bahan-baku', [LaporanController::class, 'generateLaporanStokBahanBaku']);
+
     //Transaksi (MO)
     Route::get('/transaksis/show-transaksi-pembayaran-valid', [TransaksiController::class, 'showTransaksiPembayaranValid']);
     Route::post('/transaksis/terima-pesanan/{id}', [TransaksiController::class, 'terimaPesanan']);
     Route::post('/transaksis/tolak-pesanan/{id}', [TransaksiController::class, 'tolakPesanan']);
+    Route::get('/transaksis/show-pesanan-hari-ini', [TransaksiController::class, 'showPesananHariIni']);
+    Route::put('/transaksis/proses-pesanan/{id}', [TransaksiController::class, 'prosesPesanan']);
 });
 
 //Upload Bukti Pembayaran

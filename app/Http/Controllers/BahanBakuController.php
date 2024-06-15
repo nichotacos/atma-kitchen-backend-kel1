@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\BahanBaku;
+use App\Models\Kemasan;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -14,6 +15,7 @@ class BahanBakuController extends Controller
     {
         try {
             $bahanBakus = BahanBaku::query()->with('unit');
+            $kemasans = Kemasan::all();
 
             if ($request->search) {
                 $bahanBakus->where(function ($query) use ($request) {
@@ -45,7 +47,7 @@ class BahanBakuController extends Controller
             return response()->json([
                 'status' => true,
                 'message' => 'Berhasil menampilkan data bahan baku',
-                'data' => $data
+                'data' => [$data, $kemasans]
             ], 200);
         } catch (\Exception $e) {
             return response()->json([
