@@ -460,7 +460,11 @@ class CustomerController extends Controller
 
             $transaksis->id_status = 12;
             $transaksis->save();
+            $user = Customer::find($transaksis->id_customer);
             $user->notify(new PushNotifikasi);
+            if (!$user) {
+                throw new \Exception("Customer Not Found");
+            }
 
             return response()->json([
                 "status" => true,
@@ -515,7 +519,7 @@ class CustomerController extends Controller
         }
         return response()->json(['message' => 'Customer not found'], 404);
     }
-    
+
     public function tolakTransfer($id, Request $request) {
         // Logic for rejecting transfer
         return response()->json(['message' => 'Transfer rejected'], 200);
