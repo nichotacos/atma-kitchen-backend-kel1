@@ -217,6 +217,8 @@ Route::group(['middleware' => 'auth:employee-api'], function () {
     Route::get('/transaksis/show-transaksi-pembayaran-valid', [TransaksiController::class, 'showTransaksiPembayaranValid']);
     Route::post('/transaksis/terima-pesanan/{id}', [TransaksiController::class, 'terimaPesanan']);
     Route::post('/transaksis/tolak-pesanan/{id}', [TransaksiController::class, 'tolakPesanan']);
+    Route::get('/transaksis/show-pesanan-hari-ini', [TransaksiController::class, 'showPesananHariIni']);
+    Route::put('/transaksis/proses-pesanan/{id}', [TransaksiController::class, 'prosesPesanan']);
 });
 
 //Upload Bukti Pembayaran
